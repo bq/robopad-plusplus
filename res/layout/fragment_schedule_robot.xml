@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <HorizontalScrollView 
+        android:id="@+id/controls_layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/holo_green_dark" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginRight="-10dp"
+                android:background="@drawable/btn_green_selector"
+                android:scaleType="fitCenter"
+                android:src="@drawable/up_button" />
+
+            <ImageButton
+                android:id="@+id/down_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginRight="-10dp"
+                android:background="@drawable/btn_green_selector"
+                android:scaleType="fitCenter"
+                android:src="@drawable/down_button" />
+
+            <ImageButton
+                android:id="@+id/left_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginRight="-10dp"
+                android:background="@drawable/btn_green_selector"
+                android:scaleType="fitCenter"
+                android:src="@drawable/left_button" />
+
+            <ImageButton
+                android:id="@+id/right_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginRight="-10dp"
+                android:background="@drawable/btn_green_selector"
+                android:scaleType="fitCenter"
+                android:src="@drawable/right_button" />
+
+            <ImageButton
+                android:id="@+id/stop_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginRight="-10dp"
+                android:background="@drawable/btn_green_selector"
+                android:scaleType="fitCenter"
+                android:src="@drawable/stop_button" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <com.bq.robotic.robopad_plusplus.drag_drop_grid.DragDropGrid
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/controls_layout_view" />
+
+</RelativeLayout>

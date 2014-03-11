@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center" >
+
+    <ImageButton
+        android:id="@+id/up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/up_button" />
+
+    <LinearLayout
+        android:id="@+id/left_right_pad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pad_margin"
+        android:layout_marginBottom="@dimen/pad_margin"
+        android:layout_below="@id/up_button"
+        android:layout_centerHorizontal="true" >
+
+        <ImageButton
+            android:id="@+id/left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/left_right_margin"
+            android:background="@drawable/btn_green_selector"
+            android:src="@drawable/left_button" />
+
+        <ImageButton
+            android:id="@+id/right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/btn_green_selector"
+            android:src="@drawable/right_button" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/down_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/left_right_pad"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/down_button" />
+
+</RelativeLayout>

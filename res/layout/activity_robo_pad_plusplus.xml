@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RoboPad_plusplus" >
+
+    <RelativeLayout
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/holo_green_light"
+        android:gravity="center_vertical" >
+
+        <ImageButton
+            android:id="@+id/select_bot_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:onClick="onSelectBotButtonClick"
+            android:layout_centerVertical="true"
+            android:padding="2dp"
+            android:src="@drawable/robot_icon" />
+
+        <ImageButton
+            android:id="@+id/pad_button"
+            android:layout_toRightOf="@id/select_bot_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_navigation_dark_green_selector"
+            android:onClick="onGamePadButtonClick"
+            android:clickable="false"
+            android:padding="4dp"
+            android:src="@drawable/pad_icon"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/schedule_button"
+            android:layout_toRightOf="@id/pad_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_navigation_dark_green_selector"
+            android:onClick="onSelectBotButtonClick"
+            android:src="@drawable/perm_group_storage"
+            android:visibility="gone" />
+
+         <Button
+            android:id="@+id/connect_button"
+            style="@style/green_button.connect_button"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAllCaps="true" />
+
+        <Button
+            android:id="@+id/disconnect_button"
+            style="@style/green_button.disconnect_button"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAllCaps="true" />
+        
+    </RelativeLayout>
+    
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/holo_green_light" >
+
+        <TextView
+            android:id="@+id/title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp"
+            android:src="@drawable/bq_logo" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/game_pad_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/title_layout"
+        android:layout_below="@id/navigation_bar" />
+
+</RelativeLayout>

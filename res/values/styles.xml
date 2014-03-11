@@ -1,0 +1,20 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="green_button">
+        <item name="android:background">@drawable/btn_navigation_dark_green_selector</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:onClick">onChangeConnection</item>
+    </style>
+    
+    
+    <style name="green_button.connect_button">  
+        <item name="android:text">@string/connect</item>
+    </style>
+    
+    <style name="green_button.disconnect_button">
+        <item name="android:text">@string/disconnect</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+</resources>
