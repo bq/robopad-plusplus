@@ -23,6 +23,8 @@
 
 package com.bq.robotic.robopad_plusplus.fragments;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,14 +33,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
-import com.bq.robotic.robopad_plusplus.drag_drop_grid.DragDropGrid;
-import com.bq.robotic.robopad_plusplus.drag_drop_grid.RobotControlsDragDropGridAdapter;
+import com.bq.robotic.robopad_plusplus.drag_drop_grid.DraggableGridView;
+import com.bq.robotic.robopad_plusplus.drag_drop_grid.OnRearrangeListener;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
 
 
@@ -55,8 +59,10 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	private static final String LOG_TAG = "ScheduleRobotActionsFragment";
 	
 	private ScheduleRobotMovementsListener listener;
-	private DragDropGrid gridview;
+//	private ScrollableDragDropGrid gridview;
+	DraggableGridView gridView;
 	private robotType botType;
+	ArrayList<String> scheduledControls = new ArrayList<String>();
 
 
 	@Override
@@ -65,15 +71,10 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		View layout = inflater.inflate(R.layout.fragment_schedule_robot, container, false);
+		
+		gridView = ((DraggableGridView) layout.findViewById(R.id.grid_view));
 
 		setUiListeners(layout);
-		
-		gridview = (DragDropGrid) layout.findViewById(R.id.grid_view);	
-		
-		RobotControlsDragDropGridAdapter adapter = new RobotControlsDragDropGridAdapter(getActivity(), gridview);
-		
-        gridview.setAdapter(adapter);
-		gridview.setOnClickListener(onGridViewClick);
 
 		return layout;
 
@@ -145,6 +146,28 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	 * @param The view used as the main container for this fragment
 	 */
 	protected void setUiListeners(View containerLayout) {
+		
+    	gridView.setOnRearrangeListener(new OnRearrangeListener() {
+			public void onRearrange(int oldIndex, int newIndex) {
+				if(scheduledControls.isEmpty()) {
+					return;
+				}
+				
+				String scheduledControl = scheduledControls.remove(oldIndex);
+				if (oldIndex < newIndex)
+					scheduledControls.add(newIndex, scheduledControl);
+				else
+					scheduledControls.add(newIndex, scheduledControl);
+			}
+		});
+    	
+//    	gridView.setOnItemClickListener(new OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//				gridView.removeViewAt(arg2);
+//				scheduledControls.remove(arg2);
+//			}
+//		});
 
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
@@ -188,26 +211,42 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 				Log.e(LOG_TAG, "RobotListener is null");
 				return;
 			}
+			
+			ImageView view = new ImageView(getActivity());
 
 			switch(v.getId()) { 
 
 				case R.id.stop_button:
-//					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
+					view.setImageResource(R.drawable.stop_button);
+					gridView.addView(view);
+					scheduledControls.add(RoboPadConstants.STOP_COMMAND);				
+					break;
+					
+				case R.id.up_button:
+					view.setImageResource(R.drawable.up_button);
+					gridView.addView(view);
+					scheduledControls.add(RoboPadConstants.UP_COMMAND);				
+					break;
+					
+				case R.id.down_button:
+					view.setImageResource(R.drawable.down_button);
+					gridView.addView(view);
+					scheduledControls.add(RoboPadConstants.DOWN_COMMAND);				
+					break;
+					
+				case R.id.left_button:
+					view.setImageResource(R.drawable.left_button);
+					gridView.addView(view);
+					scheduledControls.add(RoboPadConstants.LEFT_COMMAND);				
+					break;
+				
+				case R.id.right_button:
+					view.setImageResource(R.drawable.right_button);
+					gridView.addView(view);
+					scheduledControls.add(RoboPadConstants.RIGHT_COMMAND);				
 					break;
 			}
 
-		}
-	};
-	
-	
-	/**
-	 * Listeners for the views in the grid
-	 */
-	protected OnClickListener onGridViewClick = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			Toast.makeText(getActivity(), "Clicked View", Toast.LENGTH_SHORT).show();
 		}
 	};
 

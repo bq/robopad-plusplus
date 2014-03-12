@@ -91,7 +91,9 @@ public class DeleteDropZoneView extends View {
 
 	private void initTrashIcon() {
 		if (trash == null) {
-			trash = getImage(android.R.drawable.ic_menu_delete, getMeasuredHeight(), getMeasuredHeight());
+//			trash = getImage(android.R.drawable.ic_menu_delete, getMeasuredWidth(), getMeasuredHeight());
+//			trash = getImage(android.R.drawable.ic_menu_delete, getWidth(), getHeight());
+			trash = getImage(android.R.drawable.ic_menu_delete);
 		}
 	}
 
@@ -105,14 +107,23 @@ public class DeleteDropZoneView extends View {
 		invalidate();
 	}
 
-	private Bitmap getImage (int id, int width, int height) {
+//	private Bitmap getImage (int id, int width, int height) {
+//	    Bitmap bmp = BitmapFactory.decodeResource( getResources(), id );
+//	    Bitmap img = Bitmap.createScaledBitmap(bmp, width, height, true);
+//	    if (bmp != null && !isInEditMode()) {
+//	        bmp.recycle();
+//	    }
+//	    invalidate();
+//	    return img;
+//	}
+	
+	private Bitmap getImage (int id) {
 	    Bitmap bmp = BitmapFactory.decodeResource( getResources(), id );
-	    Bitmap img = Bitmap.createScaledBitmap(bmp, width, height, true);
-	    if (bmp != null && !isInEditMode()) {
-	        bmp.recycle();
-	    }
-	    invalidate();
-	    return img;
+//	    if (bmp != null && !isInEditMode()) {
+//	        bmp.recycle();
+//	    }
+//	    invalidate();
+	    return bmp;
 	}
 
 }
