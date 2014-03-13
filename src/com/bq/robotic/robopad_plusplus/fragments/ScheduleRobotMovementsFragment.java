@@ -33,14 +33,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.drag_drop_grid.DeleteDropZoneView;
 import com.bq.robotic.robopad_plusplus.drag_drop_grid.DraggableGridView;
 import com.bq.robotic.robopad_plusplus.drag_drop_grid.OnRearrangeListener;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
@@ -73,6 +72,7 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		View layout = inflater.inflate(R.layout.fragment_schedule_robot, container, false);
 		
 		gridView = ((DraggableGridView) layout.findViewById(R.id.grid_view));
+		gridView.setDeleteZone((DeleteDropZoneView) layout.findViewById(R.id.delete_view));
 
 		setUiListeners(layout);
 
@@ -158,6 +158,16 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 					scheduledControls.add(newIndex, scheduledControl);
 				else
 					scheduledControls.add(newIndex, scheduledControl);
+			}
+			
+			public void onRearrange(boolean isDraggedDeleted, int draggedDeletedIndex) {
+				if(scheduledControls.isEmpty()) {
+					return;
+				}
+				
+				if(isDraggedDeleted) {
+					scheduledControls.remove(draggedDeletedIndex);
+				}
 			}
 		});
     	

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,9 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	Context context;
 	//delete zone
 	private DeleteDropZoneView deleteZone;
+	private boolean draggedInDeleteZone = false;
+	// Debugging
+	private static final String LOG_TAG = "DraggableGridView";
 
 	//CONSTRUCTOR AND HELPERS
 	public DraggableGridView (Context context, AttributeSet attrs) {
@@ -62,7 +66,11 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		dpi = metrics.densityDpi;
 		
-		createDeleteZone();
+	}
+	
+	
+	public void setDeleteZone(DeleteDropZoneView deleteZone) {
+		this.deleteZone = deleteZone;
 	}
 	
 	
@@ -105,24 +113,31 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	};
 
 	
-	//OVERRIDES
+	/*
+	 * MANAGE VIEWS
+	 */
 	@Override
 	public void addView(View child) {
+		Log.e(LOG_TAG, "addView");
 		super.addView(child);
 		newPositions.add(-1);
 		
 		deleteZone.bringToFront();
-	};
-	
-	
-	@Override
-	public void removeViewAt(int index) {
-		super.removeViewAt(index);
-		newPositions.remove(index);
-	};
+	}
+
+	//FIXME
+    @Override
+    public void removeViewAt(int index) {
+    	Log.e(LOG_TAG, "removeViewAt");
+    	super.removeViewAt(index);
+    	newPositions.remove(index);
+    };
 
 	
-	//LAYOUT
+	/*
+	 * LAYOUT(non-Javadoc)
+	 * @see android.view.ViewGroup#onLayout(boolean, int, int, int, int)
+	 */
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		//compute width of the screen of the device, in dp
@@ -158,6 +173,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	
 	@Override
 	protected int getChildDrawingOrder(int childCount, int i) {
+		
 		if (dragged == -1) {
 			return i;
 		} else if (i == childCount - 1) {
@@ -256,8 +272,18 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		
 		return -1;
 	}
+	
+	
+	private void bringDraggedToFront() {
+	    View draggedView = getChildAt(dragged);
+	    draggedView.bringToFront();	    
+	    deleteZone.bringToFront();	    	    
+    }
+	
 
-	//EVENT HANDLERS
+	/*
+	 * EVENT HANDLERS
+	 */
 	public void onClick(View view) {
 		if (enabled) {
 			
@@ -298,6 +324,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		switch (action & MotionEvent.ACTION_MASK) {
 		
 			case MotionEvent.ACTION_DOWN:
+				Log.e(LOG_TAG, "ACTION_DOWN");
 				enabled = true;
 				lastX = (int) event.getX();
 				lastY = (int) event.getY();
@@ -305,7 +332,11 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 				break;
 				
 			case MotionEvent.ACTION_MOVE:
+				Log.e(LOG_TAG, "ACTION_MOVE");
+				
 				int delta = lastY - (int)event.getY();
+				
+				invalidate();
 				
 				if (dragged != -1) {
 					//change draw location of dragged visual
@@ -338,16 +369,25 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 				break;
 				
 			case MotionEvent.ACTION_UP:
+				Log.e(LOG_TAG, "ACTION_UP");
+				Log.e(LOG_TAG, "dragged: " + dragged);
+				Log.e(LOG_TAG, "lastTarget: " + lastTarget);
 				if (dragged != -1) {
 					View v = getChildAt(dragged);
 					
-					if (lastTarget != -1) {
+					if(touchUpInDeleteZoneDrop(lastX, lastY)) {
+						draggedInDeleteZone = true;
+						reorderChildren();
+					
+					} else if (lastTarget != -1) {
+						Log.e(LOG_TAG, "traza 1");
+						
 						reorderChildren();
 					} else {
+						Log.e(LOG_TAG, "traza 2");
 						Point xy = getCoorFromIndex(dragged);
 						v.layout(xy.x, xy.y, xy.x + childSize, xy.y + childSize);
 					}
-					v.clearAnimation();
 					
 					if (v instanceof ImageView) {
 						((ImageView)v).setAlpha(255);
@@ -356,10 +396,12 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 					lastTarget = -1;
 					dragged = -1;
 					hideDeleteView();
+					draggedInDeleteZone = false;
 				}
 				touching = false;
+				cancelAnimations();
 				break;
-			}
+		}
 		
 		if (dragged != -1) {
 			return true;
@@ -368,8 +410,12 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		return false;
 	}
 
-	//EVENT HELPERS
+	
+	/*
+	 * ANIMATIONS
+	 */
 	protected void animateDragged() {
+		Log.e(LOG_TAG, "animateDragged");
 		View v = getChildAt(dragged);
 		int x = getCoorFromIndex(dragged).x + childSize / 2, y = getCoorFromIndex(dragged).y + childSize / 2;
 		int l = x - (3 * childSize / 4), t = y - (3 * childSize / 4);
@@ -399,6 +445,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	}
 	
 	protected void animateGap(int target) {
+		Log.e(LOG_TAG, "animateGap");
 		for (int i = 0; i < getChildCount(); i++) {
 			View v = getChildAt(i);
 			
@@ -454,12 +501,12 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	
 	
 	private Animation createFastRotateAnimation() {
-		Animation rotate = new RotateAnimation(-2.0f,
-										  2.0f,
+		Animation rotate = new RotateAnimation(-3.0f,
+										  3.0f,
 										  Animation.RELATIVE_TO_SELF,
-										  0.5f,
+										  0.8f,
 										  Animation.RELATIVE_TO_SELF,
-										  0.5f);
+										  0.8f);
 
 	 	rotate.setRepeatMode(Animation.REVERSE);
         rotate.setRepeatCount(Animation.INFINITE);
@@ -468,39 +515,65 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 
 		return rotate;
 	}
+	
+	
+	private void cancelAnimations() {
+		 for (int i=0; i < getChildCount(); i++) {
+			 View child = getChildAt(i);
+			 child.clearAnimation();
+		 }
+	}
 
-
+	
+	/*
+	 * REORDER CHILDS
+	 */
 	protected void reorderChildren() {
-		//FIGURE OUT HOW TO REORDER CHILDREN WITHOUT REMOVING THEM ALL AND RECONSTRUCTING THE LIST!!!
-		if (onRearrangeListener != null) {
-			onRearrangeListener.onRearrange(dragged, lastTarget);
-		}
+		Log.e(LOG_TAG, "in reorderChildren");
+		//FIXME: FIGURE OUT HOW TO REORDER CHILDREN WITHOUT REMOVING THEM ALL AND RECONSTRUCTING THE LIST!!!
+
 		
 		ArrayList<View> children = new ArrayList<View>();
-		
+		Log.e(LOG_TAG, "getChildCount in reorderChildren: " + getChildCount());
 		for (int i = 0; i < getChildCount(); i++) {
 			getChildAt(i).clearAnimation();
 			children.add(getChildAt(i));
 		}
 		
 		removeAllViews();
-		//FIXME
-//		touchUpInDeleteZoneDrop()
 		
-		while (dragged != lastTarget)
-			if (lastTarget == children.size()) { // dragged and dropped to the right of the last element
+		if(draggedInDeleteZone) { // dragged in deleted zone
+			children.remove(dragged);
+
 			
-				children.add(children.remove(dragged));
-				dragged = lastTarget;
-				
-			} else if (dragged < lastTarget) { // shift to the right 
-				Collections.swap(children, dragged, dragged + 1);
-				dragged++;
-			
-			} else if (dragged > lastTarget) { // shift to the left
-				Collections.swap(children, dragged, dragged - 1);
-				dragged--;
+			if (onRearrangeListener != null) {
+				onRearrangeListener.onRearrange(true, dragged);
 			}
+		
+		} else {
+			
+			if (onRearrangeListener != null) {
+				onRearrangeListener.onRearrange(dragged, lastTarget);
+			}
+		
+			while (dragged != lastTarget) {
+				if (lastTarget == children.size()) { // dragged and dropped to the right of the last element
+					Log.e(LOG_TAG, "primer if");
+					children.add(children.remove(dragged));
+					dragged = lastTarget;
+					
+				} else if (dragged < lastTarget) { // shift to the right 
+					Log.e(LOG_TAG, "segundo if");
+					Collections.swap(children, dragged, dragged + 1);
+					dragged++;
+				
+				} else if (dragged > lastTarget) { // shift to the left
+					Log.e(LOG_TAG, "tercer if");
+					Collections.swap(children, dragged, dragged - 1);
+					dragged--;
+				}
+			}
+		}
 		
 		for (int i = 0; i < children.size(); i++) {
 			newPositions.set(i, -1);
@@ -564,61 +637,43 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	}
 	
 	
-	// DELETE ZONE
-	private void createDeleteZone() {
-		deleteZone = new DeleteDropZoneView(getContext());
-		addView(deleteZone);
-	}
-	
-	
+	/*
+	 * DELETE ZONE
+	 */	
 	private void manageDeleteZoneHover(int x, int y) {
-		Rect zone = new Rect();
-		deleteZone.getHitRect(zone);
-
-		if (zone.intersect(x, y, x+1, y+1)) {
+		if (touchUpInDeleteZoneDrop(x, y) ) {
 			deleteZone.highlight();
 		} else {
 			deleteZone.smother();
 		}
 	}
 
+	
 	private boolean touchUpInDeleteZoneDrop(int x, int y) {
 		Rect zone = new Rect();
 		deleteZone.getHitRect(zone);
 
-		if (zone.intersect(x, y, x+1, y+1)) {
+		if (zone.intersect(x, y, x+50, y+50)) {
 			deleteZone.smother();
 			return true;
 		}
 		return false;
 	}
 	
+	
     private void showDeleteView() {
         deleteZone.setVisibility(View.VISIBLE);
-   
-        int l = deleteZone.getMeasuredWidth();
-        
-        int t = computeDropZoneVerticalLocation();
-        int b = computeDropZoneVerticalBottom();
-        
-        //FIXME
-        deleteZone.layout(l,  t, l + getWidth(), b);
-    }
-	
-	private int computeDropZoneVerticalBottom() {
-        return getHeight() - deleteZone.getMeasuredHeight() + getHeight();
     }
 
-    private int computeDropZoneVerticalLocation() {        
-        return getHeight() - deleteZone.getMeasuredHeight();
-    }
-
+    
 	private void hideDeleteView() {
 	    deleteZone.setVisibility(View.INVISIBLE);
 	}
 
 	
-	//OTHER METHODS
+	/*
+	 * LISTENERS
+	 */
 	public void setOnRearrangeListener(OnRearrangeListener l) {
 		this.onRearrangeListener = l;
 	}

@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
-            android:name="com.bq.robotic.robopad_plusplus.RoboPad_plusplus"
+            android:name="com.bq.robotic.robopad_plusplus.RoboPadSplashScreen"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
             <intent-filter>
@@ -26,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.bq.robotic.robopad_plusplus.RoboPad_plusplus"
+            android:screenOrientation="landscape"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

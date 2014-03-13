@@ -37,6 +37,12 @@ public class RoboPadConstants {
     
     
     /**
+     * Splash screen
+     */
+    public static final int SPLASH_DISPLAY_TIME = 2000; /* 2 seconds */
+    
+    
+    /**
      * Beetle robot
      */
     public static enum Claw_next_state {OPEN_STEP, CLOSE_STEP, FULL_OPEN};    

@@ -12,8 +12,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center" >
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
             <ImageButton
                 android:id="@+id/up_button"
@@ -64,6 +64,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/controls_layout_view"
-        android:background="@android:color/white"  />
+        android:background="@android:color/white" />
+
+    <com.bq.robotic.robopad_plusplus.drag_drop_grid.DeleteDropZoneView
+        android:id="@+id/delete_view"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:paddingLeft="200dp"
+        android:paddingRight="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" 
+        android:visibility="invisible"  />
 
 </RelativeLayout>
