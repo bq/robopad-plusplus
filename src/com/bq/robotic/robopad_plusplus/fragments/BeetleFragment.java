@@ -1,5 +1,5 @@
 /*
-* This file is part of the GamePad
+* This file is part of the RoboPad++
 *
 * Copyright (C) 2013 Mundo Reader S.L.
 * 

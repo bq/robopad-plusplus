@@ -11,5 +11,7 @@
     
     <dimen name="pad_margin">25dp</dimen>
     <dimen name="left_right_margin">110dp</dimen>
+    
+    <dimen name="scheduler_control_height">65dp</dimen>
 
 </resources>

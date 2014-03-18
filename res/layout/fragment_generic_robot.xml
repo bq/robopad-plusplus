@@ -14,82 +14,63 @@
         android:layout_centerVertical="true"
         layout="@layout/pad_layout" />
 
-    <Button
+    <ImageButton
         android:id="@+id/command_button_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_margin="5dp"
-        android:background="@drawable/generic_command_button_green_selector"
-        android:text="@string/command_3"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/comand_button_3" />
 
-    <Button
+    <ImageButton
         android:id="@+id/command_button_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_toLeftOf="@id/command_button_3"
-        android:background="@drawable/generic_command_button_green_selector"
-        android:text="@string/command_2"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/comand_button_2" />
 
-    <Button
+    <ImageButton
         android:id="@+id/command_button_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_toLeftOf="@id/command_button_2"
-        android:background="@drawable/generic_command_button_green_selector"
-        android:text="@string/command_1"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/comand_button_1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/command_button_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/command_button_3"
-        android:layout_margin="5dp"
-        android:background="@drawable/generic_command_button_green_selector"
-        android:text="@string/command_6"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/comand_button_6" />
 
-    <Button
+    <ImageButton
         android:id="@+id/command_button_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/command_button_3"
-        android:layout_margin="5dp"
         android:layout_toLeftOf="@id/command_button_6"
-        android:background="@drawable/generic_command_button_green_selector"
-        android:text="@string/command_5"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/comand_button_5" />
 
-    <Button
+    <ImageButton
         android:id="@+id/command_button_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/command_button_3"
-        android:layout_margin="5dp"
         android:layout_toLeftOf="@id/command_button_5"
-        android:background="@drawable/generic_command_button_green_selector"
-        android:text="@string/command_4"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:background="@drawable/btn_green_selector"
+        android:src="@drawable/comand_button_4" />
 
     <ImageButton
         android:id="@+id/stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
+        android:layout_alignRight="@id/command_button_6"
         android:background="@drawable/btn_green_selector"
         android:src="@drawable/stop_button" />
     
@@ -97,7 +78,7 @@
         android:id="@+id/schedule_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/stop_button"
+        android:layout_alignLeft="@id/command_button_4"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="7dp"

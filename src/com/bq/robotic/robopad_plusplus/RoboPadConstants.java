@@ -1,5 +1,5 @@
 /*
-* This file is part of the GamePad
+* This file is part of the RoboPad++
 *
 * Copyright (C) 2013 Mundo Reader S.L.
 * 
@@ -29,7 +29,10 @@ public class RoboPadConstants {
     // Debugging
     public static final boolean D = true;
     
+    
+    
     public static final long CLICK_SLEEP_TIME = 150;
+    public static final long DELAY_BETWEEN_SCHEDULED_COMMANDS = 800;
     
     public static enum robotType {POLLYWOG, BEETLE, RHINO, GENERIC_ROBOT};
     
@@ -51,16 +54,19 @@ public class RoboPadConstants {
     public static final int INIT_CLAW_POS = 30;
     public static int CLAW_STEP = 5;
     public static String CLAW_COMMAND = "_C";
+    public static String FULL_OPEN_STEP_COMMAND = "F";
+    public static String OPEN_STEP_COMMAND = "O";
+    public static String CLOSE_STEP_COMMAND = "T";
   
     
     /**
-     * Pins renacuajo bot! revise for each robot
+     * Commands to send to the Arduino
      */  
     //FIXME: Put in comments the correct pins
-    public static final String UP_COMMAND = "U"; // servo digital port both wheels, left[pin 4, value = 0], right[pin 7, value = 180]
-    public static final String DOWN_COMMAND = "D"; // servo digital port both wheels, left[pin 4, value = 180], right[pin 7, value = 0]
-    public static final String LEFT_COMMAND = "L"; // servo digital port both wheels, left[pin 4, value = 90], right[pin 7, value = 0] //with 90 it is stop
-    public static final String RIGHT_COMMAND = "R"; // servo digital port both wheels, left[pin 4, value = 0], right[pin 7, value = 90]
+    public static final String UP_COMMAND = "U"; // servo digital port both wheels, left[pin 6, value = 0], right[pin 9, value = 180]
+    public static final String DOWN_COMMAND = "D"; // servo digital port both wheels, left[pin 6, value = 180], right[pin 9, value = 0]
+    public static final String LEFT_COMMAND = "L"; // servo digital port both wheels, left[pin 6, value = 90], right[pin 9, value = 0] //with 90 it is stop
+    public static final String RIGHT_COMMAND = "R"; // servo digital port both wheels, left[pin 6, value = 0], right[pin 9, value = 90]
     public static final String STOP_COMMAND = "S"; //servo digital port both, stop both
     
     

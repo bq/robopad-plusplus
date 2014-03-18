@@ -1,5 +1,5 @@
 /*
-* This file is part of the GamePad
+* This file is part of the RoboPad++
 *
 * Copyright (C) 2013 Mundo Reader S.L.
 * 
@@ -27,6 +27,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -44,6 +45,7 @@ import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.fragments.BeetleFragment;
 import com.bq.robotic.robopad_plusplus.fragments.GenericRobotFragment;
 import com.bq.robotic.robopad_plusplus.fragments.PollywogFragment;
+import com.bq.robotic.robopad_plusplus.fragments.RhinoFragment;
 import com.bq.robotic.robopad_plusplus.fragments.RobotFragment;
 import com.bq.robotic.robopad_plusplus.fragments.ScheduleRobotMovementsFragment;
 import com.bq.robotic.robopad_plusplus.fragments.SelectBotFragment;
@@ -59,7 +61,7 @@ import com.bq.robotic.robopad_plusplus.listeners.SelectBotListener;
 public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements RobotListener, SelectBotListener, ScheduleRobotMovementsListener {
 	
 	// Debugging
-    private static final String LOG_TAG = "GamePad";
+    private static final String LOG_TAG = "RoboPad_plusplus";
     
     private ActionBar mActionBar;   
     private ImageButton mSelectBotButton;
@@ -125,7 +127,40 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 			
 	}
 	
-	
+    
+	@Override
+	public void onAttachFragment(Fragment fragment) {
+		super.onAttachFragment(fragment);
+		
+		if(connectButton == null && disconnectButton == null) {
+			return;
+		}
+		
+		// Check the status for the connect / disconnect buttons
+		if(isConnectedWithoutToast()) {
+            connectButton.setVisibility(View.GONE);
+            disconnectButton.setVisibility(View.VISIBLE);
+            
+//            if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
+//            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
+//            } 
+		} else {
+			connectButton.setVisibility(View.VISIBLE);
+            disconnectButton.setVisibility(View.GONE);
+            
+//            if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
+//            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+//            
+//            } else if (mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof ScheduleRobotMovementsFragment) {
+//            	((ScheduleRobotMovementsFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+//            }
+		}
+		
+	}
+
+
+
+
 	/**
 	 * Put the text in the title bar in the bottom of the screen
 	 * 
@@ -160,7 +195,8 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
             	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
-            }
+            } 
+            
             connectButton.setVisibility(View.GONE);
             disconnectButton.setVisibility(View.VISIBLE);
             break;
@@ -174,6 +210,9 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
             setStatus(R.string.title_not_connected);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
             	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+            
+            } else if (mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof ScheduleRobotMovementsFragment) {
+            	((ScheduleRobotMovementsFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
             }
             connectButton.setVisibility(View.VISIBLE);
             disconnectButton.setVisibility(View.GONE);
@@ -405,8 +444,8 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 		} else if (botType == robotType.BEETLE) {
 			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.BEETLE.ordinal());
 
-//		} else if (botType == robotType.RHINO) {	
-//			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.RHINO.ordinal());
+		} else if (botType == robotType.RHINO) {	
+			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.RHINO.ordinal());
 
 		} else if (botType == robotType.GENERIC_ROBOT) {
 			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.GENERIC_ROBOT.ordinal());
@@ -464,9 +503,9 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_beetle_action_bar_icon, 0, 0, 0);
 			robotFragment = new BeetleFragment();
 
-//		} else if (botType == robotType.RHINO) {	
-//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
-//			robotFragment = new RhinoFragment();
+		} else if (botType == robotType.RHINO) {	
+			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
+			robotFragment = new RhinoFragment();
 
 		} else if (botType == robotType.GENERIC_ROBOT) {
 			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);

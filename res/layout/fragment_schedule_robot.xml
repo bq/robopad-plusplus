@@ -2,60 +2,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    
+    <ImageButton
+        android:id="@+id/play_command_button"
+        android:layout_width="@dimen/scheduler_control_height"
+        android:layout_height="@dimen/scheduler_control_height"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/green_button_btn_default_holo_dark"
+        android:src="@android:drawable/ic_menu_send"
+        android:scaleType="centerCrop" />
+    
+    <ImageButton
+        android:id="@+id/remove_all_button"
+        android:layout_width="@dimen/scheduler_control_height"
+        android:layout_height="@dimen/scheduler_control_height"
+        android:background="@drawable/green_button_btn_default_holo_dark"
+        android:src="@android:drawable/ic_menu_delete"
+        android:layout_toLeftOf="@id/play_command_button"
+        android:scaleType="centerCrop" />
 
     <HorizontalScrollView
         android:id="@+id/controls_layout_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/scheduler_control_height"
+        android:layout_marginRight="3dp"
+        android:layout_toLeftOf="@id/remove_all_button"
         android:background="@color/holo_green_dark" >
 
         <LinearLayout
+            android:id="@+id/controls_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal" >
 
             <ImageButton
                 android:id="@+id/up_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/scheduler_control_height"
+                android:layout_height="match_parent"
                 android:background="@drawable/btn_green_selector"
-                android:scaleType="fitCenter"
-                android:src="@drawable/up_button_little" />
+                android:scaleType="centerCrop"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/schedule_up_control_selector" />
 
             <ImageButton
                 android:id="@+id/down_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/scheduler_control_height"
+                android:layout_height="match_parent"
                 android:background="@drawable/btn_green_selector"
-                android:scaleType="fitCenter"
-                android:src="@drawable/down_button_little" />
+                android:scaleType="centerCrop"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/schedule_down_control_selector" />
 
             <ImageButton
                 android:id="@+id/left_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/scheduler_control_height"
+                android:layout_height="match_parent"
                 android:background="@drawable/btn_green_selector"
-                android:scaleType="fitCenter"
-                android:src="@drawable/left_button_little" />
+                android:scaleType="centerCrop"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/schedule_left_control_selector" />
 
             <ImageButton
                 android:id="@+id/right_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/scheduler_control_height"
+                android:layout_height="match_parent"
                 android:background="@drawable/btn_green_selector"
-                android:scaleType="fitCenter"
-                android:src="@drawable/right_button_little" />
+                android:scaleType="centerCrop"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/schedule_right_control_selector" />
 
             <ImageButton
                 android:id="@+id/stop_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-5dp"
-                android:layout_marginRight="-10dp"
+                android:layout_width="@dimen/scheduler_control_height"
+                android:layout_height="match_parent"
                 android:background="@drawable/btn_green_selector"
-                android:scaleType="fitCenter"
-                android:src="@drawable/stop_button_little" />
+                android:scaleType="centerCrop"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/schedule_stop_control_selector" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -70,11 +95,32 @@
         android:id="@+id/delete_view"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:paddingLeft="200dp"
-        android:paddingRight="200dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp" 
         android:visibility="invisible"  />
+    
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:background="@drawable/abc_menu_dropdown_panel_holo_dark"
+        android:padding="20dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
+
+
+
+
+
+
+
+
+

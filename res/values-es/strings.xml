@@ -19,6 +19,9 @@
     <string name="full_open_claw">Soltar pinza</string>
     <string name="open_claw">Abrir pinza</string>
     <string name="close_claw">Cerrar pinza</string>  
+    <string name="full_open_claw_little">P++</string>
+    <string name="open_claw_little">P+</string> 
+    <string name="close_claw_little">P-</string>    
     
     <!-- Rhino robot -->
     <string name="charge">Embestir</string>

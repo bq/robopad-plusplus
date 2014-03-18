@@ -17,6 +17,18 @@
         android:layout_centerVertical="true"
         android:background="@drawable/btn_green_selector"
         android:src="@drawable/stop_button" />
+    
+    <Button
+        android:id="@+id/schedule_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/green_button_btn_default_holo_dark"
+        android:textColor="@android:color/white"
+        android:text="@string/schedule" />
 
     <Button
         android:id="@+id/charge_button"
@@ -28,7 +40,7 @@
         android:text="@string/charge"
         android:textColor="@android:color/white" />
 
-    <com.bq.robotic.robopad.SliderView
+    <com.bq.robotic.robopad_plusplus.SliderView
         android:id="@+id/left_slider"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -40,7 +52,7 @@
         android:thumb="@drawable/slider_thumbs_selector"
         android:thumbOffset="16dp" />
 
-    <com.bq.robotic.robopad.SliderView
+    <com.bq.robotic.robopad_plusplus.SliderView
         android:id="@+id/right_slider"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

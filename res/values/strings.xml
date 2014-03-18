@@ -18,18 +18,13 @@
     <!--  Beetle robot-->
     <string name="full_open_claw">Open full claw</string>
     <string name="open_claw">Open claw</string>
-    <string name="close_claw">Close claw</string>   
+    <string name="close_claw">Close claw</string> 
+    <string name="full_open_claw_little">C++</string>
+    <string name="open_claw_little">C+</string> 
+    <string name="close_claw_little">C-</string>    
     
     <!-- Rhino robot -->
     <string name="charge">Charge</string>
-    
-    <!-- Generic robot -->
-    <string name="command_1">1</string>
-    <string name="command_2">2</string> 
-    <string name="command_3">3</string> 
-    <string name="command_4">4</string> 
-    <string name="command_5">5</string> 
-    <string name="command_6">6</string>  
     
     <!-- DragDropGrid -->
     <string name="remove">Remove</string>

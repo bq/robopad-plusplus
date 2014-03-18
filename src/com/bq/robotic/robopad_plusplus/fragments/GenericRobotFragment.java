@@ -1,5 +1,5 @@
 /*
-* This file is part of the GamePad
+* This file is part of the RoboPad++
 *
 * Copyright (C) 2013 Mundo Reader S.L.
 * 
@@ -96,22 +96,22 @@ public class GenericRobotFragment extends RobotFragment {
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
 
-		Button commandButton1 = (Button) containerLayout.findViewById(R.id.command_button_1);
+		ImageButton commandButton1 = (ImageButton) containerLayout.findViewById(R.id.command_button_1);
 		commandButton1.setOnClickListener(onButtonClick);
 
-		Button commandButton2 = (Button) containerLayout.findViewById(R.id.command_button_2);
+		ImageButton commandButton2 = (ImageButton) containerLayout.findViewById(R.id.command_button_2);
 		commandButton2.setOnClickListener(onButtonClick);
 
-		Button commandButton3 = (Button) containerLayout.findViewById(R.id.command_button_3);
+		ImageButton commandButton3 = (ImageButton) containerLayout.findViewById(R.id.command_button_3);
 		commandButton3.setOnClickListener(onButtonClick);
 
-		Button commandButton4 = (Button) containerLayout.findViewById(R.id.command_button_4);
+		ImageButton commandButton4 = (ImageButton) containerLayout.findViewById(R.id.command_button_4);
 		commandButton4.setOnClickListener(onButtonClick);
 
-		Button commandButton5 = (Button) containerLayout.findViewById(R.id.command_button_5);
+		ImageButton commandButton5 = (ImageButton) containerLayout.findViewById(R.id.command_button_5);
 		commandButton5.setOnClickListener(onButtonClick);
 
-		Button commandButton6 = (Button) containerLayout.findViewById(R.id.command_button_6);
+		ImageButton commandButton6 = (ImageButton) containerLayout.findViewById(R.id.command_button_6);
 		commandButton6.setOnClickListener(onButtonClick);
 	}
 

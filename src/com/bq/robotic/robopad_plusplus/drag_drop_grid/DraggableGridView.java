@@ -15,7 +15,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +27,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 
 
@@ -46,6 +47,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	protected OnRearrangeListener onRearrangeListener;
 	protected OnClickListener secondaryOnClickListener;
 	private OnItemClickListener onItemClickListener;
+	private OnItemLongClickListener onItemLongClickListener;
 	// Context
 	Context context;
 	//delete zone
@@ -118,20 +120,26 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	 */
 	@Override
 	public void addView(View child) {
-		Log.e(LOG_TAG, "addView");
 		super.addView(child);
 		newPositions.add(-1);
 		
-		deleteZone.bringToFront();
+		if(deleteZone != null) {
+			deleteZone.bringToFront();
+		}
 	}
-
-	//FIXME
+	
     @Override
     public void removeViewAt(int index) {
-    	Log.e(LOG_TAG, "removeViewAt");
     	super.removeViewAt(index);
     	newPositions.remove(index);
     };
+    
+    
+    public void removeAll() {
+    	super.removeAllViews();
+    	newPositions.clear();
+    	invalidate();
+    }
 
 	
 	/*
@@ -146,15 +154,25 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		//determine number of columns, at least 2
 		colCount = 2;
 		
+		//FIXME
 		// Defines the size of the childs
-		int sub = 30;
-		w -= 35;
+		int sub = 60;
+		w -= 70;
 		
 		while (w > 0) {
 			colCount++;
 			w -= sub;
-			sub += 10;
+			sub += 20;
 		}
+		
+//		int sub = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,  context.getResources().getDisplayMetrics());
+//		w -= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35,  context.getResources().getDisplayMetrics());
+//		
+//		while (w > 0) {
+//			colCount++;
+//			w -= sub;
+//			sub += (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10,  context.getResources().getDisplayMetrics());
+//		}
 
 		//determine childSize and padding, in px
 		childSize = (r - l) / colCount;
@@ -273,34 +291,47 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		return -1;
 	}
 	
-	
-	private void bringDraggedToFront() {
-	    View draggedView = getChildAt(dragged);
-	    draggedView.bringToFront();	    
-	    deleteZone.bringToFront();	    	    
-    }
-	
 
 	/*
 	 * EVENT HANDLERS
 	 */
+//	public void onClick(View view) {
+//		if (enabled) {
+//			
+//			if (secondaryOnClickListener != null) {
+//				secondaryOnClickListener.onClick(view);
+//			}
+//			
+//			if (onItemClickListener != null && getLastIndex() != -1) {
+//				onItemClickListener.onItemClick(null, getChildAt(getLastIndex()), getLastIndex(), getLastIndex() / colCount);
+//			}
+//		}
+//	}
+//	
+//	
+//	public boolean onLongClick(View view) {
+//		if (!enabled) {
+//			return false;
+//		}
+//		
+//		int index = getLastIndex();
+//		
+//		if (index != -1) {
+//			dragged = index;
+//			animateMoveAllItems();
+//			animateDragged();
+//			showDeleteView();	
+//			
+//			return true;
+//		}
+//		
+//		return false;
+//	}
+	
+	
 	public void onClick(View view) {
-		if (enabled) {
-			
-			if (secondaryOnClickListener != null) {
-				secondaryOnClickListener.onClick(view);
-			}
-			
-			if (onItemClickListener != null && getLastIndex() != -1) {
-				onItemClickListener.onItemClick(null, getChildAt(getLastIndex()), getLastIndex(), getLastIndex() / colCount);
-			}
-		}
-	}
-	
-	
-	public boolean onLongClick(View view) {
 		if (!enabled) {
-			return false;
+			return;
 		}
 		
 		int index = getLastIndex();
@@ -310,6 +341,23 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 			animateMoveAllItems();
 			animateDragged();
 			showDeleteView();	
+			
+		}
+
+	}
+	
+	
+	public boolean onLongClick(View view) {
+		if (!enabled) {
+			return false;
+		}
+			
+//			if (secondaryOnClickListener != null) {
+//				secondaryOnClickListener.onClick(view);
+//			}
+			
+		if (onItemLongClickListener != null && getLastIndex() != -1) {
+			onItemLongClickListener.onItemLongClick(null, getChildAt(getLastIndex()), getLastIndex(), getLastIndex() / colCount);
 			
 			return true;
 		}
@@ -324,16 +372,13 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		switch (action & MotionEvent.ACTION_MASK) {
 		
 			case MotionEvent.ACTION_DOWN:
-				Log.e(LOG_TAG, "ACTION_DOWN");
 				enabled = true;
 				lastX = (int) event.getX();
 				lastY = (int) event.getY();
 				touching = true;
 				break;
 				
-			case MotionEvent.ACTION_MOVE:
-				Log.e(LOG_TAG, "ACTION_MOVE");
-				
+			case MotionEvent.ACTION_MOVE:				
 				int delta = lastY - (int)event.getY();
 				
 				invalidate();
@@ -369,9 +414,6 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 				break;
 				
 			case MotionEvent.ACTION_UP:
-				Log.e(LOG_TAG, "ACTION_UP");
-				Log.e(LOG_TAG, "dragged: " + dragged);
-				Log.e(LOG_TAG, "lastTarget: " + lastTarget);
 				if (dragged != -1) {
 					View v = getChildAt(dragged);
 					
@@ -379,12 +421,9 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 						draggedInDeleteZone = true;
 						reorderChildren();
 					
-					} else if (lastTarget != -1) {
-						Log.e(LOG_TAG, "traza 1");
-						
+					} else if (lastTarget != -1) {					
 						reorderChildren();
 					} else {
-						Log.e(LOG_TAG, "traza 2");
 						Point xy = getCoorFromIndex(dragged);
 						v.layout(xy.x, xy.y, xy.x + childSize, xy.y + childSize);
 					}
@@ -415,7 +454,6 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	 * ANIMATIONS
 	 */
 	protected void animateDragged() {
-		Log.e(LOG_TAG, "animateDragged");
 		View v = getChildAt(dragged);
 		int x = getCoorFromIndex(dragged).x + childSize / 2, y = getCoorFromIndex(dragged).y + childSize / 2;
 		int l = x - (3 * childSize / 4), t = y - (3 * childSize / 4);
@@ -445,7 +483,6 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	}
 	
 	protected void animateGap(int target) {
-		Log.e(LOG_TAG, "animateGap");
 		for (int i = 0; i < getChildCount(); i++) {
 			View v = getChildAt(i);
 			
@@ -529,12 +566,9 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	 * REORDER CHILDS
 	 */
 	protected void reorderChildren() {
-		Log.e(LOG_TAG, "in reorderChildren");
 		//FIXME: FIGURE OUT HOW TO REORDER CHILDREN WITHOUT REMOVING THEM ALL AND RECONSTRUCTING THE LIST!!!
 
-		
 		ArrayList<View> children = new ArrayList<View>();
-		Log.e(LOG_TAG, "getChildCount in reorderChildren: " + getChildCount());
 		for (int i = 0; i < getChildCount(); i++) {
 			getChildAt(i).clearAnimation();
 			children.add(getChildAt(i));
@@ -558,17 +592,14 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 		
 			while (dragged != lastTarget) {
 				if (lastTarget == children.size()) { // dragged and dropped to the right of the last element
-					Log.e(LOG_TAG, "primer if");
 					children.add(children.remove(dragged));
 					dragged = lastTarget;
 					
 				} else if (dragged < lastTarget) { // shift to the right 
-					Log.e(LOG_TAG, "segundo if");
 					Collections.swap(children, dragged, dragged + 1);
 					dragged++;
 				
 				} else if (dragged > lastTarget) { // shift to the left
-					Log.e(LOG_TAG, "tercer if");
 					Collections.swap(children, dragged, dragged - 1);
 					dragged--;
 				}
@@ -579,8 +610,11 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 			newPositions.set(i, -1);
 			addView(children.get(i));
 		}
-
-		deleteZone.bringToFront();
+		
+		if(deleteZone != null) {
+			deleteZone.bringToFront();
+		}
+		
 		requestLayout();
 	}
 	
@@ -641,6 +675,11 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	 * DELETE ZONE
 	 */	
 	private void manageDeleteZoneHover(int x, int y) {
+		
+		if(deleteZone == null) {
+			return;
+		}
+		
 		if (touchUpInDeleteZoneDrop(x, y) ) {
 			deleteZone.highlight();
 		} else {
@@ -650,10 +689,17 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 
 	
 	private boolean touchUpInDeleteZoneDrop(int x, int y) {
+		
+		if(deleteZone == null) {
+			return false;
+		}
+		
 		Rect zone = new Rect();
 		deleteZone.getHitRect(zone);
+		
+		int offset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
 
-		if (zone.intersect(x, y, x+50, y+50)) {
+		if (zone.intersect(x, y, x + offset, y + offset)) {
 			deleteZone.smother();
 			return true;
 		}
@@ -662,12 +708,16 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	
 	
     private void showDeleteView() {
-        deleteZone.setVisibility(View.VISIBLE);
+    	if(deleteZone != null) {
+    		deleteZone.setVisibility(View.VISIBLE);
+    	}
     }
 
     
 	private void hideDeleteView() {
-	    deleteZone.setVisibility(View.INVISIBLE);
+		if(deleteZone != null) {
+			deleteZone.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	
@@ -681,5 +731,9 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
 	
 	public void setOnItemClickListener(OnItemClickListener l) {
 		this.onItemClickListener = l;
+	}
+	
+	public void setOnItemLongClickListener(OnItemLongClickListener l) {
+		this.onItemLongClickListener = l;
 	}
 }

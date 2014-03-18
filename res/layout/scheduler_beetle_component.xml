@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/beetle_controls_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/scheduler_control_height"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/full_open_claw_button"
+        android:layout_width="@dimen/scheduler_control_height"
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_green_selector"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/schedule_full_open_claw_control_selector" />
+
+    <ImageButton
+        android:id="@+id/open_claw_button"
+        android:layout_width="@dimen/scheduler_control_height"
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_green_selector"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/schedule_open_claw_control_selector" />
+
+    <ImageButton
+        android:id="@+id/close_claw_button"
+        android:layout_width="@dimen/scheduler_control_height"
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_green_selector"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/schedule_close_claw_control_selector" />
+
+</LinearLayout>
