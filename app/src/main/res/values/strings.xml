@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">RoboPad++</string>
+    
+    <string name="pollywog">Pollywog</string>
+    <string name="beetle">Beetle</string>
+    <string name="rhino">Rhino</string>
+    <string name="generic_robot">Generic robot</string>
+    
+    <string name="select_robot">SELECT ROBOT</string>
+    <string name="remote_control">REMOTE CONTROL</string>
+    
+    <string name="exit_robot_control_dialog">The connection with this robot will be lost, do you really want to choose a new type of robot?</string>
+    <string name="exit_robot_control_dialog_title">Disconnect the robot</string>
+    
+    <!--  Beetle robot-->
+    <string name="full_open_claw">Open full claw</string>
+    <string name="open_claw">Open claw</string>
+    <string name="close_claw">Close claw</string> 
+    <string name="full_open_claw_little">C++</string>
+    <string name="open_claw_little">C+</string> 
+    <string name="close_claw_little">C-</string>    
+    
+    <!-- Rhino robot -->
+    <string name="charge">Charge</string>
+    
+    <!-- DragDropGrid -->
+    <string name="remove">Remove</string>
+    <string name="schedule_title">"Schedule the movements of the "</string>
+    <string name="schedule">Schedule</string>
+    
+    <!-- Scheduler -->
+    <string name="save">Save</string>
+    <string name="load">Load</string>
+    <string name="settings">Settings</string>
+
+</resources>

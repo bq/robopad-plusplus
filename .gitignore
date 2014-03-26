@@ -1,11 +1,35 @@
-# don't commit bin directory
-bin/
+# built application files
+*.apk
+*.ap_
 
-# neither gen directory
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
 gen/
 
-# .setting is only for eclipse settings
-.settings/
+# Local configuration file (sdk path, etc)
+local.properties
 
-# temporal files 
+# Eclipse stuff
+#.classpath
+#.project
+#.settings
+
+# Gradle stuff
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+out/
+*.iml
+*.ipr
+*.iws
+
+# Temporal files
 *~
