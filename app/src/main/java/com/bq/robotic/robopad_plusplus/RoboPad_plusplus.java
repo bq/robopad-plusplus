@@ -43,6 +43,7 @@ import com.bq.robotic.droid2ino.utils.AndroidinoConstants;
 import com.bq.robotic.droid2ino.utils.DeviceListDialogStyle;
 import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.fragments.BeetleFragment;
+import com.bq.robotic.robopad_plusplus.fragments.CrabFragment;
 import com.bq.robotic.robopad_plusplus.fragments.GenericRobotFragment;
 import com.bq.robotic.robopad_plusplus.fragments.PollywogFragment;
 import com.bq.robotic.robopad_plusplus.fragments.RhinoFragment;
@@ -140,20 +141,9 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 		if(isConnectedWithoutToast()) {
             connectButton.setVisibility(View.GONE);
             disconnectButton.setVisibility(View.VISIBLE);
-            
-//            if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
-//            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
-//            } 
 		} else {
 			connectButton.setVisibility(View.VISIBLE);
             disconnectButton.setVisibility(View.GONE);
-            
-//            if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
-//            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
-//            
-//            } else if (mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof ScheduleRobotMovementsFragment) {
-//            	((ScheduleRobotMovementsFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
-//            }
 		}
 		
 	}
@@ -174,7 +164,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 	/**
 	 * Put the text in the title bar in the bottom of the screen
 	 * 
-	 * @param textId the text to put in the bottom title bar
+	 * @param text the text to put in the bottom title bar
 	 */
     public void setFragmentTitle(String text) {
     	mBottomTitleBar.setText(text);
@@ -192,7 +182,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
       switch (connectionState) {
       
         case AndroidinoConstants.STATE_CONNECTED:
-            setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+            setStatus(R.string.title_connected_to);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
             	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
             } 
@@ -207,7 +197,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
             
         case AndroidinoConstants.STATE_LISTEN:
         case AndroidinoConstants.STATE_NONE:
-            setStatus(R.string.title_not_connected);
+            setStatus(R.string.not_connected);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
             	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
             
@@ -244,7 +234,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     
     
     /**
-     * Callback for the connect and disconnet buttons
+     * Callback for the connect and disconnect buttons
      * @param v
      */
     public void onChangeConnection(View v) {
@@ -421,7 +411,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 	 * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth 
 	 * connection. 
 	 * 
-	 * @param The message to be send to the Arduino
+	 * @param message to be send to the Arduino
 	 */
 	@Override
 	public void onSendMessage(String message) {
@@ -446,6 +436,9 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 
 		} else if (botType == robotType.RHINO) {	
 			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.RHINO.ordinal());
+
+		} else if (botType == robotType.CRAB) {
+			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.CRAB.ordinal());
 
 		} else if (botType == robotType.GENERIC_ROBOT) {
 			bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.GENERIC_ROBOT.ordinal());
@@ -507,6 +500,10 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
 			robotFragment = new RhinoFragment();
 
+		}else if (botType == robotType.CRAB) {
+			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_crab_action_bar_icon, 0, 0, 0);
+			robotFragment = new CrabFragment();
+
 		} else if (botType == robotType.GENERIC_ROBOT) {
 			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);
 			robotFragment = new GenericRobotFragment();
@@ -552,7 +549,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 	/**
 	 * Callback from the RobotFragment or SelectBotFragment for changing the bottom title bar.
 	 * 
-	 * @param titleId The text resource id
+	 * @param title The text resource id
 	 */
 	@Override
 	public void onSetFragmentTitle(String title) {

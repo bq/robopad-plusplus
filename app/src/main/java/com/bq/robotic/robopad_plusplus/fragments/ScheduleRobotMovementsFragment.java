@@ -53,7 +53,6 @@ import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 
 
@@ -73,7 +72,6 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	private DraggableGridView gridView;
 	private robotType botType;
 	private ArrayList<String> scheduledControls = new ArrayList<String>();
-	private ScheduledThreadPoolExecutor exec;
 	private int currentControlIndex = -1;
 	private boolean sendStopCommand = false;
 
@@ -117,11 +115,15 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		    	setBeetleUIComponents();
 		    	
 		    } else if (robotTypeIndex == robotType.RHINO.ordinal()) {
-		    	botType = robotType.RHINO;
-		    	botTypeString = getString(R.string.rhino);
-		    	
-		    	setRhinoUIComponents();
-		    
+                botType = robotType.RHINO;
+                botTypeString = getString(R.string.rhino);
+
+                setRhinoUIComponents();
+
+            } else if (robotTypeIndex == robotType.CRAB.ordinal()) {
+                botType = robotType.CRAB;
+                botTypeString = getString(R.string.crab);
+
 		    } else if (robotTypeIndex == robotType.GENERIC_ROBOT.ordinal()) {
 		    	botType = robotType.GENERIC_ROBOT;
 		    	botTypeString = getString(R.string.generic_robot);
@@ -372,11 +374,7 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 					
 					disableControllerButtons();
 					
-					exec = new ScheduledThreadPoolExecutor(1);
-					//the delay between the termination of one execution and the commencement of the next
-//					long delay = RoboPadConstants.DELAY_BETWEEN_SCHEDULED_COMMANDS;
 					currentControlIndex = 0;
-//					exec.scheduleWithFixedDelay(new MySendControlsToArduinoTask(), 0, delay, TimeUnit.MILLISECONDS);
                     (new MySendControlsToArduinoTask()).run();
 					break;
 			

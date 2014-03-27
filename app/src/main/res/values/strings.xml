@@ -6,6 +6,7 @@
     <string name="pollywog">Pollywog</string>
     <string name="beetle">Beetle</string>
     <string name="rhino">Rhino</string>
+    <string name="crab">Crab</string>
     <string name="generic_robot">Generic robot</string>
     
     <string name="select_robot">SELECT ROBOT</string>
@@ -18,12 +19,22 @@
     <string name="full_open_claw">Open full claw</string>
     <string name="open_claw">Open claw</string>
     <string name="close_claw">Close claw</string> 
-    <string name="full_open_claw_little">C++</string>
-    <string name="open_claw_little">C+</string> 
-    <string name="close_claw_little">C-</string>    
-    
+
     <!-- Rhino robot -->
     <string name="charge">Charge</string>
+    
+    <!-- Crab robot -->
+    <string name="step_size">Size of steps </string>
+    <string name="left_amplitude">Left amplitude: </string>
+    <string name="right_amplitude">Right amplitude: </string>
+    <string name="speed">Speed</string>
+    <string name="period">Period:</string>
+    <string name="legs_coordination">"Coordination\nbetween legs"</string>
+    <string name="phase_difference">Phase difference: </string>
+    <string name="reset">Reset</string>
+    <string name="default_amplitude">20</string>
+    <string name="default_period">2000</string>
+    <string name="default_phase">-90</string>
     
     <!-- DragDropGrid -->
     <string name="remove">Remove</string>
@@ -34,5 +45,9 @@
     <string name="save">Save</string>
     <string name="load">Load</string>
     <string name="settings">Settings</string>
+    
+    <!-- Error -->
+    <string name="max_exceeded_error">"The maximum value is "</string>
+    <string name="min_exceeded_error">"The minimum value is "</string>
 
 </resources>

@@ -34,7 +34,7 @@ public class RoboPadConstants {
     public static final long CLICK_SLEEP_TIME = 150;
     public static final long DELAY_BETWEEN_SCHEDULED_COMMANDS = 800;
     
-    public static enum robotType {POLLYWOG, BEETLE, RHINO, GENERIC_ROBOT};
+    public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT};
     
     public static final String COMMAND_DIVISOR = "_";
     
@@ -74,6 +74,25 @@ public class RoboPadConstants {
      * Rhino Robot
      */
     public static String CHARGE_COMMAND = "C";
+
+    /**
+     * Crab Robot
+     */
+    public static int MIN_AMPLITUDE = 0;
+    public static int MAX_AMPLITUDE = 40;
+    public static int DEFAULT_AMPLITUDE = 20;
+    public static int MIN_PERIOD = 1000;
+    public static int MAX_PERIOD = 8000;
+    public static int DEFAULT_PERIOD = 2000;
+    public static int MIN_PHASE = -90;
+    public static int MAX_PHASE = 90;
+    public static int DEFAULT_PHASE = -90;
+    public static String LEFT_AMPLITUDE_COMMAND = "AL";
+    public static String RIGHT_AMPLITUDE_COMMAND = "AR";
+    public static String PERIOD_COMMAND = "T";
+    public static String PHASE_COMMAND = "F";
+    public static String RESET_COMMAND = "I";
+
     
     /**
      * Generic Robot

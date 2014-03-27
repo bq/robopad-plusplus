@@ -96,7 +96,7 @@ public class SelectBotFragment extends Fragment {
 	/**
 	 * Send the message to the Arduino board depending on the button pressed
 	 * 
-	 * @param viewId The id of the view pressed
+	 * @param containerLayout The id of the view pressed
 	 */
 	protected void setUiListeners(View containerLayout) {
 
@@ -108,6 +108,9 @@ public class SelectBotFragment extends Fragment {
 
 		Button rhinoButton = (Button) containerLayout.findViewById(R.id.rhino_button);
 		rhinoButton.setOnClickListener(onButtonClick);
+
+        Button crabButton = (Button) containerLayout.findViewById(R.id.crab_button);
+        crabButton.setOnClickListener(onButtonClick);
 
 		Button genericRobotButton = (Button) containerLayout.findViewById(R.id.generic_button);
 		genericRobotButton.setOnClickListener(onButtonClick);
@@ -136,9 +139,14 @@ public class SelectBotFragment extends Fragment {
 			case R.id.beetle_button:
 				listener.onRobotSelected(RoboPadConstants.robotType.BEETLE);      				
 				break;
+
 			case R.id.rhino_button:
 				listener.onRobotSelected(RoboPadConstants.robotType.RHINO);    				
 				break;
+
+            case R.id.crab_button:
+                listener.onRobotSelected(RoboPadConstants.robotType.CRAB);
+                break;
 
 			case R.id.generic_button:
 				listener.onRobotSelected(RoboPadConstants.robotType.GENERIC_ROBOT);      				
