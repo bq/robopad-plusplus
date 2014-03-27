@@ -19,6 +19,8 @@ Estos 6 botones mandan el siguiente carácter a la placa Arduino:
 | Botón 5 - '5'
 | Botón 6 - '6'
 
+La diferencia con la aplicación RoboPad es que ¡ahora tienes la nueva funcionalidad de programar de los movimientos del robot! Puedes añadir los movimientos que quieres que el robot realice, reorganizarlos y eliminarlos uno a uno o todas a la vez. Cuando estés listo, puedes enviar los movimientos al robot y ver cómo los realiza.
+
 
 Características
 ===============
@@ -26,6 +28,8 @@ Características
 #. Controla robots que utilicen una placa Arduino a través del Bluetooth de tu dispositivo móvil
 
 #. 6 botones en el tipo de robot genérico para usar en tus propios robots
+   
+#. Programa los movimientos de tu robot y mira cómo los realiza
 
 #. Mandos de control específicos para los printbots Renacuajo, Escarabajo y Rhino de Bq.
 

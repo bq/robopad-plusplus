@@ -1,8 +1,8 @@
-=======
-RoboPad
-=======
+============================
+RoboPad_plusplus / RoboPad++
+============================
 
-RoboPad is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by a Arduino board with a Bluetooth module.
+RoboPad++ is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by an Arduino board with a Bluetooth module.
 
 Right now, the type of robot that you can choose are the printbots designed in the Bq company or whichever robot with an Arduino board. 
 
@@ -19,6 +19,8 @@ The buttons send the following character to the Arduino board:
 | Button 5 - '5'
 | Button 6 - '6'
 
+The difference with the RoboPad app is that now you have the new functionality of scheduling the robot's movements! You can add the movements that you want for your robot, rearrange them and remove them one by one or all at once. When you are ready, you can send the movements to your robot and see how it moves as you chose. 
+
 
 Features
 ========
@@ -26,6 +28,8 @@ Features
 #. Control Arduino robots via Bluetooth
 
 #. 6 buttons in the generic robot mode for use as you want in your Arduino code
+  
+#. Schedule the movements of your robot and see how it moves according to them
 
 #. Specific controls for the Pollywog, Beetle and Rhino printbots of Bq
 
