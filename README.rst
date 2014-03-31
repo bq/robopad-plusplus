@@ -61,9 +61,9 @@ Installation
 	sudo apt-get upgrade
 	sudo apt-get install ia32-libs-multiarch 
 
-#. Clone the RoboPad repository::
+#. Clone the RoboPad-plusplus repository::
 	
-	git clone https://github.com/bq/robopad_plusplus.git
+	git clone https://github.com/bq/robopad-plusplus.git
 
 #. In Android Studio go to ``File`` > ``Open`` and select the  previous RoboPad cloned project.
 
