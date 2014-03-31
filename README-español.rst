@@ -1,8 +1,8 @@
-=======
-RoboPad
-=======
+============================
+RoboPad-plusplus / RoboPad++
+============================
 
-RoboPad es una aplicación Android para controlar robots a través del Bluetooth del dispositivo móvil. Puedes elegir distintos tipos de robots con sus mandos de control específicos de cada uno. Todos los robots deben utilizar una placa Arduino y un módulo Bluetooth.
+RoboPad++ es una aplicación Android para controlar robots a través del Bluetooth del dispositivo móvil. Puedes elegir distintos tipos de robots con sus mandos de control específicos de cada uno. Todos los robots deben utilizar una placa Arduino y un módulo Bluetooth.
 
 Los tipos de robots que se pueden seleccionar hoy en día son aquellos diseñados por la empresa Bq, además de cualquier otro que sea controlado por una placa Arduino.
 
@@ -37,19 +37,19 @@ Características
 Instalación
 ===========
 
-#. RoboPad_plusplus depende de las bibliotecas droid2ino y drag_drop_grid. Clona los repositorios de ambas bibliotecas::
+#. RoboPad++ depende de las bibliotecas droid2ino y drag-drop-grid. Clona los repositorios de ambas bibliotecas::
 
     git clone https://github.com/bq/droid2ino.git
-    git clone https://github.com/bq/drap_drop_grid.git
+    git clone https://github.com/bq/drap-drop-grid.git
 
 #. Instala la biblioteca droid2ino en tu repositorio local::
   
     cd droid2ino/droid2ino
     gradle install
 
-#. Instala la biblioteca drag_drop_grid en tu repositorio local::
+#. Instala la biblioteca drag-drop-grid en tu repositorio local::
    
-    cd drag_drop_grid/drag_drop_grid
+    cd drag-drop-grid/drag-drop-grid
     gradle publishToMavenLocal
 
 #. Instala `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ y `Gradle <http://www.gradle.org/downloads>`_.
@@ -62,7 +62,7 @@ Instalación
 
 #. Clona el repositorio RoboPad::
 	
-	git clone https://github.com/bq/robopad.git
+	git clone https://github.com/bq/robopad_plusplus.git
 
 #. En Android Studio, ve a ``File`` > ``Open`` y selecciona el proyecto RoboPad clonado previamente.
 
@@ -75,6 +75,11 @@ Requisitos
 - `Java JDK <http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html>`_ 
 
 - `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ 
+
+- `Maven <http://maven.apache.org/download.cgi>`_.  Si estás en Ubuntu::
+    
+    sudo apt-get update
+    sudo apt-get install maven
 
 - `Gradle <http://www.gradle.org/downloads>`_ recommended version 1.10
   
@@ -102,4 +107,4 @@ Limitaciones
 Licencia
 ========
 
-RoboPad es distribuido en términos de la licencia GPL. Consulte la web http://www.gnu.org/licenses/ para más detalles.
+RoboPad-plusplus es distribuido en términos de la licencia GPL. Consulte la web http://www.gnu.org/licenses/ para más detalles.

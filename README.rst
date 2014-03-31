@@ -1,5 +1,5 @@
 ============================
-RoboPad_plusplus / RoboPad++
+RoboPad-plusplus / RoboPad++
 ============================
 
 RoboPad++ is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by an Arduino board with a Bluetooth module.
@@ -37,19 +37,19 @@ Features
 Installation
 ============
 
-#. RoboPad_plusplus depends on droid2ino and drag_drop_grid library. Clone both repositories::
+#. RoboPad++ depends on droid2ino and drag-drop-grid libraries. Clone both repositories::
 
     git clone https://github.com/bq/droid2ino.git
-    git clone https://github.com/bq/drap_drop_grid.git
+    git clone https://github.com/bq/drap-drop-grid.git
 
 #. Install the droid2ino library in your local repository::
   
     cd droid2ino/droid2ino
     gradle install
 
-#. Install the drag_drop_grid library in your local repository::
+#. Install the drag-drop-grid library in your local repository::
    
-	cd drag_drop_grid/drag_drop_grid
+	cd drag-drop-grid/drag-drop-grid
 	gradle publishToMavenLocal
 
 
@@ -63,7 +63,7 @@ Installation
 
 #. Clone the RoboPad repository::
 	
-	git clone https://github.com/bq/robopad.git
+	git clone https://github.com/bq/robopad_plusplus.git
 
 #. In Android Studio go to ``File`` > ``Open`` and select the  previous RoboPad cloned project.
 
@@ -76,6 +76,11 @@ Requirements
 - `Java JDK <http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html>`_ 
 
 - `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ 
+
+- `Maven <http://maven.apache.org/download.cgi>`_.  If you use Ubuntu::
+    
+    sudo apt-get update
+    sudo apt-get install maven
 
 - `Gradle <http://www.gradle.org/downloads>`_ recommended version 1.10
   
@@ -103,4 +108,4 @@ Limitations
 License
 =======
 
-RoboPad is distributed in terms of GPL license. See http://www.gnu.org/licenses/ for more details.
+RoboPad-plusplus is distributed in terms of GPL license. See http://www.gnu.org/licenses/ for more details.
