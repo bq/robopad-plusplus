@@ -1,116 +1,207 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-    <ImageButton
-        android:id="@+id/menu_button"
-        android:layout_width="@dimen/scheduler_control_height"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/green_button_btn_default_holo_dark"
-        android:src="@drawable/abc_ic_menu_moreoverflow_normal_holo_dark"
-        android:scaleType="centerCrop" />
-    
-    <ImageButton
-        android:id="@+id/play_command_button"
-        android:layout_width="@dimen/scheduler_control_height"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:background="@drawable/green_button_btn_default_holo_dark"
-        android:src="@android:drawable/ic_menu_send"
-        android:layout_toLeftOf="@id/menu_button"
-        android:scaleType="centerCrop" />
-    
-    <ImageButton
-        android:id="@+id/remove_all_button"
-        android:layout_width="@dimen/scheduler_control_height"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:background="@drawable/green_button_btn_default_holo_dark"
-        android:src="@android:drawable/ic_menu_delete"
-        android:layout_toLeftOf="@id/play_command_button"
-        android:scaleType="centerCrop" />
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_marginTop="40dp">
 
-    <HorizontalScrollView
-        android:id="@+id/controls_layout_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:layout_marginRight="3dp"
-        android:layout_toLeftOf="@id/remove_all_button"
-        android:background="@color/holo_green_dark" >
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/type_of_movements_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:orientation="vertical"
+        app:columnCount="2"
+        android:background="@android:color/transparent">
 
-        <LinearLayout
-            android:id="@+id/controls_layout"
+        <ImageButton
+            android:id="@+id/up_button"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:padding="@dimen/button_press_medium_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/schedule_up_control_selector" />
 
-            <ImageButton
-                android:id="@+id/up_button"
-                android:layout_width="@dimen/scheduler_control_height"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_green_selector"
-                android:scaleType="centerCrop"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/schedule_up_control_selector" />
+        <ImageButton
+            android:id="@+id/down_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:scaleType="centerCrop"
+            android:padding="@dimen/button_press_medium_padding"
+            android:src="@drawable/schedule_down_control_selector" />
 
-            <ImageButton
-                android:id="@+id/down_button"
-                android:layout_width="@dimen/scheduler_control_height"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_green_selector"
-                android:scaleType="centerCrop"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/schedule_down_control_selector" />
+        <ImageButton
+            android:id="@+id/left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:scaleType="centerCrop"
+            android:padding="@dimen/button_press_medium_padding"
+            android:src="@drawable/schedule_left_control_selector" />
 
-            <ImageButton
-                android:id="@+id/left_button"
-                android:layout_width="@dimen/scheduler_control_height"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_green_selector"
-                android:scaleType="centerCrop"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/schedule_left_control_selector" />
+        <ImageButton
+            android:id="@+id/right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:scaleType="centerCrop"
+            android:padding="@dimen/button_press_medium_padding"
+            android:src="@drawable/schedule_right_control_selector" />
 
-            <ImageButton
-                android:id="@+id/right_button"
-                android:layout_width="@dimen/scheduler_control_height"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_green_selector"
-                android:scaleType="centerCrop"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/schedule_right_control_selector" />
+        <ImageButton
+            android:id="@+id/stop_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red_octagon_btn_transparent_selector"
+            android:scaleType="centerCrop"
+            android:padding="@dimen/button_press_medium_padding"
+            android:src="@drawable/schedule_stop_control_selector" />
 
-            <ImageButton
-                android:id="@+id/stop_button"
-                android:layout_width="@dimen/scheduler_control_height"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_green_selector"
-                android:scaleType="centerCrop"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/schedule_stop_control_selector" />
-        </LinearLayout>
-    </HorizontalScrollView>
+        <!--<HorizontalScrollView-->
+            <!--android:id="@+id/controls_layout_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/scheduler_control_height"-->
+            <!--android:layout_marginRight="3dp"-->
+            <!--android:layout_toLeftOf="@id/remove_all_button"-->
+            <!--android:background="@color/holo_green_dark" >-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/controls_layout"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal" >-->
+<!---->
+                <!--<ImageButton-->
+                    <!--android:id="@+id/up_button"-->
+                    <!--android:layout_width="@dimen/scheduler_control_height"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/btn_green_selector"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:src="@drawable/schedule_up_control_selector" />-->
+
+                <!--<ImageButton-->
+                    <!--android:id="@+id/down_button"-->
+                    <!--android:layout_width="@dimen/scheduler_control_height"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/btn_green_selector"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:src="@drawable/schedule_down_control_selector" />-->
+
+                <!--<ImageButton-->
+                    <!--android:id="@+id/left_button"-->
+                    <!--android:layout_width="@dimen/scheduler_control_height"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/btn_green_selector"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:src="@drawable/schedule_left_control_selector" />-->
+
+                <!--<ImageButton-->
+                    <!--android:id="@+id/right_button"-->
+                    <!--android:layout_width="@dimen/scheduler_control_height"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/btn_green_selector"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:src="@drawable/schedule_right_control_selector" />-->
+
+                <!--<ImageButton-->
+                    <!--android:id="@+id/stop_button"-->
+                    <!--android:layout_width="@dimen/scheduler_control_height"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/btn_green_selector"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:src="@drawable/schedule_stop_control_selector" />-->
+            <!--</LinearLayout>-->
+        <!--</HorizontalScrollView>-->
+
+     </android.support.v7.widget.GridLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_options_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/type_of_movements_container"
+        android:background="@color/scheduler_blue_light">
+
+        <ImageButton
+            android:id="@+id/remove_all_button"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
+            android:layout_marginLeft="5dp"
+            android:padding="@dimen/button_press_medium_padding"
+            android:background="@drawable/dark_blue_circle_btn_transparent_selector"
+            android:src="@drawable/ic_trash"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@+id/send_movements_button"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
+            android:padding="@dimen/button_press_medium_padding"
+            android:background="@drawable/dark_blue_circle_btn_transparent_selector"
+            android:src="@drawable/ic_send"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@+id/load_movements_button"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
+            android:padding="@dimen/button_press_medium_padding"
+            android:background="@drawable/dark_blue_circle_btn_transparent_selector"
+            android:src="@drawable/ic_load"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@+id/save_movements_button"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
+            android:padding="@dimen/button_press_medium_padding"
+            android:background="@drawable/dark_blue_circle_btn_transparent_selector"
+            android:src="@drawable/ic_save"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@+id/setting_button"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
+            android:padding="@dimen/button_press_medium_padding"
+            android:background="@drawable/dark_blue_circle_btn_transparent_selector"
+            android:src="@drawable/ic_settings"
+            android:scaleType="centerCrop" />
+
+    </LinearLayout>
 
     <com.bq.robotic.drag_drop_grid.DraggableGridView
         android:id="@+id/grid_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/controls_layout_view"
+        android:layout_toRightOf="@id/type_of_movements_container"
+        android:layout_below="@id/menu_options_container"
         android:background="@android:color/white" />
 
     <com.bq.robotic.drag_drop_grid.DeleteDropZoneView
         android:id="@+id/delete_view"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="55dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" 
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
         android:visibility="invisible"
-        android:text="@string/remove"/>
+        />
     
     <ProgressBar
         android:id="@+id/progress_bar"

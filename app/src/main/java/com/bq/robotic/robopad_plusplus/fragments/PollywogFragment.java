@@ -25,16 +25,19 @@ package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RobotConnectionsPopupWindow;
 
 
 /**
@@ -49,39 +52,37 @@ public class PollywogFragment extends RobotFragment {
 	// Debugging
 	private static final String LOG_TAG = "PollywogFragment";
 
+    private ImageButton pinExplanationButton;
+//    private View layout;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater,
-			ViewGroup container,
-			Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		View layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
+        View layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.pollywog);
-		}
+        setUiListeners(layout);
 
-		setUiListeners(layout);
+        return layout;
 
-		return layout;
-
-	}
+    }
 
 
-	/**
-	 * Set the listeners to the views that need them. It must be done here in the fragment in order
-	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
-	 * callbacks of all the possible fragments
-	 * 
-	 * @param The view used as the main container for this fragment
-	 */
+    /**
+     * Set the listeners to the views that need them. It must be done here in the fragment in order
+     * to get the callback here and not in the FragmentActivity, that would be a mess with all the
+     * callbacks of all the possible fragments
+     *
+     * @param containerLayout The view used as the main container for this fragment
+     */
 	@Override
 	protected void setUiListeners(View containerLayout) {
 
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
-		
-		Button scheduleButton = (Button) containerLayout.findViewById(R.id.schedule_button);
+
+        ImageButton scheduleButton = (ImageButton) containerLayout.findViewById(R.id.schedule_button);
 		scheduleButton.setOnClickListener(onButtonClick);
 
 		ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
@@ -95,6 +96,9 @@ public class PollywogFragment extends RobotFragment {
 
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
+
+        pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
+        pinExplanationButton.setOnClickListener(onButtonClick);
 	}
 
 
@@ -155,6 +159,18 @@ public class PollywogFragment extends RobotFragment {
 				case R.id.stop_button:
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;
+
+                case R.id.bot_icon:
+
+                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
+                            getActivity())).getPopupWindow();
+
+                    // Displaying the popup at the specified location, + offsets.
+                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
+                            pinExplanationButton.getPaddingTop());
+
+                    break;
 					
 				case R.id.schedule_button:
 					listener.onScheduleButtonClicked(robotType.POLLYWOG);    				
@@ -165,5 +181,16 @@ public class PollywogFragment extends RobotFragment {
 	};
 
 
+    @Override
+    public void onBluetoothConnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_connected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
+    }
+
+    @Override
+    public void onBluetoothDisconnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_disconnected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_off);
+    }
 
 }

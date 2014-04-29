@@ -1,18 +1,53 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <!--
+    Base application theme, dependent on API level. This theme is replaced
+    by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+-->
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="windowActionBar">false</item>
+
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/background_gradient</item>
+        <item name="android:colorBackgroundCacheHint">#00000000</item>
+    </style>
+
+    <!-- popup anim -->
+    <style name="popup_animation" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/popup_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_out</item>
+    </style>
 
     <style name="green_button">
-        <item name="android:background">@drawable/btn_navigation_dark_green_selector</item>
+        <item name="android:background">@drawable/green_button_btn_default_holo_light</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:onClick">onChangeConnection</item>
     </style>
-    
-    
-    <style name="green_button.connect_button">  
+
+    <style name="green_button_large" parent="green_button">
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+    </style>
+
+    <style name="green_button_large.connect_button">
+
         <item name="android:text">@string/connect</item>
     </style>
-    
-    <style name="green_button.disconnect_button">
+
+    <style name="green_button_large.disconnect_button">
         <item name="android:text">@string/disconnect</item>
         <item name="android:visibility">gone</item>
     </style>

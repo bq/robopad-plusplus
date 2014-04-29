@@ -24,18 +24,23 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.Claw_next_state;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.Claw_next_state;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RobotConnectionsPopupWindow;
 
 /**
  * Fragment of the game pad controller for the Beetle robot.
@@ -51,9 +56,12 @@ public class BeetleFragment extends RobotFragment {
 
 	private int mClawPosition; // Current position of the claw 
 
-	private Button mFullOpenClawButton;
-	private Button mOpenStepClawButton;
-	private Button mCloseStepClawButton;
+    private ImageButton mFullOpenClawButton;
+    private ImageButton mOpenStepClawButton;
+    private ImageButton mCloseStepClawButton;
+    private Handler sendClawValuesHandler;
+    private boolean clawButtonUp = false;
+    private ImageButton pinExplanationButton;
 
 
 	@Override
@@ -63,14 +71,14 @@ public class BeetleFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_beetle, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.beetle);
-		}
-		
-		// Put the servo of the claws in a initial position 
-		mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
+        ((ImageView) layout.findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_off);
 
-		setUiListeners(layout);
+        // Put the servo of the claws in a initial position
+        mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50)
+
+        setUiListeners(layout);
+
+        sendClawValuesHandler = new Handler();
 
 		return layout;
 
@@ -89,20 +97,20 @@ public class BeetleFragment extends RobotFragment {
 
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
-		
-		Button scheduleButton = (Button) containerLayout.findViewById(R.id.schedule_button);
+
+        ImageButton scheduleButton = (ImageButton) containerLayout.findViewById(R.id.schedule_button);
 		scheduleButton.setOnClickListener(onButtonClick);
 
-		mFullOpenClawButton = (Button) containerLayout.findViewById(R.id.full_open_claw_button);
-		mFullOpenClawButton.setOnClickListener(onButtonClick);
+        mFullOpenClawButton = (ImageButton) containerLayout.findViewById(R.id.full_open_claw_button);
+        mFullOpenClawButton.setOnClickListener(onButtonClick);
 
-		mOpenStepClawButton = (Button) containerLayout.findViewById(R.id.open_claw_button);
-		mOpenStepClawButton.setOnClickListener(onButtonClick);
+        mOpenStepClawButton = (ImageButton) containerLayout.findViewById(R.id.open_claw_button);
+        mOpenStepClawButton.setOnTouchListener(clawOnTouchListener);
 
-		mCloseStepClawButton = (Button) containerLayout.findViewById(R.id.close_claw_button);
-		mCloseStepClawButton.setOnClickListener(onButtonClick);
+        mCloseStepClawButton = (ImageButton) containerLayout.findViewById(R.id.close_claw_button);
+        mCloseStepClawButton.setOnTouchListener(clawOnTouchListener);
 
-		ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
+        ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
 		upButton.setOnTouchListener(buttonOnTouchListener);
 
 		ImageButton downButton = (ImageButton) containerLayout.findViewById(R.id.down_button);
@@ -113,10 +121,27 @@ public class BeetleFragment extends RobotFragment {
 
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
+
+        pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
+        pinExplanationButton.setOnClickListener(onButtonClick);
 	}
 
 
-	/**
+    // FIXME: change the background image for the beetle
+    @Override
+    public void onBluetoothConnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_connected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_on);
+    }
+
+    @Override
+    public void onBluetoothDisconnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_disconnected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_off);
+    }
+
+
+    /**
 	 * Send the message to the Arduino board depending on the button pressed
 	 * 
 	 * @param viewId The id of the view pressed
@@ -173,30 +198,25 @@ public class BeetleFragment extends RobotFragment {
 				case R.id.stop_button:
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;
-	
-				case R.id.full_open_claw_button: 
-					if(listener != null && listener.onCheckIsConnected()) {
-						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPostion(Claw_next_state.FULL_OPEN) 
-								+ RoboPadConstants.COMMAND_DIVISOR);
-					}
-					break;
-	
-				case R.id.open_claw_button:  
-					if(listener != null && listener.onCheckIsConnected()) {
-						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPostion(Claw_next_state.OPEN_STEP)
-								+ RoboPadConstants.COMMAND_DIVISOR);
-					}
-					break;
-	
-				case R.id.close_claw_button:
-					if(listener != null && listener.onCheckIsConnected()) {
-						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPostion(Claw_next_state.CLOSE_STEP)
-								+ RoboPadConstants.COMMAND_DIVISOR);
-					}
-					break;	
+
+                case R.id.full_open_claw_button:
+                    if(listener.onCheckIsConnected()) {
+                        listener.onSendMessage(RoboPadConstants.CLAW_COMMAND
+                                + getNextClawPosition(Claw_next_state.FULL_OPEN));
+                    }
+                    break;
+
+                case R.id.bot_icon:
+
+                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
+                            getActivity())).getPopupWindow();
+
+                    // Displaying the popup at the specified location, + offsets.
+                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
+                            pinExplanationButton.getPaddingTop());
+
+                    break;
 					
 				case R.id.schedule_button:
 					listener.onScheduleButtonClicked(robotType.BEETLE);    				
@@ -208,55 +228,139 @@ public class BeetleFragment extends RobotFragment {
 	};
 
 
-	/**
-	 * Get the next position for the claw of the beetle robot
-	 * 
-	 * @param nextState The next state depending on the button that was pressed
-	 * @return The message for controlling the position of the servo of the claws
-	 */
-	private String getNextClawPostion(Claw_next_state nextState) {
+    /**
+     * Listener for the touch events. When action_down, the user is pressing the button
+     * so we send the message of the claw value to the arduino, and when action_up it stops sending it
+     */
+    protected View.OnTouchListener clawOnTouchListener = new View.OnTouchListener() {
 
-		// Show buttons enabled or disabled if the claw gets to max or min position
-		if(mClawPosition == RoboPadConstants.MAX_OPEN_CLAW_POS 
-				&& nextState == Claw_next_state.CLOSE_STEP) {
-			
-			mOpenStepClawButton.setEnabled(true);
-			mFullOpenClawButton.setEnabled(true);
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
 
-		} else if(mClawPosition == RoboPadConstants.MIN_CLOSE_CLAW_POS 
-				&& (nextState == Claw_next_state.OPEN_STEP 
-				|| nextState == Claw_next_state.FULL_OPEN) ) {
-			
-			mCloseStepClawButton.setEnabled(true);
-		}
 
-		if (nextState == Claw_next_state.OPEN_STEP) {
-			mClawPosition -= RoboPadConstants.CLAW_STEP;
+            if(listener == null) {
+                return false;
+            }
 
-		} else if (nextState == Claw_next_state.CLOSE_STEP) {
-			mClawPosition += RoboPadConstants.CLAW_STEP;
+            switch (event.getAction()) {
 
-		} else if (nextState == Claw_next_state.FULL_OPEN) {
-			mClawPosition = RoboPadConstants.MAX_OPEN_CLAW_POS;
+                case MotionEvent.ACTION_DOWN:
 
-		}
+                    if(listener.onCheckIsConnected()) {
+                        clawButtonUp = false;
+                        (new MySendClawValueToArduinoTask(v.getId())).run();
+                    }
+                    break;
 
-		// Don't exceed the limits of the claw
-		if (mClawPosition <= RoboPadConstants.MAX_OPEN_CLAW_POS) {
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    clawButtonUp = true;
+                    break;
 
-			mClawPosition = RoboPadConstants.MAX_OPEN_CLAW_POS;	
-			mOpenStepClawButton.setEnabled(false);
-			mFullOpenClawButton.setEnabled(false);
+            }
 
-		} else if (mClawPosition >= RoboPadConstants.MIN_CLOSE_CLAW_POS) {
+            return false;
+        }
 
-			mClawPosition = RoboPadConstants.MIN_CLOSE_CLAW_POS; 
-			mCloseStepClawButton.setEnabled(false);
-			
-		}
+    };
 
-		return String.valueOf(mClawPosition);
 
-	}
+    /**
+     * Get the next position for the claw of the beetle robot
+     *
+     * @param nextState The next state depending on the button that was pressed
+     * @return The message for controlling the position of the servo of the claws
+     */
+    private String getNextClawPosition(Claw_next_state nextState) {
+
+        // Show buttons enabled or disabled if the claw gets to max or min position
+        if(mClawPosition == RoboPadConstants.MAX_OPEN_CLAW_POS
+                && nextState == Claw_next_state.CLOSE_STEP) {
+
+            mOpenStepClawButton.setEnabled(true);
+            mFullOpenClawButton.setEnabled(true);
+
+        } else if(mClawPosition == RoboPadConstants.MIN_CLOSE_CLAW_POS
+                && (nextState == Claw_next_state.OPEN_STEP
+                || nextState == Claw_next_state.FULL_OPEN) ) {
+
+            mCloseStepClawButton.setEnabled(true);
+        }
+
+        if (nextState == Claw_next_state.OPEN_STEP) {
+            mClawPosition -= RoboPadConstants.CLAW_STEP;
+
+        } else if (nextState == Claw_next_state.CLOSE_STEP) {
+            mClawPosition += RoboPadConstants.CLAW_STEP;
+
+        } else if (nextState == Claw_next_state.FULL_OPEN) {
+            mClawPosition = RoboPadConstants.MAX_OPEN_CLAW_POS;
+
+        }
+
+        // Don't exceed the limits of the claw
+        if (mClawPosition <= RoboPadConstants.MAX_OPEN_CLAW_POS) {
+
+            mClawPosition = RoboPadConstants.MAX_OPEN_CLAW_POS;
+            mOpenStepClawButton.setEnabled(false);
+            mFullOpenClawButton.setEnabled(false);
+            clawButtonUp = true;
+
+        } else if (mClawPosition >= RoboPadConstants.MIN_CLOSE_CLAW_POS) {
+
+            mClawPosition = RoboPadConstants.MIN_CLOSE_CLAW_POS;
+            mCloseStepClawButton.setEnabled(false);
+            clawButtonUp = true;
+
+        }
+
+        return String.valueOf(mClawPosition);
+
+    }
+
+
+    /**************************************************************************************
+     *************************   MySendClawValueToArduinoTask   ***************************
+     **************************************************************************************/
+
+    class MySendClawValueToArduinoTask implements Runnable {
+
+        private int viewId;
+
+        public MySendClawValueToArduinoTask(int viewId) {
+            this.viewId = viewId;
+        }
+
+        @Override
+        public void run() {
+
+            if(clawButtonUp) {
+                sendClawValuesHandler.removeCallbacks(this);
+
+            } else {
+
+                String message = null;
+
+                switch (viewId) {
+
+                    case R.id.open_claw_button:
+                        message = RoboPadConstants.CLAW_COMMAND
+                                + getNextClawPosition(Claw_next_state.OPEN_STEP);
+                        break;
+
+                    case R.id.close_claw_button:
+                        message = RoboPadConstants.CLAW_COMMAND
+                                + getNextClawPosition(Claw_next_state.CLOSE_STEP);
+                        break;
+                }
+
+                if (message != null) {
+                    listener.onSendMessage(message);
+                    sendClawValuesHandler.postDelayed(this, RoboPadConstants.CLICK_SLEEP_TIME);
+                }
+            }
+        }
+    }
+
 
 }

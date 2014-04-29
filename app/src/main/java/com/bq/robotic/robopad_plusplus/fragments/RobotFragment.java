@@ -2,7 +2,7 @@
 * This file is part of the RoboPad++
 *
 * Copyright (C) 2013 Mundo Reader S.L.
-* 
+*
 * Date: February 2014
 * Author: Estefanía Sarasola Elvira <estefania.sarasola@bq.com>
 *
@@ -31,13 +31,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.listeners.RobotListener;
 
 
 /**
  * Base fragment for all the robot fragments
- * 
+ *
  * @author Estefanía Sarasola Elvira
  *
  */
@@ -65,17 +65,30 @@ public abstract class RobotFragment extends Fragment {
 	 */
 	protected abstract void controlButtonActionDown(int viewId);
 
-	
+
 	/**
 	 * Callback method called from the activity when the Bluetooth change its status to connected
 	 */
 	public void onBluetoothConnected() {}
-	
-	
+
+
 	/**
 	 * Callback method called from the activity when the Bluetooth change its status to disconnected
 	 */
 	public void onBluetoothDisconnected() {}
+
+
+    /**
+     * Set the fragmentActivity listener. Right now it is not necessary because the
+     * fragment activity that contains the fragments is the one that implements the listener
+     * so it is done in the onAttach of RobotFragment. But with this method can be another class
+     * witch implements the listener not the container fragment activity.
+     *
+     * @param listener The RobotListener
+     */
+    public void setRobotListener(RobotListener listener) {
+        this.listener = listener;
+    }
 
 
 	@Override
@@ -127,8 +140,8 @@ public abstract class RobotFragment extends Fragment {
 					mIsConnected = true;
 				}
 
-				mIsClick = false;					
-				sendActionThread = createSendActionThread(view.getId());										
+				mIsClick = false;
+				sendActionThread = createSendActionThread(view.getId());
 				sendActionThread.start();
 
 				break;
@@ -147,7 +160,7 @@ public abstract class RobotFragment extends Fragment {
 
 				break;
 
-			}		
+			}
 
 			return false;
 		}
@@ -158,9 +171,9 @@ public abstract class RobotFragment extends Fragment {
 
 	/**
 	 * Thread to send the command but waits and send the stop command with a 130 delay
-	 * in case it was only a click and the arduino app didn't process the stop command 
+	 * in case it was only a click and the arduino app didn't process the stop command
 	 * because of itself delays
-	 * 
+	 *
 	 * @param actionId the id of the view touched
 	 * @return Thread The thread that send the commands when pressed the corresponding buttons
 	 */

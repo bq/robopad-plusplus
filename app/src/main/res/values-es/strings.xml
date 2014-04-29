@@ -49,4 +49,14 @@
     <string name="max_exceeded_error">"El valor máximo es "</string>
     <string name="min_exceeded_error">"El valor mínimo es "</string>
 
+    <string name="pollywog_pin_explanation">
+        <![CDATA[
+            <h4>Conéctame a los siguientes pines:</h4>
+            <p><strong>- Bluetooth:</strong></p>
+            <p>TXD: pin 0 <br /> RXD: pìn 1 <br /> VCC: VCC <br />GND: GND</p>
+            <p><strong>- Servos:</strong> </p>
+            <p>Rueda izquierda: pin 6 <br /> Rueda derecha: pin 9 </p>
+            ]]>
+    </string>
+
 </resources>

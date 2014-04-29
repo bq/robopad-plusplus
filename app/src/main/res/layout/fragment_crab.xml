@@ -7,180 +7,210 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/amplitude_title"
+    <Button
+        android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/step_size"
-        android:textColor="@color/holo_green_dark"
-        android:textAppearance="@android:style/TextAppearance.Large"/>
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/green_button_btn_default_holo_dark"
+        android:textColor="@android:color/white"
+        android:text="@string/reset" />
 
-    <TextView
-        android:id="@+id/left_amplitude_title"
+    <RelativeLayout
+        android:id="@+id/first_column"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/amplitude_title"
-        android:layout_marginTop="6dp"
-        android:text="@string/left_amplitude"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@id/reset_button">
 
-    <TextView
-        android:id="@+id/left_amplitude_value"
+        <TextView
+            android:id="@+id/amplitude_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="@string/step_size"
+            android:textColor="@color/holo_green_dark"
+            android:textAppearance="@android:style/TextAppearance.Large"/>
+
+        <TextView
+            android:id="@+id/left_amplitude_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amplitude_title"
+            android:layout_marginTop="6dp"
+            android:text="@string/left_amplitude"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+        <TextView
+            android:id="@+id/left_amplitude_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/left_amplitude_title"
+            android:layout_alignBaseline="@id/left_amplitude_title"
+            android:layout_marginLeft="10dp"
+            android:text="@string/default_amplitude"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+        <SeekBar
+            android:id="@+id/left_amplitude"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/left_amplitude_title"
+            android:layout_marginTop="10dp"
+            android:max="40"
+            android:progress="20"/>
+
+        <TextView
+            android:id="@+id/right_amplitude_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/left_amplitude"
+            android:layout_marginTop="15dp"
+            android:text="@string/right_amplitude"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+        <TextView
+            android:id="@+id/right_amplitude_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/right_amplitude_title"
+            android:layout_alignBaseline="@id/right_amplitude_title"
+            android:layout_marginLeft="10dp"
+            android:text="@string/default_amplitude"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+        <SeekBar
+            android:id="@+id/right_amplitude"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/right_amplitude_title"
+            android:layout_marginTop="10dp"
+            android:max="40"
+            android:progress="20"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/left_amplitude_title"
-        android:layout_alignBaseline="@id/left_amplitude_title"
-        android:layout_marginLeft="10dp"
-        android:text="@string/default_amplitude"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_alignParentRight="true">
 
-    <SeekBar
-        android:id="@+id/left_amplitude"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/left_amplitude_title"
-        android:layout_marginTop="10dp"
-        android:max="40"
-        android:progress="20"/>
+        <TextView
+            android:id="@+id/speed_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speed"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/holo_green_dark"
+            android:textAppearance="@android:style/TextAppearance.Large"/>
 
-    <TextView
-        android:id="@+id/right_amplitude_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/left_amplitude"
-        android:layout_marginTop="25dp"
-        android:text="@string/right_amplitude"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
+        <TextView
+            android:id="@+id/period_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/speed_title"
+            android:layout_marginTop="6dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/period"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
 
-    <TextView
-        android:id="@+id/right_amplitude_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/right_amplitude_title"
-        android:layout_alignBaseline="@id/right_amplitude_title"
-        android:layout_marginLeft="10dp"
-        android:text="@string/default_amplitude"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
+        <TextView
+            android:id="@+id/period_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/period_title"
+            android:layout_alignBaseline="@id/period_title"
+            android:layout_marginLeft="10dp"
+            android:text="@string/default_period"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
 
-    <SeekBar
-        android:id="@+id/right_amplitude"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/right_amplitude_title"
-        android:layout_marginTop="10dp"
-        android:max="40"
-        android:progress="20"/>
+        <SeekBar
+            android:id="@+id/period_bar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/period_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:paddingLeft="50dp"
+            android:max="7000"
+            android:progress="1000"/>
 
-    <TextView
-        android:id="@+id/speed_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/speed"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/holo_green_dark"
-        android:textAppearance="@android:style/TextAppearance.Large"/>
+        <TextView
+            android:id="@+id/legs_coordination_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/legs_coordination"
+            android:lines="2"
+            android:gravity="center"
+            android:layout_below="@id/period_bar"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/holo_green_dark"
+            android:textAppearance="@android:style/TextAppearance.Large"/>
 
-    <TextView
-        android:id="@+id/period_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/speed_title"
-        android:layout_marginTop="6dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/period"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
+        <TextView
+            android:id="@+id/phase_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/legs_coordination_title"
+            android:layout_marginTop="6dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/phase_difference"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
 
-    <TextView
-        android:id="@+id/period_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/period_title"
-        android:layout_alignBaseline="@id/period_title"
-        android:layout_marginLeft="10dp"
-        android:text="@string/default_period"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
+        <TextView
+            android:id="@+id/phase_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/phase_title"
+            android:layout_alignBaseline="@id/phase_title"
+            android:layout_marginLeft="10dp"
+            android:text="@string/default_phase"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
 
-    <SeekBar
-        android:id="@+id/period_bar"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/period_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="50dp"
-        android:max="7000"
-        android:progress="1000"/>
+        <SeekBar
+            android:id="@+id/phase"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phase_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:paddingLeft="50dp"
+            android:max="180"
+            android:progress="0"/>
 
-    <TextView
-        android:id="@+id/legs_coordination_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/legs_coordination"
-        android:lines="2"
-        android:gravity="center"
-        android:layout_below="@id/period_bar"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/holo_green_dark"
-        android:textAppearance="@android:style/TextAppearance.Large"/>
-
-    <TextView
-        android:id="@+id/phase_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/legs_coordination_title"
-        android:layout_marginTop="6dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/phase_difference"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
-
-    <TextView
-        android:id="@+id/phase_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/phase_title"
-        android:layout_alignBaseline="@id/phase_title"
-        android:layout_marginLeft="10dp"
-        android:text="@string/default_phase"
-        android:textAppearance="@android:style/TextAppearance.Medium"/>
-
-    <SeekBar
-        android:id="@+id/phase"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/phase_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="50dp"
-        android:max="180"
-        android:progress="0"/>
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/btn_green_selector"
-        android:src="@drawable/stop_button" />
+        android:src="@drawable/ic_stop_button" />
 
     <Button
         android:id="@+id/schedule_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="7dp"
         android:background="@drawable/green_button_btn_default_holo_dark"
         android:textColor="@android:color/white"
         android:text="@string/schedule" />
-
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/green_button_btn_default_holo_dark"
-        android:textColor="@android:color/white"
-        android:text="@string/reset" />
 
 </RelativeLayout>

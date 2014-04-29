@@ -35,9 +35,9 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.SliderView;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.SliderView;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 
 
 /**
@@ -63,12 +63,8 @@ public class RhinoFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_rhino, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.rhino);
-		}
-
 		setUiListeners(layout);
-		
+
 		if(listener != null && listener.onCheckIsConnectedWithoutToast()) {
 			onBluetoothConnected();
 		} else {
@@ -110,12 +106,12 @@ public class RhinoFragment extends RobotFragment {
 	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
 	 * callbacks of all the possible fragments
 	 * 
-	 * @param The view used as the main container for this fragment
+	 * @param containerLayout The view used as the main container for this fragment
 	 */
 	@Override
 	protected void setUiListeners(View containerLayout) {
 
-		Button scheduleButton = (Button) containerLayout.findViewById(R.id.schedule_button);
+        ImageButton scheduleButton = (ImageButton) containerLayout.findViewById(R.id.schedule_button);
 		scheduleButton.setOnClickListener(onButtonClick);
 
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
@@ -140,7 +136,8 @@ public class RhinoFragment extends RobotFragment {
 		super.onBluetoothConnected();
 		
 		Log.e(LOG_TAG, "onBluetoothConnected");
-		
+
+        //FIXME!! neccesary?
 		if(mLeftSlider == null || mRightSlider == null) {
 			return;
 		}
@@ -158,7 +155,7 @@ public class RhinoFragment extends RobotFragment {
 		super.onBluetoothDisconnected();
 		
 		Log.e(LOG_TAG, "onBluetoothDisconnected");
-		
+        //FIXME!!
 		if(mLeftSlider == null || mRightSlider == null) {
 			return;
 		}

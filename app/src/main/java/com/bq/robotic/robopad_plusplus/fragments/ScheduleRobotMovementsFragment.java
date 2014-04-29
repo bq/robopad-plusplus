@@ -24,15 +24,16 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,9 +49,10 @@ import com.bq.robotic.drag_drop_grid.DeleteDropZoneView;
 import com.bq.robotic.drag_drop_grid.DraggableGridView;
 import com.bq.robotic.drag_drop_grid.OnRearrangeListener;
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.RoboPad_plusplus;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 
 import java.util.ArrayList;
 
@@ -102,38 +104,34 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		Bundle bundle = this.getArguments();
 		if(bundle != null){
 		    int robotTypeIndex = bundle.getInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.POLLYWOG.ordinal());
-		    String botTypeString = "";
+//		    String botTypeString = "";
 		    
 		    if(robotTypeIndex == robotType.POLLYWOG.ordinal()) {
 		    	botType = robotType.POLLYWOG;
-		    	botTypeString = getString(R.string.pollywog);
+//		    	botTypeString = getString(R.string.pollywog);
 		    
 		    } else if (robotTypeIndex == robotType.BEETLE.ordinal()) {
 		    	botType = robotType.BEETLE;
-		    	botTypeString = getString(R.string.beetle);
+//		    	botTypeString = getString(R.string.beetle);
 		    	
 		    	setBeetleUIComponents();
 		    	
 		    } else if (robotTypeIndex == robotType.RHINO.ordinal()) {
                 botType = robotType.RHINO;
-                botTypeString = getString(R.string.rhino);
+//                botTypeString = getString(R.string.rhino);
 
                 setRhinoUIComponents();
 
             } else if (robotTypeIndex == robotType.CRAB.ordinal()) {
                 botType = robotType.CRAB;
-                botTypeString = getString(R.string.crab);
+//                botTypeString = getString(R.string.crab);
 
 		    } else if (robotTypeIndex == robotType.GENERIC_ROBOT.ordinal()) {
 		    	botType = robotType.GENERIC_ROBOT;
-		    	botTypeString = getString(R.string.generic_robot);
+//		    	botTypeString = getString(R.string.generic_robot);
 		    	
 		    	setGenericRobotUIComponents();
 		    }
-		    
-			if(listener != null) {
-				listener.onSetFragmentTitle(getString(R.string.schedule_title) + botTypeString);
-			}
 
             sendMovementsHandler = new Handler();
 		}
@@ -162,6 +160,15 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 					+ " must implement SelectBotListener");
 		}
 	}
+
+
+//    /**
+//     * Needed to override the callback when the user clicks the back button because
+//     */
+//    @Override
+//    public void onBackPressed() {
+//        listener.
+//    }
 	
 	
 //	public void onBluetoothConnected() {
@@ -242,19 +249,25 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnClickListener(onButtonClick);
 		
-		ImageButton playCommandsButton = (ImageButton) containerLayout.findViewById(R.id.play_command_button);
-		playCommandsButton.setOnClickListener(onButtonClick);
+		ImageButton sendMovementsButton = (ImageButton) containerLayout.findViewById(R.id.send_movements_button);
+        sendMovementsButton.setOnClickListener(onButtonClick);
 		
 		ImageButton removeAllButton = (ImageButton) containerLayout.findViewById(R.id.remove_all_button);
 		removeAllButton.setOnClickListener(onButtonClick);
+
+        ImageButton loadMovementsButton = (ImageButton) containerLayout.findViewById(R.id.load_movements_button);
+        loadMovementsButton.setOnClickListener(onButtonClick);
+
+        ImageButton saveMovementsButton = (ImageButton) containerLayout.findViewById(R.id.save_movements_button);
+        saveMovementsButton.setOnClickListener(onButtonClick);
 		
-		ImageButton menuButton = (ImageButton) containerLayout.findViewById(R.id.menu_button);
-		menuButton.setOnClickListener(onButtonClick);
+		ImageButton setting_button = (ImageButton) containerLayout.findViewById(R.id.setting_button);
+        setting_button.setOnClickListener(onButtonClick);
 	}
 	
 	
 	private void setBeetleUIComponents() {
-		LinearLayout controlsLayout = (LinearLayout) getActivity().findViewById(R.id.controls_layout);
+		GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
 		controlsLayout.addView(LinearLayout.inflate(getActivity().getBaseContext(), R.layout.scheduler_beetle_component, null));
 		
 		ImageButton mFullOpenClawButton = (ImageButton) getActivity().findViewById(R.id.full_open_claw_button);
@@ -269,7 +282,7 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	
 	
 	private void setRhinoUIComponents() {
-		LinearLayout controlsLayout = (LinearLayout) getActivity().findViewById(R.id.controls_layout);
+        GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
 		controlsLayout.addView(LinearLayout.inflate(getActivity().getBaseContext(), R.layout.scheduler_rhino_component, null));
 		
 		ImageButton mChargeButton = (ImageButton) getActivity().findViewById(R.id.charge_button);
@@ -278,7 +291,7 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	
 	
 	private void setGenericRobotUIComponents() {
-		LinearLayout controlsLayout = (LinearLayout) getActivity().findViewById(R.id.controls_layout);
+        GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
 		controlsLayout.addView(LinearLayout.inflate(getActivity().getBaseContext(), R.layout.scheduler_generic_robot_component, null));
 		
 		ImageButton commandButton1 = (ImageButton) getActivity().findViewById(R.id.command_button_1);
@@ -338,25 +351,25 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 					break;
 					
 				case R.id.up_button:
-					view.setImageResource(R.drawable.up_button);
+					view.setImageResource(R.drawable.ic_up_button);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.UP_COMMAND);				
 					break;
 					
 				case R.id.down_button:
-					view.setImageResource(R.drawable.down_button);
+					view.setImageResource(R.drawable.ic_down_button);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.DOWN_COMMAND);				
 					break;
 					
 				case R.id.left_button:
-					view.setImageResource(R.drawable.left_button);
+					view.setImageResource(R.drawable.ic_left_button);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.LEFT_COMMAND);				
 					break;
 				
 				case R.id.right_button:
-					view.setImageResource(R.drawable.right_button);
+					view.setImageResource(R.drawable.ic_right_button);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.RIGHT_COMMAND);				
 					break;
@@ -366,7 +379,7 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 					gridView.removeAll();
 					break;
 					
-				case R.id.play_command_button:
+				case R.id.send_movements_button:
 					
 					if(!listener.onCheckIsConnected() || scheduledControls.isEmpty()) {
 						break;
@@ -378,12 +391,12 @@ public class ScheduleRobotMovementsFragment extends Fragment {
                     (new MySendControlsToArduinoTask()).run();
 					break;
 			
-				case R.id.menu_button:
-				    PopupMenu popup = new PopupMenu(getActivity(), v);
-				    MenuInflater inflater = popup.getMenuInflater();
-				    inflater.inflate(R.menu.scheduler_menu, popup.getMenu());
-				    popup.setOnMenuItemClickListener(onMenuItemClickListener);
-				    popup.show();
+				case R.id.setting_button:
+//				    PopupMenu popup = new PopupMenu(getActivity(), v);
+//				    MenuInflater inflater = popup.getMenuInflater();
+//				    inflater.inflate(R.menu.scheduler_menu, popup.getMenu());
+//				    popup.setOnMenuItemClickListener(onMenuItemClickListener);
+//				    popup.show();
 					break;
 			}
 
@@ -406,19 +419,19 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 			switch(v.getId()) { 
 			
 				case R.id.full_open_claw_button: 
-					view.setImageResource(R.drawable.full_open_claw_button);
+					view.setImageResource(R.drawable.ic_full_open_claw);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.FULL_OPEN_STEP_COMMAND);	
 					break;
 	
 				case R.id.open_claw_button: 
-					view.setImageResource(R.drawable.open_claw_button);
+					view.setImageResource(R.drawable.ic_open_claw);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.OPEN_STEP_COMMAND);
 					break;
 	
 				case R.id.close_claw_button:
-					view.setImageResource(R.drawable.close_claw_button);
+					view.setImageResource(R.drawable.ic_close_claw);
 					gridView.addView(view);
 					scheduledControls.add(RoboPadConstants.CLOSE_STEP_COMMAND);
 					break;	
@@ -551,14 +564,16 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	
 	
 	private void enableControllerButtons() {
-		LinearLayout controlsViews = (LinearLayout) getActivity().findViewById(R.id.controls_layout);
-		for (int i = 0; i < controlsViews.getChildCount(); i++) {
-			controlsViews.getChildAt(i).setEnabled(true);
+        GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
+		for (int i = 0; i < controlsLayout.getChildCount(); i++) {
+            controlsLayout.getChildAt(i).setEnabled(true);
 		}
 
-		((ImageButton) getActivity().findViewById(R.id.play_command_button)).setEnabled(true);
+		((ImageButton) getActivity().findViewById(R.id.send_movements_button)).setEnabled(true);
 		((ImageButton) getActivity().findViewById(R.id.remove_all_button)).setEnabled(true);
-        ((ImageButton) getActivity().findViewById(R.id.menu_button)).setEnabled(true);
+        ((ImageButton) getActivity().findViewById(R.id.load_movements_button)).setEnabled(true);
+        ((ImageButton) getActivity().findViewById(R.id.save_movements_button)).setEnabled(true);
+        ((ImageButton) getActivity().findViewById(R.id.setting_button)).setEnabled(true);
 		((ProgressBar) getActivity().findViewById(R.id.progress_bar)).setVisibility(View.GONE);
 		
 		if(botType == robotType.BEETLE) {
@@ -579,14 +594,16 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	
 	
 	private void disableControllerButtons() {
-		LinearLayout controlsViews = (LinearLayout) getActivity().findViewById(R.id.controls_layout);
+        GridLayout controlsViews = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
 		for (int i = 0; i < controlsViews.getChildCount(); i++) {
 			controlsViews.getChildAt(i).setEnabled(false);
 		}
-		
-		((ImageButton) getActivity().findViewById(R.id.play_command_button)).setEnabled(false);
-		((ImageButton) getActivity().findViewById(R.id.remove_all_button)).setEnabled(false);
-        ((ImageButton) getActivity().findViewById(R.id.menu_button)).setEnabled(false);
+
+        ((ImageButton) getActivity().findViewById(R.id.send_movements_button)).setEnabled(false);
+        ((ImageButton) getActivity().findViewById(R.id.remove_all_button)).setEnabled(false);
+        ((ImageButton) getActivity().findViewById(R.id.load_movements_button)).setEnabled(false);
+        ((ImageButton) getActivity().findViewById(R.id.save_movements_button)).setEnabled(false);
+        ((ImageButton) getActivity().findViewById(R.id.setting_button)).setEnabled(false);
 		((ProgressBar) getActivity().findViewById(R.id.progress_bar)).setVisibility(View.VISIBLE);
 		
 		if(botType == robotType.BEETLE) {
@@ -626,7 +643,13 @@ public class ScheduleRobotMovementsFragment extends Fragment {
                 Log.i(LOG_TAG, "sendStopCommand");
 				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 				sendStopCommand = false;
-                sendMovementsHandler.postDelayed(this, RoboPadConstants.DELAY_BETWEEN_SCHEDULED_COMMANDS);
+
+                if (botType == robotType.CRAB) {
+                    sendMovementsHandler.postDelayed(this, RoboPadConstants.CRAB_DELAY_BETWEEN_SCHEDULED_COMMANDS);
+
+                } else {
+                    sendMovementsHandler.postDelayed(this, RoboPadConstants.DELAY_BETWEEN_SCHEDULED_COMMANDS);
+                }
 
 			} else if (currentControlIndex >= scheduledControls.size()) {
 				Log.i(LOG_TAG, "all movements were sent");
@@ -640,23 +663,29 @@ public class ScheduleRobotMovementsFragment extends Fragment {
                 enableControllerButtons();
 
 			} else if (currentControlIndex < scheduledControls.size()) {
-				Log.e(LOG_TAG, "new movement: " + scheduledControls.get(currentControlIndex));
-				listener.onSendMessage(scheduledControls.get(currentControlIndex));
+                Log.e(LOG_TAG, "new movement: " + scheduledControls.get(currentControlIndex));
+                listener.onSendMessage(scheduledControls.get(currentControlIndex));
 
-                View currentChild =  gridView.getChildAt(currentControlIndex);
+                View currentChild = gridView.getChildAt(currentControlIndex);
 
-                currentChild.setBackgroundColor(Color.CYAN);
+                currentChild.setBackgroundResource(R.drawable.turquoise_circle_default_button);
+//                currentChild.setBackgroundColor(Color.CYAN);
 
-                gridView.scrollTo(0, (int)currentChild.getY());
+                gridView.scrollTo(0, (int) currentChild.getY());
 
-                if(currentControlIndex > 0) {
+                if (currentControlIndex > 0) {
                     gridView.getChildAt(currentControlIndex - 1).setBackgroundColor(Color.WHITE);
                 }
 
-				sendStopCommand = true;
-				currentControlIndex++;
+                sendStopCommand = true;
+                currentControlIndex++;
 
-                sendMovementsHandler.postDelayed(this, RoboPadConstants.DELAY_BETWEEN_SCHEDULED_COMMANDS);
+                if (botType == robotType.CRAB) {
+                    sendMovementsHandler.postDelayed(this, RoboPadConstants.CRAB_DELAY_BETWEEN_SCHEDULED_COMMANDS);
+
+                } else {
+                    sendMovementsHandler.postDelayed(this, RoboPadConstants.DELAY_BETWEEN_SCHEDULED_COMMANDS);
+                }
 			}
 
         }

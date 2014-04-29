@@ -33,8 +33,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 
 
 /**
@@ -57,10 +57,6 @@ public class GenericRobotFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_generic_robot, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.generic_robot);
-		}
-
 		setUiListeners(layout);
 
 		return layout;
@@ -73,7 +69,7 @@ public class GenericRobotFragment extends RobotFragment {
 	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
 	 * callbacks of all the possible fragments
 	 * 
-	 * @param The view used as the main container for this fragment
+	 * @param containerLayout is a view used as the main container for this fragment
 	 */
 	@Override
 	protected void setUiListeners(View containerLayout) {

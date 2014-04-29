@@ -4,14 +4,15 @@
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
-    
+
     <dimen name="activity_horizontal_margin">100dp</dimen>
-    
     <dimen name="activity_vertical_margin">18dp</dimen>
-    
-    <dimen name="pad_margin">25dp</dimen>
-    <dimen name="left_right_margin">110dp</dimen>
-    
+
     <dimen name="scheduler_control_height">65dp</dimen>
+
+    <dimen name="stop_button_margin_right">-40dp</dimen>
+    <dimen name="claw_buttons_margin">40dp</dimen>
+    <dimen name="left_pad_margin">60dp</dimen>
+    <dimen name="pad_minus_margins">-60dp</dimen>
 
 </resources>

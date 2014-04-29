@@ -11,11 +11,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.listeners.SchedulerMenuDialogListener;
 
 public class SchedulerMenuDialogFragment extends DialogFragment {

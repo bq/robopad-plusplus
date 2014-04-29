@@ -1,76 +1,89 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/pad_layout_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         layout="@layout/pad_layout" />
 
     <LinearLayout
         android:id="@+id/claws_pad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
         android:layout_centerVertical="true"
         android:orientation="vertical" >
 
-        <Button
+        <ImageButton
             android:id="@+id/full_open_claw_button"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/green_button_btn_default_holo_dark"
-            android:text="@string/full_open_claw"
-            android:textColor="@android:color/white" />
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:scaleType="center"
+            android:padding="@dimen/button_press_little_padding"
+            android:src="@drawable/full_open_claw_selector"
+            android:layout_marginBottom="@dimen/claw_buttons_margin"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/open_claw_button"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/green_button_btn_default_holo_dark"
-            android:text="@string/open_claw"
-            android:textColor="@android:color/white" />
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:scaleType="center"
+            android:padding="@dimen/button_press_medium_padding"
+            android:src="@drawable/open_claw_selector"
+            android:layout_marginBottom="@dimen/claw_buttons_margin"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/close_claw_button"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/green_button_btn_default_holo_dark"
-            android:text="@string/close_claw"
-            android:textColor="@android:color/white" />
+            android:background="@drawable/green_circle_btn_transparent_selector"
+            android:scaleType="center"
+            android:padding="@dimen/button_press_padding"
+            android:src="@drawable/close_claw_selector" />
     </LinearLayout>
-    
-    <Button
-        android:id="@+id/schedule_button"
+
+    <ImageButton
+        android:id="@+id/bot_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/green_button_btn_default_holo_dark"
-        android:textColor="@android:color/white"
-        android:text="@string/schedule" />
+        android:layout_marginLeft="25dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/blue_circle_btn_transparent_selector"
+        android:scaleType="centerCrop"
+        android:paddingTop="@dimen/button_press_padding"
+        android:paddingBottom="@dimen/button_press_padding"
+        android:src="@drawable/bot_beetle_disconnected" />
 
     <ImageButton
         android:id="@+id/stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/pad_layout_view"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/btn_green_selector"
-        android:src="@drawable/stop_button" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@id/pad_layout_view"
+        android:background="@drawable/red_octagon_btn_transparent_selector"
+        android:padding="3dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="@dimen/stop_button_margin_right"
+        android:src="@drawable/ic_stop_button" />
+
+    <ImageButton
+        android:id="@+id/schedule_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/yellow_circle_btn_transparent_selector"
+        android:onClick="onChangeConnection"
+        android:scaleType="centerCrop"
+        android:padding="@dimen/button_press_padding"
+        android:src="@drawable/ic_schedule_button"/>
 
 </RelativeLayout>

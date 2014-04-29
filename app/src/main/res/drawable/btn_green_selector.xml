@@ -21,8 +21,8 @@
     <item android:state_window_focused="false" android:state_enabled="true"
         android:drawable="@android:color/transparent" />
     
-    <item android:state_enabled="false"
-        android:drawable="@android:color/transparent" />
+    <item android:state_window_focused="false" android:state_enabled="false"
+        android:drawable="@drawable/green_button_btn_default_disabled_holo_light" />
     
     <item android:state_pressed="true"
         android:drawable="@drawable/green_button_btn_default_pressed_holo_light" />

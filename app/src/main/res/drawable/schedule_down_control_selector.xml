@@ -5,6 +5,6 @@
         android:drawable="@drawable/down_button_disabled" /> 
     
     <item android:state_enabled="true"
-        android:drawable="@drawable/down_button" />
+        android:drawable="@drawable/ic_down_button" />
     
 </selector>

@@ -23,7 +23,7 @@
 
 package com.bq.robotic.robopad_plusplus.listeners;
 
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 
 /**
  * Listener for robot fragments to communicate with the fragment activity that manage the bluetooth 
@@ -56,23 +56,15 @@ public interface RobotListener {
 	 * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth 
 	 * connection. 
 	 * 
-	 * @param The message to be send to the Arduino
+	 * @param message to be send to the Arduino
 	 */
 	void onSendMessage(String message);
 
 	
 	/**
-	 * Callback from the RobotFragment for changing the bottom title bar.
-	 * 
-	 * @param titleId The text resource id
-	 */
-	void onSetFragmentTitle(int titleId);
-	
-	
-	/**
 	 * Callback from the RobotFragmemt when the user press the schedule robot's movements
 	 * 
-	 * @param robotType
+	 * @param botType robot type
 	 */
 	void onScheduleButtonClicked(robotType botType);
 	

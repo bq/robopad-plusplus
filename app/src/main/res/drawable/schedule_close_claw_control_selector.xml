@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     
     <item android:state_enabled="false"
-        android:drawable="@drawable/close_claw_button_disabled" /> 
+        android:drawable="@drawable/close_claw_disabled" />
     
     <item android:state_enabled="true"
-        android:drawable="@drawable/close_claw_button" />
+        android:drawable="@drawable/ic_close_claw" />
     
 </selector>

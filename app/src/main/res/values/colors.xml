@@ -2,4 +2,18 @@
 <resources>
     <color name="holo_green_dark">#ff669900</color>
     <color name="holo_green_light">#99cc00</color>
+    <color name="holo_green_light_transparent_1">#A099cc00</color>
+    <color name="holo_green_light_transparent_2">#4099cc00</color>
+    <color name="holo_blue_light">#33b5e5</color>
+    <color name="scheduler_blue_light">#3bacab</color>
+    <color name="holo_blue_light_transparent_1">#A033b5e5</color>
+    <color name="holo_blue_light_transparent_2">#4033b5e5</color>
+    <color name="holo_turquoise_transparent_1">#A038aeac</color>
+    <color name="holo_turquoise_transparent_2">#4038aeac</color>
+    <color name="yellow_transparent_1">#A0f8c154</color>
+    <color name="yellow_transparent_2">#40f8c154</color>
+    <color name="dark_blue_transparent_1">#A003395e</color>
+    <color name="dark_blue_transparent_2">#4003395e</color>
+    <color name="orange_transparent_1">#A0f57e29</color>
+    <color name="orange_transparent_2">#40f57e29</color>
 </resources>

@@ -5,6 +5,6 @@
         android:drawable="@drawable/right_button_disabled" /> 
     
     <item android:state_enabled="true"
-        android:drawable="@drawable/right_button" />
+        android:drawable="@drawable/ic_right_button" />
     
 </selector>

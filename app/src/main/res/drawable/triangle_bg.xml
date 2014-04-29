@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item >
+        <rotate
+            android:fromDegrees="45"
+            android:toDegrees="45"
+            android:pivotX="100%"
+            android:pivotY="100%" >
+            <shape
+                android:shape="rectangle"  >
+                <stroke android:width="2dp" android:color="#1C3C3B" />
+                <gradient xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:type="linear"
+                    android:startColor="#38aeac" android:centerColor="#2D8B8A" android:endColor="#1C3C3B">
+                </gradient>
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
+
+
+

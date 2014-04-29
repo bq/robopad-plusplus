@@ -31,7 +31,7 @@ package com.bq.robotic.robopad_plusplus.listeners;
 public interface ScheduleRobotMovementsListener {
 	
 	/**
-	 * Callback from the RobotFragment for checking if the device is connected to an Arduino 
+	 * Callback from the ScheduleRobotMovementFragment for checking if the device is connected to an Arduino
 	 * through the bluetooth connection.
 	 * If the device is not connected it warns the user of it through a Toast.
 	 * 
@@ -41,26 +41,18 @@ public interface ScheduleRobotMovementsListener {
 	
 	
 	/**
-	 * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth 
+	 * Callback from the ScheduleRobotMovementFragment for sending a message to the Arduino through the bluetooth
 	 * connection. 
 	 * 
-	 * @param The message to be send to the Arduino
+	 * @param message to be send to the Arduino
 	 */
 	void onSendMessage(String message);
 
-	
-	/**
-	 * Callback from the RobotFragment for changing the bottom title bar.
-	 * 
-	 * @param titleId The text resource id
-	 */
-	void onSetFragmentTitle(int titleId);
-	
-	/**
-	 * Callback from the RobotFragment for changing the bottom title bar.
-	 * 
-	 * @param titleId The text 
-	 */
-	void onSetFragmentTitle(String title);
+
+//    /**
+//     * Callback from the ScheduleRobotMovementFragment to dismiss the ScheduleRobotMovementFragment and shows the
+//     * previous fragment
+//     */
+//    void onBackWasPressed();
 	
 }

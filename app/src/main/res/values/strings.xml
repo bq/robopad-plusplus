@@ -2,15 +2,13 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">RoboPad++</string>
+    <string name="title_activity_select_robot">SelectRobotActivity</string>
     
     <string name="pollywog">Pollywog</string>
     <string name="beetle">Beetle</string>
     <string name="rhino">Rhino</string>
     <string name="crab">Crab</string>
     <string name="generic_robot">Generic robot</string>
-    
-    <string name="select_robot">SELECT ROBOT</string>
-    <string name="remote_control">REMOTE CONTROL</string>
     
     <string name="exit_robot_control_dialog">The connection with this robot will be lost, do you really want to choose a new type of robot?</string>
     <string name="exit_robot_control_dialog_title">Disconnect the robot</string>
@@ -49,5 +47,16 @@
     <!-- Error -->
     <string name="max_exceeded_error">"The maximum value is "</string>
     <string name="min_exceeded_error">"The minimum value is "</string>
+
+
+    <string name="pollywog_pin_explanation">
+        <![CDATA[
+        <h4>Connect me to the following pins:</h4>
+        <p><strong>- Bluetooth:</strong></p>
+        <p>TXD: pin 0 <br /> RXD: pìn 1 <br /> VCC: VCC <br />GND: GND</p>
+        <p><strong>- Servos:</strong> </p>
+        <p>Left wheel: pin 6 <br /> Right wheel: pin 9 </p>
+        ]]>
+    </string>
 
 </resources>

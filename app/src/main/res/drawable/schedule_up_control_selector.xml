@@ -5,6 +5,6 @@
         android:drawable="@drawable/up_button_disabled" /> 
     
     <item android:state_enabled="true"
-        android:drawable="@drawable/up_button" />
+        android:drawable="@drawable/ic_up_button" />
     
 </selector>

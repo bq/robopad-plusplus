@@ -35,8 +35,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.RoboPadConstants.robotType;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 
 
 /**
@@ -58,10 +58,6 @@ public class CrabFragment extends RobotFragment {
 			Bundle savedInstanceState) {
 
 		View layout = inflater.inflate(R.layout.fragment_crab, container, false);
-
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.crab);
-		}
 
 		setUiListeners(layout);
 
@@ -135,6 +131,7 @@ public class CrabFragment extends RobotFragment {
 					break;
 					
 				case R.id.schedule_button:
+                    listener.onSendMessage(RoboPadConstants.RESET_COMMAND);
 					listener.onScheduleButtonClicked(robotType.CRAB);
 					break;
 
