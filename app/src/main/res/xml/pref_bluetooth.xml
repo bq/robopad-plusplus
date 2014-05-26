@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@android:drawable/stat_sys_data_bluetooth">
+
+    <!-- A 'parent' preference, which enables/disables child preferences (below)
+         when checked/unchecked. -->
+    <com.bq.robotic.robopad_plusplus.utils.InverseYesNoDialogPreference
+        android:key="pref_automatic_bluetooth_allowed"
+        android:title="@string/pref_title_automatic_bluetooth"
+        android:summary="@string/pref_summary_automatic_bluetooth"
+        android:dialogMessage="@string/pref_summary_automatic_bluetooth"
+        android:defaultValue="false"
+        android:positiveButtonText="@android:string/yes"
+        android:negativeButtonText="@android:string/no"
+        />
+
+    <CheckBoxPreference
+        android:key="pref_bluetooth_enable"
+        android:title="@string/pref_title_bluetooth"
+        />
+
+</PreferenceScreen>

@@ -7,14 +7,14 @@
     <dimen name="activity_horizontal_margin">128dp</dimen>
     <dimen name="activity_vertical_margin">20dp</dimen>
 
-    <dimen name="button_press_padding">13dp</dimen>
-    <dimen name="button_press_medium_padding">10dp</dimen>
-    <dimen name="button_press_little_padding">6dp</dimen>
-    <dimen name="stop_button_padding">80dp</dimen>
-    <dimen name="stop_button_margin_right">-100dp</dimen>
+    <dimen name="button_press_padding">16dp</dimen>
+    <dimen name="button_press_medium_padding">12dp</dimen>
+    <dimen name="button_press_little_padding">4dp</dimen>
+    <dimen name="stop_button_margin_right">-60dp</dimen>
     <dimen name="splash_icon_margin">60dp</dimen>
     <dimen name="claw_buttons_margin">60dp</dimen>
     <dimen name="left_pad_margin">80dp</dimen>
     <dimen name="pad_minus_margins">-80dp</dimen>
+    <dimen name="text_size">18sp</dimen>
 
 </resources>

@@ -24,15 +24,20 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 
-import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.listeners.RobotListener;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 
 
 /**
@@ -51,6 +56,10 @@ public abstract class RobotFragment extends Fragment {
 	protected boolean mIsConnected = false;
 
 	protected RobotListener listener;
+
+    // Tips
+    protected ToolTipRelativeLayout mToolTipFrameLayout;
+    protected boolean isLastTipToShow = true;
 
 	/**
 	 * Set the listeners to the UI views
@@ -113,6 +122,83 @@ public abstract class RobotFragment extends Fragment {
 					+ " must implement robotListener");
 		}
 	}
+
+
+    /**
+     * By default checks the preferences for the show tips. The onClickListener on mToolTipFrameLayout
+     * is for show the tips until isLastTipToShow is set to true.
+     * @param savedInstanceState
+     */
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        int showTipsValue = Integer.parseInt(sharedPref.getString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.FIRST_TIME.ordinal())));
+
+        // If never we don't do anything
+        if (showTipsValue == RoboPadConstants.showTipsValues.NEVER.ordinal()) {
+            return;
+        }
+
+        mToolTipFrameLayout = (ToolTipRelativeLayout) getActivity().findViewById(R.id.activity_main_tooltipframelayout);
+
+        if(mToolTipFrameLayout == null) {
+            return;
+        }
+
+        mToolTipFrameLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showTips();
+            }
+        });
+
+        if (showTipsValue == RoboPadConstants.showTipsValues.FIRST_TIME.ordinal()) {
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.NEVER.ordinal()));
+            editor.commit();
+
+            showTips();
+
+        } else if (showTipsValue == RoboPadConstants.showTipsValues.ALWAYS.ordinal()) {
+            showTips();
+        }
+
+    }
+
+
+    /**
+     * Show the tips. When the last tip is shown, the mToolTipFrameLayout must be removed in order
+     * to let the user clicks in the other buttons
+     */
+    protected void showTips() {
+        showNextTip();
+
+        // if mToolTipFrameLayout was null, this method is never called, so it isn't needed to check
+        if (isLastTipToShow) {
+            ViewGroup parent = (ViewGroup) mToolTipFrameLayout.getParent();
+
+            if(parent != null) {
+                parent.removeView(mToolTipFrameLayout);
+            }
+        }
+    }
+
+
+    /**
+     * Show the next tip for this robot fragment
+     */
+    protected abstract void showNextTip();
+
+
+    /**
+     * Force children to implement the isLastTipToShow setter in order not to forget using it
+     * @param isLastTipToShow boolean that indicates if the last tip shown was the last one
+     */
+    protected abstract void setIsLastTipToShow(boolean isLastTipToShow);
 
 
 	/**

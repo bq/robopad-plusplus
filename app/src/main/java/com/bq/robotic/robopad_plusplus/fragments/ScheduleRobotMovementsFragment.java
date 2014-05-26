@@ -24,8 +24,6 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
@@ -49,7 +48,6 @@ import com.bq.robotic.drag_drop_grid.DeleteDropZoneView;
 import com.bq.robotic.drag_drop_grid.DraggableGridView;
 import com.bq.robotic.drag_drop_grid.OnRearrangeListener;
 import com.bq.robotic.robopad_plusplus.R;
-import com.bq.robotic.robopad_plusplus.RoboPad_plusplus;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
@@ -171,9 +169,9 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 //    }
 	
 	
-//	public void onBluetoothConnected() {
-//		
-//	}
+	public void onBluetoothConnected() {
+		// Do nothing
+	}
 	
 	
 	public void onBluetoothDisconnected() {
@@ -263,6 +261,33 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		
 		ImageButton setting_button = (ImageButton) containerLayout.findViewById(R.id.setting_button);
         setting_button.setOnClickListener(onButtonClick);
+
+        final GridLayout typeOfMovementsContainer = (GridLayout) containerLayout.findViewById(R.id.type_of_movements_container);
+        final ViewTreeObserver vto = typeOfMovementsContainer.getViewTreeObserver();
+        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                int finalHeight = typeOfMovementsContainer.getHeight();
+                int childCount = typeOfMovementsContainer.getChildCount();
+                boolean rowWasSet = false;
+
+                for(int i = 0; i < childCount; i++) {
+                    if (typeOfMovementsContainer.getChildAt(i).getBottom() > finalHeight) {
+                        if (!rowWasSet) {
+                            typeOfMovementsContainer.setRowCount(i);
+                            rowWasSet = true;
+                        }
+                        typeOfMovementsContainer.setColumnCount(typeOfMovementsContainer.getColumnCount() + 1);
+                    }
+                }
+
+                final GridLayout typeOfMovementsContainer = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
+                final ViewTreeObserver vto = typeOfMovementsContainer.getViewTreeObserver();
+                vto.removeOnPreDrawListener(this);
+                return true;
+            }
+        };
+
+        vto.addOnPreDrawListener(preDrawListener);
 	}
 	
 	
@@ -663,15 +688,21 @@ public class ScheduleRobotMovementsFragment extends Fragment {
                 enableControllerButtons();
 
 			} else if (currentControlIndex < scheduledControls.size()) {
-                Log.e(LOG_TAG, "new movement: " + scheduledControls.get(currentControlIndex));
+                Log.d(LOG_TAG, "new movement: " + scheduledControls.get(currentControlIndex));
                 listener.onSendMessage(scheduledControls.get(currentControlIndex));
+
+                if(currentControlIndex == 0) {
+                    gridView.scrollToTop();
+                }
 
                 View currentChild = gridView.getChildAt(currentControlIndex);
 
                 currentChild.setBackgroundResource(R.drawable.turquoise_circle_default_button);
-//                currentChild.setBackgroundColor(Color.CYAN);
 
-                gridView.scrollTo(0, (int) currentChild.getY());
+                if(currentChild.getBottom() > gridView.getHeight()) {
+                    gridView.scrollTo(0, (int) (currentChild.getTop() - currentChild.getHeight()
+                            - currentChild.getPaddingTop() - currentChild.getPaddingBottom()));
+                }
 
                 if (currentControlIndex > 0) {
                     gridView.getChildAt(currentControlIndex - 1).setBackgroundColor(Color.WHITE);

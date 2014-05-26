@@ -35,6 +35,8 @@ Features
 
 #. Specific controls for the Pollywog, Beetle and Rhino printbots of Bq
 
+#. Management of the Bluetooth connection for battery saving
+
 
 Installation
 ============

@@ -1,84 +1,103 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context="com.bq.robotic.robopad.SelectRobotActivity">
+    tools:context="com.bq.robotic.robopad_plusplus.SelectRobotActivity">
 
-    <HorizontalScrollView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:layout_gravity="center">
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/blue_circle_btn_transparent_selector"
+        android:padding="@dimen/button_press_padding"
+        android:src="@drawable/ic_settings"
+        android:onClick="onShowPreferences"/>
 
-        <LinearLayout
-            android:id="@+id/controls_layout_view"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:scrollbars="none"
+            android:layout_gravity="center">
 
-            <ImageButton
-                android:id="@+id/pollywog_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/controls_layout_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/menu_pollywog_icon_pressed_selector"
-                android:src="@drawable/menu_pollywog_icon_selector"
-                android:padding="20dp"
-                android:layout_marginLeft="40dp"
-                android:onClick="onRobotSelected"/>
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/beetle_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:background="@drawable/menu_beetle_icon_pressed_selector"
-                android:src="@drawable/menu_beetle_icon_selector"
-                android:onClick="onRobotSelected"/>
+                <ImageButton
+                    android:id="@+id/pollywog_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/menu_pollywog_icon_pressed_selector"
+                    android:src="@drawable/menu_pollywog_icon_selector"
+                    android:padding="20dp"
+                    android:layout_marginLeft="40dp"
+                    android:onClick="onRobotSelected"/>
 
-            <Button
-                android:id="@+id/rhino_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/btn_green_selector"
-                android:drawableTop="@drawable/bot_rhino"
-                android:text="@string/rhino"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:onClick="onRobotSelected"/>
+                <ImageButton
+                    android:id="@+id/beetle_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:background="@drawable/menu_beetle_icon_pressed_selector"
+                    android:src="@drawable/menu_beetle_icon_selector"
+                    android:onClick="onRobotSelected"/>
 
-            <Button
-                android:id="@+id/crab_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/btn_green_selector"
-                android:drawableTop="@drawable/bot_crab"
-                android:text="@string/crab"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:onClick="onRobotSelected"/>
+                <Button
+                    android:id="@+id/rhino_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_green_selector"
+                    android:drawableTop="@drawable/bot_rhino"
+                    android:text="@string/rhino"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:onClick="onRobotSelected"/>
 
-            <Button
-                android:id="@+id/generic_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/btn_green_selector"
-                android:drawableTop="@drawable/bot_generic"
-                android:text="@string/generic_robot"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:onClick="onRobotSelected"/>
+                <Button
+                    android:id="@+id/crab_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_green_selector"
+                    android:drawableTop="@drawable/bot_crab"
+                    android:text="@string/crab"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:onClick="onRobotSelected"/>
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/generic_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_green_selector"
+                    android:drawableTop="@drawable/bot_generic"
+                    android:text="@string/generic_robot"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:onClick="onRobotSelected"/>
 
-    </HorizontalScrollView>
-</LinearLayout>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+    </LinearLayout>
+
+</RelativeLayout>

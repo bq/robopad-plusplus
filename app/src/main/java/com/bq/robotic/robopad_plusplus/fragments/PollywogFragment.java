@@ -25,6 +25,7 @@ package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,8 @@ import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.utils.RobotConnectionsPopupWindow;
+import com.bq.robotic.robopad_plusplus.utils.TipsFactory;
+import com.nhaarman.supertooltips.ToolTipView;
 
 
 /**
@@ -53,7 +56,14 @@ public class PollywogFragment extends RobotFragment {
 	private static final String LOG_TAG = "PollywogFragment";
 
     private ImageButton pinExplanationButton;
-//    private View layout;
+
+    // Tips
+    private ToolTipView pin_explanation_tip;
+    private ToolTipView bluetooth_tip;
+    private ToolTipView pad_tip;
+    private ToolTipView schedule_tip;
+    private ToolTipView currentTipView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -83,7 +93,7 @@ public class PollywogFragment extends RobotFragment {
 		stopButton.setOnClickListener(onButtonClick);
 
         ImageButton scheduleButton = (ImageButton) containerLayout.findViewById(R.id.schedule_button);
-		scheduleButton.setOnClickListener(onButtonClick);
+        scheduleButton.setOnClickListener(onButtonClick);
 
 		ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
 		upButton.setOnTouchListener(buttonOnTouchListener);
@@ -119,22 +129,18 @@ public class PollywogFragment extends RobotFragment {
 
 			case R.id.up_button:
 				listener.onSendMessage(RoboPadConstants.UP_COMMAND);
-				//	    			Log.e(LOG_TAG, "up command send");
 				break;
 	
 			case R.id.down_button:
 				listener.onSendMessage(RoboPadConstants.DOWN_COMMAND);
-				//	    			Log.e(LOG_TAG, "down command send");
 				break;
 	
 			case R.id.left_button:
 				listener.onSendMessage(RoboPadConstants.LEFT_COMMAND);	
-				//	    			Log.e(LOG_TAG, "left command send");
 				break;
 	
 			case R.id.right_button:
 				listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND);
-				//	    			Log.e(LOG_TAG, "right command send");
 				break;
 
 		}
@@ -165,20 +171,93 @@ public class PollywogFragment extends RobotFragment {
                     PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
                             getActivity())).getPopupWindow();
 
-                    // Displaying the popup at the specified location, + offsets.
+//                    // Displaying the popup at the specified location, + offsets.
+//                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+//                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
+//                            pinExplanationButton.getPaddingTop());
+
+                    int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
+                            getActivity().getResources().getDisplayMetrics());
+
                     popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
-                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
-                            pinExplanationButton.getPaddingTop());
+                            pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
+                            offsetY);
 
                     break;
-					
+
 				case R.id.schedule_button:
-					listener.onScheduleButtonClicked(robotType.POLLYWOG);    				
+					listener.onScheduleButtonClicked(robotType.POLLYWOG);
 					break;
 			}
 
 		}
 	};
+
+
+    private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
+
+        @Override
+        public void onToolTipViewClicked(ToolTipView toolTipView) {
+            showNextTip();
+        }
+    };
+
+
+    protected void showNextTip() {
+        if (currentTipView == null) {
+            setIsLastTipToShow(false);
+            // Pin explanation tip
+            pin_explanation_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
+                    getActivity().findViewById(R.id.bot_icon));
+
+            currentTipView = pin_explanation_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pin_explanation_tip) {
+            pin_explanation_tip.remove();
+            pin_explanation_tip = null;
+
+            bluetooth_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button));
+
+            currentTipView = bluetooth_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == bluetooth_tip) {
+            bluetooth_tip.remove();
+            bluetooth_tip = null;
+
+            schedule_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.schedule_tip_text),
+                    getActivity().findViewById(R.id.schedule_button));
+
+            currentTipView = schedule_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == schedule_tip) {
+            schedule_tip.remove();
+            schedule_tip = null;
+
+            pad_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
+                    getActivity().findViewById(R.id.right_button));
+
+            currentTipView = pad_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pad_tip) {
+            pad_tip.remove();
+            pad_tip = null;
+
+            currentTipView = null;
+            setIsLastTipToShow(true);
+            mToolTipFrameLayout.setOnClickListener(null);
+        }
+
+    }
+
+    @Override
+    protected void setIsLastTipToShow(boolean isLastTipToShow) {
+        this.isLastTipToShow = isLastTipToShow;
+    }
 
 
     @Override

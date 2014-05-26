@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">RoboPad++</string>
+    <string name="settings">Ajustes</string>
     <string name="action_settings">Configuración</string>
     
     <string name="pollywog">Renacuajo</string>
@@ -10,16 +11,8 @@
     <string name="crab">Cangrejo</string>
     <string name="generic_robot">Robot genérico</string>
     
-    <string name="select_robot">SELECCIONAR ROBOT</string>
-    <string name="remote_control">CONTROL REMOTO</string>
-    
     <string name="exit_robot_control_dialog">Se perderá la conexión con este robot, ¿quieres elegir un nuevo tipo de robot?</string>
     <string name="exit_robot_control_dialog_title">Desconexión del robot</string>
-    
-    <!--  Beetle robot -->
-    <string name="full_open_claw">Soltar pinza</string>
-    <string name="open_claw">Abrir pinza</string>
-    <string name="close_claw">Cerrar pinza</string>  
 
     <!-- Rhino robot -->
     <string name="charge">Embestir</string>
@@ -43,20 +36,16 @@
     <!-- Scheduler -->
     <string name="save">Guardar</string>
     <string name="load">Cargar</string>
-    <string name="settings">Preferencias</string>
+
+    <!-- Tips -->
+    <string name="pin_explanation_tip_text">Si me pulsas, te enseñaré cómo has de conectar mis pines</string>
+    <string name="bluetooth_tip_text">Si me pulsas, me conectaré o desconectaré del robot</string>
+    <string name="schedule_tip_text">Si me pulsas, te llevaré a la pantalla de programación de movimientos</string>
+    <string name="pad_tip_text">Si nos pulsas, controlaremos al robot</string>
+    <string name="claws_tip_text">Si nos pulsas, controlaremos las pinzas del robot</string>
 
     <!-- Error -->
     <string name="max_exceeded_error">"El valor máximo es "</string>
     <string name="min_exceeded_error">"El valor mínimo es "</string>
-
-    <string name="pollywog_pin_explanation">
-        <![CDATA[
-            <h4>Conéctame a los siguientes pines:</h4>
-            <p><strong>- Bluetooth:</strong></p>
-            <p>TXD: pin 0 <br /> RXD: pìn 1 <br /> VCC: VCC <br />GND: GND</p>
-            <p><strong>- Servos:</strong> </p>
-            <p>Rueda izquierda: pin 6 <br /> Rueda derecha: pin 9 </p>
-            ]]>
-    </string>
 
 </resources>

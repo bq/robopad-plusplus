@@ -1,0 +1,17 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.bq.robotic.robopad_plusplus.RoboPadSettings$BluetoothPreferenceFragment"
+        android:title="@string/pref_header_bluetooth"
+        android:icon="@drawable/settings_bluetooth"
+        android:summary="@string/pref_summary_bluetooth"/>
+
+    <header
+        android:fragment="com.bq.robotic.robopad_plusplus.RoboPadSettings$TipsPreferenceFragment"
+        android:title="@string/pref_header_help_options"
+        android:icon="@drawable/settings_help"
+        android:summary="@string/pref_summary_help_options"/>
+
+</preference-headers>

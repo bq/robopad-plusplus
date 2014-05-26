@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/generic_robot_controls_layout"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/scheduler_control_height"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <ImageButton
         android:id="@+id/command_button_1"

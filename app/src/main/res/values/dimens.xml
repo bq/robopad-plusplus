@@ -7,15 +7,16 @@
     <dimen name="pad_margin">0dp</dimen>
     <dimen name="left_right_margin">30dp</dimen>
     
-    <dimen name="scheduler_control_height">60dp</dimen>
+    <dimen name="scheduler_control_height">70dp</dimen>
 
     <dimen name="button_press_padding">8dp</dimen>
     <dimen name="button_press_medium_padding">6dp</dimen>
     <dimen name="button_press_little_padding">2dp</dimen>
-    <dimen name="stop_button_margin_right">-35dp</dimen>
+    <dimen name="stop_button_margin_right">-30dp</dimen>
     <dimen name="splash_icon_margin">30dp</dimen>
     <dimen name="claw_buttons_margin">15dp</dimen>
     <dimen name="left_pad_margin">40dp</dimen>
     <dimen name="pad_minus_margins">-40dp</dimen>
+    <dimen name="text_size">13sp</dimen>
 
 </resources>

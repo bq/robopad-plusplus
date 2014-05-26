@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@android:drawable/ic_menu_help">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:key="help_options"
+        android:title="@string/pref_title_help_options"
+        android:entries="@array/pref_help_options_titles"
+        android:entryValues="@array/pref_help_options_values"
+        android:defaultValue="1"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+
+</PreferenceScreen>

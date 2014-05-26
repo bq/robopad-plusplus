@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">RoboPad++</string>
+    <string name="settings">Settings</string>
     <string name="title_activity_select_robot">SelectRobotActivity</string>
     
     <string name="pollywog">Pollywog</string>
@@ -12,11 +13,6 @@
     
     <string name="exit_robot_control_dialog">The connection with this robot will be lost, do you really want to choose a new type of robot?</string>
     <string name="exit_robot_control_dialog_title">Disconnect the robot</string>
-    
-    <!--  Beetle robot-->
-    <string name="full_open_claw">Open full claw</string>
-    <string name="open_claw">Open claw</string>
-    <string name="close_claw">Close claw</string> 
 
     <!-- Rhino robot -->
     <string name="charge">Charge</string>
@@ -42,21 +38,17 @@
     <!-- Scheduler -->
     <string name="save">Save</string>
     <string name="load">Load</string>
-    <string name="settings">Settings</string>
-    
+
+    <!-- Tips -->
+    <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>
+    <string name="bluetooth_tip_text">If you click on me, I will connect or disconnect with the robot</string>
+    <string name="schedule_tip_text">If you click on me, I will take you to the scheduling movements screen</string>
+    <string name="pad_tip_text">If you click on us, we will control the robot</string>
+    <string name="claws_tip_text">If you click on us, we will control\nthe claws of the robot</string>
+
+
     <!-- Error -->
     <string name="max_exceeded_error">"The maximum value is "</string>
     <string name="min_exceeded_error">"The minimum value is "</string>
-
-
-    <string name="pollywog_pin_explanation">
-        <![CDATA[
-        <h4>Connect me to the following pins:</h4>
-        <p><strong>- Bluetooth:</strong></p>
-        <p>TXD: pin 0 <br /> RXD: pìn 1 <br /> VCC: VCC <br />GND: GND</p>
-        <p><strong>- Servos:</strong> </p>
-        <p>Left wheel: pin 6 <br /> Right wheel: pin 9 </p>
-        ]]>
-    </string>
 
 </resources>

@@ -10,15 +10,14 @@ import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 
 public class SelectRobotActivity extends Activity {
 
+    // Debugging
+    private static final String LOG_TAG = "SelectRobotActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_robot);
     }
-
-    // Debugging
-    private static final String LOG_TAG = "SelectRobotActivity";
-
 
     /**
      * Callback for the clicks on the robot buttons to select one of the robot types
@@ -53,6 +52,17 @@ public class SelectRobotActivity extends Activity {
 
         startActivity(intent);
 
+    }
+
+
+    /**
+     * Callback for the show preferences button
+     * @param v view clicked
+     */
+    public void onShowPreferences(View v) {
+        Intent intent = new Intent(SelectRobotActivity.this,
+                RoboPadSettings.class);
+        startActivity(intent);
     }
 
 }

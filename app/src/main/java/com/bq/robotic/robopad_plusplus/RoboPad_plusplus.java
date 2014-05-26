@@ -27,6 +27,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -73,7 +75,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robo_pad_plusplus);
 
-        robotType robotTypeSelected = (robotType) getIntent().getSerializableExtra(RoboPadConstants.ROBOT_SELECTED_KEY);
+        robotType currentRobotType = (robotType) getIntent().getSerializableExtra(RoboPadConstants.ROBOT_SELECTED_KEY);
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -81,9 +83,16 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
         disconnectButton = (ImageButton) findViewById(R.id.disconnect_button);
         anim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_spiner);
 
+        // If we're being restored from a previous state,
+        // then we don't need to do anything and should return or else
+        // we could end up with overlapping fragments.
+        if (savedInstanceState != null) {
+            return;
+        }
+
         // Show the selected robot fragment
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        switch (robotTypeSelected) {
+        switch (currentRobotType) {
 
             case POLLYWOG:
                 ft.replace(R.id.game_pad_container, new PollywogFragment());
@@ -116,10 +125,10 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     protected void onPause() {
         super.onPause();
         // Store values between instances here
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED, wasEnableBluetoothAllowed); // value to store
+        editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, wasEnableBluetoothAllowed); // value to store
         // Commit to storage
         editor.commit();
     }
@@ -128,8 +137,8 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     protected void onStart() {
         super.onStart();
         // Store values between instances here
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        wasEnableBluetoothAllowed = preferences.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED, false);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        wasEnableBluetoothAllowed = preferences.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, false);
     }
 
 
@@ -144,7 +153,15 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
         switch (connectionState) {
 
             case Droid2InoConstants.STATE_CONNECTED:
-                ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
+                Fragment currentConnectedFragment = mFragmentManager.findFragmentById(R.id.game_pad_container);
+                if (currentConnectedFragment != null) {
+                    if(currentConnectedFragment instanceof RobotFragment) {
+                        ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
+
+                    } else if (currentConnectedFragment instanceof ScheduleRobotMovementsFragment) {
+                        ((ScheduleRobotMovementsFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
+                    }
+                }
 
                 // If connected is because the Bluetooth enabling was allowed
                 break;
@@ -154,8 +171,14 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 
             case Droid2InoConstants.STATE_LISTEN:
             case Droid2InoConstants.STATE_NONE:
-                if (mFragmentManager.findFragmentById(R.id.game_pad_container) != null) {
-                    ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+                Fragment currentFragment = mFragmentManager.findFragmentById(R.id.game_pad_container);
+                if (currentFragment != null) {
+                    if(currentFragment instanceof RobotFragment) {
+                        ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+
+                    } else if (currentFragment instanceof ScheduleRobotMovementsFragment) {
+                        ((ScheduleRobotMovementsFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+                    }
                 }
                 break;
         }
@@ -218,7 +241,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     /**
      * Callback for the connect and disconnect buttons
      *
-     * @param v
+     * @param v connect and disconnect buttons
      */
     public void onChangeConnection(View v) {
 
@@ -243,7 +266,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     @Override
     public void onBackPressed() {
 
-        if(!isConnectedWithoutToast()) {
+        if((mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof ScheduleRobotMovementsFragment) || !isConnectedWithoutToast()) {
             super.onBackPressed();
 
         } else {
@@ -316,6 +339,10 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     }
 
 
+    /**
+     * The user pressed the schedule robot button, so show the schedule fragment
+     * @param botType robot type
+     */
     @Override
     public void onScheduleButtonClicked(robotType botType) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
@@ -324,30 +351,37 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
         Bundle bundle = new Bundle();
 
 
-        if (botType == robotType.POLLYWOG) {
-            bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.POLLYWOG.ordinal());
+        switch (botType) {
 
-        } else if (botType == robotType.BEETLE) {
-            bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.BEETLE.ordinal());
+            case POLLYWOG:
+                bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.POLLYWOG.ordinal());
+                break;
 
-        } else if (botType == robotType.RHINO) {
-            bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.RHINO.ordinal());
+            case BEETLE:
+                bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.BEETLE.ordinal());
+                break;
 
-        } else if (botType == robotType.CRAB) {
-            bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.CRAB.ordinal());
+            case RHINO:
+                bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.RHINO.ordinal());
+                break;
 
-        } else if (botType == robotType.GENERIC_ROBOT) {
-            bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.GENERIC_ROBOT.ordinal());
+            case CRAB:
+                bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.CRAB.ordinal());
+                break;
+
+            case GENERIC_ROBOT:
+                bundle.putInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.GENERIC_ROBOT.ordinal());
+                break;
+
         }
 
         if (scheduleRobotMovementsFragment != null) {
 
-            ft.addToBackStack("current_robot");
+            ft.addToBackStack(RoboPadConstants.currentRobotBackStackKey);
             scheduleRobotMovementsFragment.setArguments(bundle);
             ft.replace(R.id.game_pad_container, scheduleRobotMovementsFragment);
             ft.commit();
 
-            findViewById(R.id.bq_logo).setVisibility(View.GONE);
         }
     }
 

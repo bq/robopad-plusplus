@@ -29,16 +29,11 @@ public class RoboPadConstants {
     // Debugging
     public static final boolean D = true;
     
-    
-    
     public static final long CLICK_SLEEP_TIME = 150;
     public static final long DELAY_BETWEEN_SCHEDULED_COMMANDS = 800;
     public static final long CRAB_DELAY_BETWEEN_SCHEDULED_COMMANDS = 4000;
 
-    public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT};
-    
-    public static final String COMMAND_DIVISOR = "_";
-
+    public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT}
 
     
     /**
@@ -50,7 +45,10 @@ public class RoboPadConstants {
     /**
      * Shared preferences
      */
-    public static final String WAS_ENABLING_BLUETOOTH_ALLOWED = "was_enabling_bluetooth_allowed";
+    public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
+    public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
+    public static final String SHOW_TIPS_KEY = "help_options";
+    public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS}
 
 
     /**
@@ -125,4 +123,7 @@ public class RoboPadConstants {
      * Schedule robot movements
      */
     public static final String ROBOT_TYPE_KEY = "robot_type_key";
+
+    // save back stack key
+    public static final String currentRobotBackStackKey = "current_robot_back_stack_key";
 }

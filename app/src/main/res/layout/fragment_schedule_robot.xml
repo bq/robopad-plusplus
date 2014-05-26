@@ -9,53 +9,49 @@
         android:id="@+id/type_of_movements_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/scheduler_control_height"
         app:orientation="vertical"
-        app:columnCount="2"
+        app:rowCount="10"
         android:background="@android:color/transparent">
 
         <ImageButton
             android:id="@+id/up_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
             android:background="@drawable/green_circle_btn_transparent_selector"
-            android:padding="@dimen/button_press_medium_padding"
             android:scaleType="centerCrop"
             android:src="@drawable/schedule_up_control_selector" />
 
         <ImageButton
             android:id="@+id/down_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
             android:background="@drawable/green_circle_btn_transparent_selector"
             android:scaleType="centerCrop"
-            android:padding="@dimen/button_press_medium_padding"
             android:src="@drawable/schedule_down_control_selector" />
 
         <ImageButton
             android:id="@+id/left_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
             android:background="@drawable/green_circle_btn_transparent_selector"
             android:scaleType="centerCrop"
-            android:padding="@dimen/button_press_medium_padding"
             android:src="@drawable/schedule_left_control_selector" />
 
         <ImageButton
             android:id="@+id/right_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
             android:background="@drawable/green_circle_btn_transparent_selector"
             android:scaleType="centerCrop"
-            android:padding="@dimen/button_press_medium_padding"
             android:src="@drawable/schedule_right_control_selector" />
 
         <ImageButton
             android:id="@+id/stop_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/red_octagon_btn_transparent_selector"
+            android:layout_width="@dimen/scheduler_control_height"
+            android:layout_height="@dimen/scheduler_control_height"
+            android:background="@drawable/red_circle_btn_transparent_selector"
             android:scaleType="centerCrop"
-            android:padding="@dimen/button_press_medium_padding"
             android:src="@drawable/schedule_stop_control_selector" />
 
         <!--<HorizontalScrollView-->
@@ -128,14 +124,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/type_of_movements_container"
         android:background="@color/scheduler_blue_light">
 
         <ImageButton
             android:id="@+id/remove_all_button"
-            android:layout_width="@dimen/scheduler_control_height"
-            android:layout_height="@dimen/scheduler_control_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:padding="@dimen/button_press_medium_padding"
             android:background="@drawable/dark_blue_circle_btn_transparent_selector"
@@ -144,8 +140,8 @@
 
         <ImageButton
             android:id="@+id/send_movements_button"
-            android:layout_width="@dimen/scheduler_control_height"
-            android:layout_height="@dimen/scheduler_control_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/button_press_medium_padding"
             android:background="@drawable/dark_blue_circle_btn_transparent_selector"
             android:src="@drawable/ic_send"
@@ -153,8 +149,8 @@
 
         <ImageButton
             android:id="@+id/load_movements_button"
-            android:layout_width="@dimen/scheduler_control_height"
-            android:layout_height="@dimen/scheduler_control_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/button_press_medium_padding"
             android:background="@drawable/dark_blue_circle_btn_transparent_selector"
             android:src="@drawable/ic_load"
@@ -162,8 +158,8 @@
 
         <ImageButton
             android:id="@+id/save_movements_button"
-            android:layout_width="@dimen/scheduler_control_height"
-            android:layout_height="@dimen/scheduler_control_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/button_press_medium_padding"
             android:background="@drawable/dark_blue_circle_btn_transparent_selector"
             android:src="@drawable/ic_save"
@@ -171,8 +167,8 @@
 
         <ImageButton
             android:id="@+id/setting_button"
-            android:layout_width="@dimen/scheduler_control_height"
-            android:layout_height="@dimen/scheduler_control_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/button_press_medium_padding"
             android:background="@drawable/dark_blue_circle_btn_transparent_selector"
             android:src="@drawable/ic_settings"
