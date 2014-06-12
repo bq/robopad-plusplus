@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 8
@@ -28,10 +28,10 @@ android {
 }
 
 dependencies {
-    compile('com.bq.robotic:droid2ino:1.4@aar') {
+    compile('com.bq.robotic:droid2ino:+@aar') {
         transitive = true
     }
     compile('com.android.support:gridlayout-v7:18.0.+')
-    compile('com.bq.robotic:drag-drop-grid:1.5@jar')
-    compile 'com.nhaarman.supertooltips:library:3.0.+'
+    compile('com.bq.robotic:drag-drop-grid:+@jar')
+    compile('com.nhaarman.supertooltips:library:3.0.+')
 }

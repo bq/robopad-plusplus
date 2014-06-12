@@ -24,25 +24,24 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.app.Activity;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayout;
-import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import com.bq.robotic.drag_drop_grid.DeleteDropZoneView;
 import com.bq.robotic.drag_drop_grid.DraggableGridView;
@@ -88,8 +87,6 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		gridView = ((DraggableGridView) layout.findViewById(R.id.grid_view));
 		gridView.setDeleteZone((DeleteDropZoneView) layout.findViewById(R.id.delete_view));
 
-		setUiListeners(layout);
-
 		return layout;
 
 	}
@@ -102,34 +99,50 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		Bundle bundle = this.getArguments();
 		if(bundle != null){
 		    int robotTypeIndex = bundle.getInt(RoboPadConstants.ROBOT_TYPE_KEY, robotType.POLLYWOG.ordinal());
-//		    String botTypeString = "";
-		    
+
 		    if(robotTypeIndex == robotType.POLLYWOG.ordinal()) {
 		    	botType = robotType.POLLYWOG;
-//		    	botTypeString = getString(R.string.pollywog);
-		    
+
 		    } else if (robotTypeIndex == robotType.BEETLE.ordinal()) {
 		    	botType = robotType.BEETLE;
-//		    	botTypeString = getString(R.string.beetle);
-		    	
 		    	setBeetleUIComponents();
 		    	
 		    } else if (robotTypeIndex == robotType.RHINO.ordinal()) {
                 botType = robotType.RHINO;
-//                botTypeString = getString(R.string.rhino);
-
                 setRhinoUIComponents();
 
             } else if (robotTypeIndex == robotType.CRAB.ordinal()) {
                 botType = robotType.CRAB;
-//                botTypeString = getString(R.string.crab);
 
 		    } else if (robotTypeIndex == robotType.GENERIC_ROBOT.ordinal()) {
 		    	botType = robotType.GENERIC_ROBOT;
-//		    	botTypeString = getString(R.string.generic_robot);
-		    	
 		    	setGenericRobotUIComponents();
 		    }
+
+            setUiListeners();
+
+            Resources r = getActivity().getResources();
+
+            int size = -1;
+            Configuration config = r.getConfiguration();
+
+            if (config.smallestScreenWidthDp >= 720) {
+                size = 120;
+
+            } else if (config.smallestScreenWidthDp >= 600) {
+                size = 95;
+
+            }else if (config.screenWidthDp >= 500) {
+                size = 80;
+
+            } else {
+                size = 60;
+            }
+
+            if(size > 0) {
+                gridView.setFixedChildrenHeight(size);
+                gridView.setFixedChildrenWidth(size);
+            }
 
             sendMovementsHandler = new Handler();
 		}
@@ -143,8 +156,8 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 		// Retain this fragment across configuration changes.
 		setRetainInstance(true);
 	}
-	
-	
+
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -158,15 +171,6 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 					+ " must implement SelectBotListener");
 		}
 	}
-
-
-//    /**
-//     * Needed to override the callback when the user clicks the back button because
-//     */
-//    @Override
-//    public void onBackPressed() {
-//        listener.
-//    }
 	
 	
 	public void onBluetoothConnected() {
@@ -184,158 +188,96 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 	 * Set the listeners to the views that need them. It must be done here in the fragment in order
 	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
 	 * callbacks of all the possible fragments
-	 * 
-	 * @param containerLayout The view used as the main container for this fragment
 	 */
-	private void setUiListeners(View containerLayout) {
+	private void setUiListeners() {
 		
     	gridView.setOnRearrangeListener(new OnRearrangeListener() {
-			public void onRearrange(int oldIndex, int newIndex) {
-				if(scheduledControls.isEmpty()) {
-					return;
-				}
-				
-				String scheduledControl = scheduledControls.remove(oldIndex);
-				if (oldIndex < newIndex)
-					scheduledControls.add(newIndex, scheduledControl);
-				else
-					scheduledControls.add(newIndex, scheduledControl);
-			}
-			
-			public void onRearrange(boolean isDraggedDeleted, int draggedDeletedIndex) {
-				if(scheduledControls.isEmpty()) {
-					return;
-				}
-				
-				if(isDraggedDeleted) {
-					scheduledControls.remove(draggedDeletedIndex);
-				}
-			}
-		});
-    	
-//    	gridView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//				gridView.removeViewAt(arg2);
-//				scheduledControls.remove(arg2);
-//			}
-//		});
-    	
-    	//FIXME
-    	gridView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            public void onRearrange(int oldIndex, int newIndex) {
+                if (scheduledControls.isEmpty()) {
+                    return;
+                }
 
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				gridView.onClick(arg1);
-				return true;
-			}
-		});
+                String scheduledControl = scheduledControls.remove(oldIndex);
+                if (oldIndex < newIndex)
+                    scheduledControls.add(newIndex, scheduledControl);
+                else
+                    scheduledControls.add(newIndex, scheduledControl);
+            }
 
-    	ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
-		stopButton.setOnClickListener(onButtonClick);
+            public void onRearrange(boolean isDraggedDeleted, int draggedDeletedIndex) {
+                if (scheduledControls.isEmpty()) {
+                    return;
+                }
 
-		ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
-		upButton.setOnClickListener(onButtonClick);
+                if (isDraggedDeleted) {
+                    scheduledControls.remove(draggedDeletedIndex);
+                }
+            }
+        });
 
-		ImageButton downButton = (ImageButton) containerLayout.findViewById(R.id.down_button);
-		downButton.setOnClickListener(onButtonClick);
+        GridLayout movementsViews = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
+        for (int i = 0; i < movementsViews.getChildCount(); i++) {
+            movementsViews.getChildAt(i).setOnClickListener(onMovementsButtonClick);
+        }
 
-		ImageButton leftButton = (ImageButton) containerLayout.findViewById(R.id.left_button);
-		leftButton.setOnClickListener(onButtonClick);
+        LinearLayout optionsLayout = (LinearLayout) getActivity().findViewById(R.id.menu_options_container);
+        for (int i = 0; i < optionsLayout.getChildCount(); i++) {
+            optionsLayout.getChildAt(i).setOnClickListener(onOptionsButtonClick);
+        }
 
-		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
-		rightButton.setOnClickListener(onButtonClick);
-		
-		ImageButton sendMovementsButton = (ImageButton) containerLayout.findViewById(R.id.send_movements_button);
-        sendMovementsButton.setOnClickListener(onButtonClick);
-		
-		ImageButton removeAllButton = (ImageButton) containerLayout.findViewById(R.id.remove_all_button);
-		removeAllButton.setOnClickListener(onButtonClick);
 
-        ImageButton loadMovementsButton = (ImageButton) containerLayout.findViewById(R.id.load_movements_button);
-        loadMovementsButton.setOnClickListener(onButtonClick);
-
-        ImageButton saveMovementsButton = (ImageButton) containerLayout.findViewById(R.id.save_movements_button);
-        saveMovementsButton.setOnClickListener(onButtonClick);
-		
-		ImageButton setting_button = (ImageButton) containerLayout.findViewById(R.id.setting_button);
-        setting_button.setOnClickListener(onButtonClick);
-
-        final GridLayout typeOfMovementsContainer = (GridLayout) containerLayout.findViewById(R.id.type_of_movements_container);
+        final GridLayout typeOfMovementsContainer = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
         final ViewTreeObserver vto = typeOfMovementsContainer.getViewTreeObserver();
         final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
-                int finalHeight = typeOfMovementsContainer.getHeight();
+                Rect scrollBounds = new Rect();
+                ScrollView scroll = (ScrollView) getActivity().findViewById(R.id.scroll_container);
+                scroll.getDrawingRect(scrollBounds);
+//                int finalHeight = scrollBounds.bottom - getActivity().getResources().getDimensionPixelSize(R.dimen.scheduler_grid_margin);
+                int finalHeight = scrollBounds.bottom;
                 int childCount = typeOfMovementsContainer.getChildCount();
-                boolean rowWasSet = false;
 
-                for(int i = 0; i < childCount; i++) {
-                    if (typeOfMovementsContainer.getChildAt(i).getBottom() > finalHeight) {
-                        if (!rowWasSet) {
-                            typeOfMovementsContainer.setRowCount(i);
-                            rowWasSet = true;
+                if(childCount > 1) {
+                    for (int i = 0; i < childCount; i++) {
+
+                        if (typeOfMovementsContainer.getChildAt(i).getBottom() > finalHeight) {
+                            typeOfMovementsContainer.setColumnCount(2);
+                            break;
                         }
-                        typeOfMovementsContainer.setColumnCount(typeOfMovementsContainer.getColumnCount() + 1);
                     }
                 }
 
-                final GridLayout typeOfMovementsContainer = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
+                scroll.invalidate();
+
                 final ViewTreeObserver vto = typeOfMovementsContainer.getViewTreeObserver();
                 vto.removeOnPreDrawListener(this);
+
                 return true;
             }
         };
 
         vto.addOnPreDrawListener(preDrawListener);
+
 	}
 	
 	
 	private void setBeetleUIComponents() {
 		GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
-		controlsLayout.addView(LinearLayout.inflate(getActivity().getBaseContext(), R.layout.scheduler_beetle_component, null));
-		
-		ImageButton mFullOpenClawButton = (ImageButton) getActivity().findViewById(R.id.full_open_claw_button);
-		mFullOpenClawButton.setOnClickListener(onClawButtonClick);
-
-		ImageButton mOpenStepClawButton = (ImageButton) getActivity().findViewById(R.id.open_claw_button);
-		mOpenStepClawButton.setOnClickListener(onClawButtonClick);
-
-		ImageButton mCloseStepClawButton = (ImageButton) getActivity().findViewById(R.id.close_claw_button);
-		mCloseStepClawButton.setOnClickListener(onClawButtonClick);
+		getActivity().getLayoutInflater().inflate(R.layout.scheduler_beetle_component, controlsLayout, true);
 	}
 	
 	
 	private void setRhinoUIComponents() {
         GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
-		controlsLayout.addView(LinearLayout.inflate(getActivity().getBaseContext(), R.layout.scheduler_rhino_component, null));
-		
-		ImageButton mChargeButton = (ImageButton) getActivity().findViewById(R.id.charge_button);
-		mChargeButton.setOnClickListener(onChargeButtonClick);
+        getActivity().getLayoutInflater().inflate(R.layout.scheduler_rhino_component, controlsLayout, true);
+
 	}
 	
 	
 	private void setGenericRobotUIComponents() {
         GridLayout controlsLayout = (GridLayout) getActivity().findViewById(R.id.type_of_movements_container);
-		controlsLayout.addView(LinearLayout.inflate(getActivity().getBaseContext(), R.layout.scheduler_generic_robot_component, null));
-		
-		ImageButton commandButton1 = (ImageButton) getActivity().findViewById(R.id.command_button_1);
-		commandButton1.setOnClickListener(onGenericCommandButtonClick);
-		
-		ImageButton commandButton2 = (ImageButton) getActivity().findViewById(R.id.command_button_2);
-		commandButton2.setOnClickListener(onGenericCommandButtonClick);
-		
-		ImageButton commandButton3 = (ImageButton) getActivity().findViewById(R.id.command_button_3);
-		commandButton3.setOnClickListener(onGenericCommandButtonClick);
-		
-		ImageButton commandButton4 = (ImageButton) getActivity().findViewById(R.id.command_button_4);
-		commandButton4.setOnClickListener(onGenericCommandButtonClick);
-		
-		ImageButton commandButton5 = (ImageButton) getActivity().findViewById(R.id.command_button_5);
-		commandButton5.setOnClickListener(onGenericCommandButtonClick);
-		
-		ImageButton commandButton6 = (ImageButton) getActivity().findViewById(R.id.command_button_6);
-		commandButton6.setOnClickListener(onGenericCommandButtonClick);
+        getActivity().getLayoutInflater().inflate(R.layout.scheduler_generic_robot_component, controlsLayout, true);
+
 	}
 	
 	
@@ -352,10 +294,19 @@ public class ScheduleRobotMovementsFragment extends Fragment {
     }
 
 
+    private void addButtonPressedToGrid(int drawableId, String movement) {
+        ImageView view = (ImageView) ImageView.inflate(getActivity().getBaseContext(), R.layout.grid_view_item_layout, null);
+        view.setImageResource(drawableId);
+        gridView.addView(view);
+        scheduledControls.add(movement);
+
+    }
+
+
 	/**
 	 * Listeners for the views that manage only clicks
 	 */
-	private OnClickListener onButtonClick = new OnClickListener() {
+	private OnClickListener onMovementsButtonClick = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -365,217 +316,145 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 				return;
 			}
 			
-			ImageView view = (ImageView) ImageView.inflate(getActivity().getBaseContext(), R.layout.grid_view_item_layout, null);
-
-			switch(v.getId()) { 
+			switch(v.getId()) {
 
 				case R.id.stop_button:
-					view.setImageResource(R.drawable.stop_button);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.STOP_COMMAND);				
+                    addButtonPressedToGrid(R.drawable.ic_stop_button, RoboPadConstants.STOP_COMMAND);
 					break;
 					
 				case R.id.up_button:
-					view.setImageResource(R.drawable.ic_up_button);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.UP_COMMAND);				
+                    addButtonPressedToGrid(R.drawable.ic_up_button, RoboPadConstants.UP_COMMAND);
 					break;
 					
 				case R.id.down_button:
-					view.setImageResource(R.drawable.ic_down_button);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.DOWN_COMMAND);				
+                    addButtonPressedToGrid(R.drawable.ic_down_button, RoboPadConstants.DOWN_COMMAND);
 					break;
 					
 				case R.id.left_button:
-					view.setImageResource(R.drawable.ic_left_button);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.LEFT_COMMAND);				
+                    addButtonPressedToGrid(R.drawable.ic_left_button, RoboPadConstants.LEFT_COMMAND);
 					break;
 				
 				case R.id.right_button:
-					view.setImageResource(R.drawable.ic_right_button);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.RIGHT_COMMAND);				
+                    addButtonPressedToGrid(R.drawable.ic_right_button, RoboPadConstants.RIGHT_COMMAND);
 					break;
-					
-				case R.id.remove_all_button:
-					scheduledControls.clear();
-					gridView.removeAll();
-					break;
-					
-				case R.id.send_movements_button:
-					
-					if(!listener.onCheckIsConnected() || scheduledControls.isEmpty()) {
-						break;
-					}
-					
-					disableControllerButtons();
-					
-					currentControlIndex = 0;
+			}
+
+            if(botType == robotType.BEETLE) {
+                switch (v.getId()) {
+                    case R.id.full_open_claw_button:
+                        addButtonPressedToGrid(R.drawable.ic_full_open_claw, RoboPadConstants.FULL_OPEN_STEP_COMMAND);
+                        break;
+
+                    case R.id.open_claw_button:
+                        addButtonPressedToGrid(R.drawable.ic_open_claw, RoboPadConstants.OPEN_STEP_COMMAND);
+                        break;
+
+                    case R.id.close_claw_button:
+                        addButtonPressedToGrid(R.drawable.ic_close_claw, RoboPadConstants.CLOSE_STEP_COMMAND);
+                        break;
+                }
+            }
+
+            if(botType == robotType.RHINO) {
+                switch(v.getId()) {
+
+                    case R.id.charge_button:
+                        addButtonPressedToGrid(R.drawable.charge_button, RoboPadConstants.CHARGE_COMMAND);
+                        break;
+
+                }
+            }
+
+            if(botType == robotType.GENERIC_ROBOT) {
+                switch(v.getId()) {
+
+                    case R.id.command_button_1:
+                        addButtonPressedToGrid(R.drawable.comand_button_1, RoboPadConstants.COMMAND_1);
+                        break;
+
+                    case R.id.command_button_2:
+                        addButtonPressedToGrid(R.drawable.comand_button_2, RoboPadConstants.COMMAND_2);
+                        break;
+
+                    case R.id.command_button_3:
+                        addButtonPressedToGrid(R.drawable.comand_button_3, RoboPadConstants.COMMAND_3);
+                        break;
+
+                    case R.id.command_button_4:
+                        addButtonPressedToGrid(R.drawable.comand_button_4, RoboPadConstants.COMMAND_4);
+                        break;
+
+                    case R.id.command_button_5:
+                        addButtonPressedToGrid(R.drawable.comand_button_5, RoboPadConstants.COMMAND_5);
+                        break;
+
+                    case R.id.command_button_6:
+                        addButtonPressedToGrid(R.drawable.comand_button_6, RoboPadConstants.COMMAND_6);
+                        break;
+
+                }
+            }
+
+		}
+	};
+
+
+    /**
+     * Listeners for the views that manage only clicks
+     */
+    private OnClickListener onOptionsButtonClick = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            if (listener == null) {
+                Log.e(LOG_TAG, "RobotListener is null");
+                return;
+            }
+
+            switch (v.getId()) {
+
+                case R.id.remove_all_button:
+                    scheduledControls.clear();
+                    gridView.removeAll();
+                    break;
+
+                case R.id.send_movements_button:
+
+                    if (!listener.onCheckIsConnected() || scheduledControls.isEmpty()) {
+                        break;
+                    }
+
+                    disableControllerButtons();
+
+                    currentControlIndex = 0;
                     (new MySendControlsToArduinoTask()).run();
-					break;
-			
-				case R.id.setting_button:
-//				    PopupMenu popup = new PopupMenu(getActivity(), v);
-//				    MenuInflater inflater = popup.getMenuInflater();
-//				    inflater.inflate(R.menu.scheduler_menu, popup.getMenu());
-//				    popup.setOnMenuItemClickListener(onMenuItemClickListener);
-//				    popup.show();
-					break;
-			}
+                    break;
 
-		}
-	};
-
-
-	private OnClickListener onClawButtonClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-
-			if(listener == null) {
-				Log.e(LOG_TAG, "RobotListener is null");
-				return;
-			}
-			
-			ImageView view = (ImageView) ImageView.inflate(getActivity().getBaseContext(), R.layout.grid_view_item_layout, null);
-
-			switch(v.getId()) { 
-			
-				case R.id.full_open_claw_button: 
-					view.setImageResource(R.drawable.ic_full_open_claw);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.FULL_OPEN_STEP_COMMAND);	
-					break;
-	
-				case R.id.open_claw_button: 
-					view.setImageResource(R.drawable.ic_open_claw);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.OPEN_STEP_COMMAND);
-					break;
-	
-				case R.id.close_claw_button:
-					view.setImageResource(R.drawable.ic_close_claw);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.CLOSE_STEP_COMMAND);
-					break;	
-			}
-		}
-	};
-	
-	
-	private OnClickListener onChargeButtonClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-
-			if(listener == null) {
-				Log.e(LOG_TAG, "RobotListener is null");
-				return;
-			}
-			
-			ImageView view = (ImageView) ImageView.inflate(getActivity().getBaseContext(), R.layout.grid_view_item_layout, null);
-
-			switch(v.getId()) { 
-			
-				case R.id.charge_button: 
-					view.setImageResource(R.drawable.charge_button);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.CHARGE_COMMAND);	
-					break;
-	
-			}
-		}
-	};
-	
-	
-	private OnClickListener onGenericCommandButtonClick = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-
-			if(listener == null) {
-				Log.e(LOG_TAG, "RobotListener is null");
-				return;
-			}
-			
-			ImageView view = (ImageView) ImageView.inflate(getActivity().getBaseContext(), R.layout.grid_view_item_layout, null);
-
-			switch(v.getId()) { 
-			
-				case R.id.command_button_1: 
-					view.setImageResource(R.drawable.comand_button_1);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.COMMAND_1);	
-					break;
-					
-				case R.id.command_button_2: 
-					view.setImageResource(R.drawable.comand_button_2);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.COMMAND_2);	
-					break;
-					
-				case R.id.command_button_3: 
-					view.setImageResource(R.drawable.comand_button_3);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.COMMAND_3);	
-					break;
-					
-				case R.id.command_button_4: 
-					view.setImageResource(R.drawable.comand_button_4);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.COMMAND_4);	
-					break;
-					
-				case R.id.command_button_5: 
-					view.setImageResource(R.drawable.comand_button_5);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.COMMAND_5);	
-					break;
-					
-				case R.id.command_button_6: 
-					view.setImageResource(R.drawable.comand_button_6);
-					gridView.addView(view);
-					scheduledControls.add(RoboPadConstants.COMMAND_6);	
-					break;
-
-			}
-		}
-	};
-	
-	
-	private OnMenuItemClickListener onMenuItemClickListener = new OnMenuItemClickListener() {
-
-		@Override
-		public boolean onMenuItemClick(MenuItem item) {
-			
-			switch (item.getItemId()) {
-			
-		        case R.id.save_scheduler:
-		            saveScheduler();
-		            return true;
-		            
-		        case R.id.load_scheduler:
+                case R.id.load_movements_button:
                     //FIXME
 //		            loadScheduler();
-		            return true;
-		            
-		        case R.id.remove_scheduler:
+                    break;
+
+                case R.id.save_movements_button:
+                    saveScheduler();
+                    break;
+
+                case R.id.remove_stored_movements_button:
                     //FIXME
 //		            removeScheduler();
-		            return true;
-		            
-		        case R.id.settings:
-		            //FIXME
-		            return true;
-		            
-		        default:
-		            return false;
-	    }
-		}
-		
-	};
+                    break;
+
+//                case R.id.setting_button:
+////				    PopupMenu popup = new PopupMenu(getActivity(), v);
+////				    MenuInflater inflater = popup.getMenuInflater();
+////				    inflater.inflate(R.menu.scheduler_menu, popup.getMenu());
+////				    popup.setOnMenuItemClickListener(onMenuItemClickListener);
+////				    popup.show();
+//                    break;
+            }
+        }
+    };
 
 
 	public robotType getBotType() {
@@ -594,25 +473,12 @@ public class ScheduleRobotMovementsFragment extends Fragment {
             controlsLayout.getChildAt(i).setEnabled(true);
 		}
 
-		((ImageButton) getActivity().findViewById(R.id.send_movements_button)).setEnabled(true);
-		((ImageButton) getActivity().findViewById(R.id.remove_all_button)).setEnabled(true);
-        ((ImageButton) getActivity().findViewById(R.id.load_movements_button)).setEnabled(true);
-        ((ImageButton) getActivity().findViewById(R.id.save_movements_button)).setEnabled(true);
-        ((ImageButton) getActivity().findViewById(R.id.setting_button)).setEnabled(true);
-		((ProgressBar) getActivity().findViewById(R.id.progress_bar)).setVisibility(View.GONE);
-		
-		if(botType == robotType.BEETLE) {
-			LinearLayout beetleControlsViews = (LinearLayout) getActivity().findViewById(R.id.beetle_controls_layout);
-			for (int i = 0; i < beetleControlsViews.getChildCount(); i++) {
-				beetleControlsViews.getChildAt(i).setEnabled(true);
-			}
-		
-		} else if(botType == robotType.GENERIC_ROBOT) {
-			LinearLayout genericRobotControlsViews = (LinearLayout) getActivity().findViewById(R.id.generic_robot_controls_layout);
-			for (int i = 0; i < genericRobotControlsViews.getChildCount(); i++) {
-				genericRobotControlsViews.getChildAt(i).setEnabled(true);
-			}
-		}
+        ((ProgressBar) getActivity().findViewById(R.id.progress_bar)).setVisibility(View.GONE);
+
+        LinearLayout optionsLayout = (LinearLayout) getActivity().findViewById(R.id.menu_options_container);
+        for (int i = 0; i < optionsLayout.getChildCount(); i++) {
+            optionsLayout.getChildAt(i).setEnabled(true);
+        }
 		
 		gridView.setEnabled(true);
 	}
@@ -624,26 +490,13 @@ public class ScheduleRobotMovementsFragment extends Fragment {
 			controlsViews.getChildAt(i).setEnabled(false);
 		}
 
-        ((ImageButton) getActivity().findViewById(R.id.send_movements_button)).setEnabled(false);
-        ((ImageButton) getActivity().findViewById(R.id.remove_all_button)).setEnabled(false);
-        ((ImageButton) getActivity().findViewById(R.id.load_movements_button)).setEnabled(false);
-        ((ImageButton) getActivity().findViewById(R.id.save_movements_button)).setEnabled(false);
-        ((ImageButton) getActivity().findViewById(R.id.setting_button)).setEnabled(false);
+        LinearLayout optionsLayout = (LinearLayout) getActivity().findViewById(R.id.menu_options_container);
+        for (int i = 0; i < optionsLayout.getChildCount(); i++) {
+            optionsLayout.getChildAt(i).setEnabled(false);
+        }
+
 		((ProgressBar) getActivity().findViewById(R.id.progress_bar)).setVisibility(View.VISIBLE);
-		
-		if(botType == robotType.BEETLE) {
-			LinearLayout beetleControlsViews = (LinearLayout) getActivity().findViewById(R.id.beetle_controls_layout);
-			for (int i = 0; i < beetleControlsViews.getChildCount(); i++) {
-				beetleControlsViews.getChildAt(i).setEnabled(false);
-			}
-		
-		} else if(botType == robotType.GENERIC_ROBOT) {
-			LinearLayout genericRobotControlsViews = (LinearLayout) getActivity().findViewById(R.id.generic_robot_controls_layout);
-			for (int i = 0; i < genericRobotControlsViews.getChildCount(); i++) {
-				genericRobotControlsViews.getChildAt(i).setEnabled(false);
-			}
-		}
-		
+
 		gridView.setEnabled(false);
 	}
 		

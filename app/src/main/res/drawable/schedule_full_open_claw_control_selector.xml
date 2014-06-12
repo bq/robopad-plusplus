@@ -5,6 +5,6 @@
         android:drawable="@drawable/full_open_claw_disabled" />
     
     <item android:state_enabled="true"
-        android:drawable="@drawable/ic_full_open_claw" />
+        android:drawable="@drawable/ic_scheduler_full_open_claw" />
     
 </selector>

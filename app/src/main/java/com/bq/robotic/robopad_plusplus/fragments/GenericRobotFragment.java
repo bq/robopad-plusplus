@@ -157,8 +157,13 @@ public class GenericRobotFragment extends RobotFragment {
 		}
 	}
 
+    @Override
+    protected void stateChanged(RoboPadConstants.robotState nextState) {
 
-	/**
+    }
+
+
+    /**
 	 * Listeners for the views that manage only clicks
 	 */
 	protected OnClickListener onButtonClick = new OnClickListener() {

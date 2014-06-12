@@ -4,8 +4,14 @@
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     -->
-    <dimen name="activity_horizontal_margin">128dp</dimen>
+    <dimen name="activity_horizontal_margin">10dp</dimen>
     <dimen name="activity_vertical_margin">20dp</dimen>
+
+    <dimen name="scheduler_control_size">105dp</dimen>
+    <dimen name="scheduler_grid_margin">20dp</dimen>
+    <dimen name="scheduler_delete_zone_right_margin">30dp</dimen>
+    <dimen name="scheduler_delete_zone_bottom_margin">40dp</dimen>
+    <dimen name="scheduler_grid_left_right_margin">20dp</dimen>
 
     <dimen name="button_press_padding">16dp</dimen>
     <dimen name="button_press_medium_padding">12dp</dimen>
@@ -16,5 +22,6 @@
     <dimen name="left_pad_margin">80dp</dimen>
     <dimen name="pad_minus_margins">-80dp</dimen>
     <dimen name="text_size">18sp</dimen>
+    <dimen name="robot_state_button_margin">30dp</dimen>
 
 </resources>

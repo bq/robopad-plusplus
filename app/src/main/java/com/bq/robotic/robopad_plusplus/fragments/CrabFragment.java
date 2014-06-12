@@ -118,8 +118,13 @@ public class CrabFragment extends RobotFragment {
         // Nothing to do here
 	}
 
+    @Override
+    protected void stateChanged(RoboPadConstants.robotState nextState) {
 
-	/**
+    }
+
+
+    /**
 	 * Listeners for the views that manage only clicks
 	 */
 	protected OnClickListener onButtonClick = new OnClickListener() {

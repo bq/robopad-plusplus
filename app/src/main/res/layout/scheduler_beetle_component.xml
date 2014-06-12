@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/beetle_controls_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ImageButton
         android:id="@+id/full_open_claw_button"
-        android:layout_width="@dimen/scheduler_control_height"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:background="@drawable/btn_green_selector"
-        android:scaleType="centerCrop"
+        android:layout_width="@dimen/scheduler_control_size"
+        android:layout_height="@dimen/scheduler_control_size"
+        android:background="@drawable/green_circle_btn_transparent_selector"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
         android:src="@drawable/schedule_full_open_claw_control_selector" />
 
     <ImageButton
         android:id="@+id/open_claw_button"
-        android:layout_width="@dimen/scheduler_control_height"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:background="@drawable/btn_green_selector"
+        android:layout_width="@dimen/scheduler_control_size"
+        android:layout_height="@dimen/scheduler_control_size"
+        android:background="@drawable/green_circle_btn_transparent_selector"
         android:scaleType="centerCrop"
+        android:layout_gravity="center"
         android:src="@drawable/schedule_open_claw_control_selector" />
 
     <ImageButton
         android:id="@+id/close_claw_button"
-        android:layout_width="@dimen/scheduler_control_height"
-        android:layout_height="@dimen/scheduler_control_height"
-        android:background="@drawable/btn_green_selector"
+        android:layout_width="@dimen/scheduler_control_size"
+        android:layout_height="@dimen/scheduler_control_size"
+        android:background="@drawable/green_circle_btn_transparent_selector"
         android:scaleType="centerCrop"
+        android:layout_gravity="center"
         android:src="@drawable/schedule_close_claw_control_selector" />
 
-</LinearLayout>
+</merge>

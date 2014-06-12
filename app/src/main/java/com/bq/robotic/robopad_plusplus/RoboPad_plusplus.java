@@ -62,6 +62,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     // Debugging
     private static final String LOG_TAG = "RoboPad_plusplus";
 
+    private static final String SAVE_FRAGMENT_STATE_KEY = "current_fragment_key";
     private FragmentManager mFragmentManager;
 
     private ImageButton connectButton;
@@ -296,6 +297,15 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        mFragmentManager.putFragment(outState, SAVE_FRAGMENT_STATE_KEY, mFragmentManager.findFragmentById(R.id.game_pad_container));
+
+    }
+
 
     /**************************************************************************************
      **************************   ROBOTLISTENER CALLBACKS   *******************************
@@ -377,7 +387,7 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 
         if (scheduleRobotMovementsFragment != null) {
 
-            ft.addToBackStack(RoboPadConstants.currentRobotBackStackKey);
+            ft.addToBackStack(RoboPadConstants.CURRENT_ROBOT_BACK_STACK_KEY);
             scheduleRobotMovementsFragment.setArguments(bundle);
             ft.replace(R.id.game_pad_container, scheduleRobotMovementsFragment);
             ft.commit();

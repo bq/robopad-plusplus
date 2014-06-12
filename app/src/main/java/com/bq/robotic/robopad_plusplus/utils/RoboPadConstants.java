@@ -34,6 +34,7 @@ public class RoboPadConstants {
     public static final long CRAB_DELAY_BETWEEN_SCHEDULED_COMMANDS = 4000;
 
     public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT}
+    public static enum robotState {MANUAL_CONTROL, LINE_FOLLOWER, LIGHT_FOLLOWER}
 
     
     /**
@@ -48,6 +49,12 @@ public class RoboPadConstants {
     public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
     public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
     public static final String SHOW_TIPS_KEY = "help_options";
+    public static final String POLLYWOG_FIRST_TIME_TIPS_KEY = "pollywog_first_time_tips_key";
+    public static final String BEETLE_FIRST_TIME_TIPS_KEY = "beetle_first_time_tips_key";
+    public static final String RHINO_FIRST_TIME_TIPS_KEY = "rhino_first_time_tips_key";
+    public static final String CRAB_FIRST_TIME_TIPS_KEY = "crab_first_time_tips_key";
+    public static final String GENERIC_ROBOT_FIRST_TIME_TIPS_KEY = "generic_robot_first_time_tips_key";
+    public static final String CURRENT_TIP_KEY = "current_tip_key";
     public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS}
 
 
@@ -81,7 +88,15 @@ public class RoboPadConstants {
     public static final String LEFT_COMMAND = "L"; // servo digital port both wheels, left[pin 6, value = 90], right[pin 9, value = 0] //with 90 it is stop
     public static final String RIGHT_COMMAND = "R"; // servo digital port both wheels, left[pin 6, value = 0], right[pin 9, value = 90]
     public static final String STOP_COMMAND = "S"; //servo digital port both, stop both
-    
+
+
+    /**
+     * Default state modes of the robots
+     */
+    public static final String MANUAL_CONTROL_MODE_COMMAND = "M";
+    public static final String LINE_FOLLOWER_MODE_COMMAND = "I";
+    public static final String LIGHT_FOLLOWER_MODE_COMMAND = "G";
+
     
     /**
      * Rhino Robot
@@ -124,6 +139,9 @@ public class RoboPadConstants {
      */
     public static final String ROBOT_TYPE_KEY = "robot_type_key";
 
-    // save back stack key
-    public static final String currentRobotBackStackKey = "current_robot_back_stack_key";
+
+    /**
+     * Save back stack key
+     */
+    public static final String CURRENT_ROBOT_BACK_STACK_KEY = "current_robot_back_stack_key";
 }

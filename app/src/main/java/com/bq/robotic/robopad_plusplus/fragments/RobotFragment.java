@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.listeners.RobotListener;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotState;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 
 
@@ -61,6 +62,9 @@ public abstract class RobotFragment extends Fragment {
     protected ToolTipRelativeLayout mToolTipFrameLayout;
     protected boolean isLastTipToShow = true;
 
+    protected robotState state = RoboPadConstants.robotState.MANUAL_CONTROL;
+
+
 	/**
 	 * Set the listeners to the UI views
 	 * @param containerLayout
@@ -73,6 +77,14 @@ public abstract class RobotFragment extends Fragment {
 	 * @param viewId the id of the view pressed
 	 */
 	protected abstract void controlButtonActionDown(int viewId);
+
+
+    /**
+     * The state of the robot changes. The state is the type of control the user has of the robot
+     * such as manual control, or if the robot is in line follower mode
+     * @param nextState next state the robot is going to have
+     */
+    protected abstract void stateChanged(robotState nextState);
 
 
 	/**
@@ -101,15 +113,6 @@ public abstract class RobotFragment extends Fragment {
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Retain this fragment across configuration changes.
-		setRetainInstance(true);
-	}
-
-
-	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
@@ -133,6 +136,9 @@ public abstract class RobotFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Retain this fragment across configuration changes.
+        setRetainInstance(true);
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         int showTipsValue = Integer.parseInt(sharedPref.getString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.FIRST_TIME.ordinal())));
 
@@ -147,6 +153,86 @@ public abstract class RobotFragment extends Fragment {
             return;
         }
 
+        if (showTipsValue == RoboPadConstants.showTipsValues.FIRST_TIME.ordinal()) {
+            checkShowTipsIfFirstTime();
+
+        } else if (showTipsValue == RoboPadConstants.showTipsValues.ALWAYS.ordinal()) {
+            enableToolTipListener();
+            showTips();
+        }
+
+    }
+
+
+    /**
+     * When the user has selected the preference of showing the tips only the first time, must be
+     * the first time for each robot screen, because each one has itself actions available. So,
+     * this method checks if it is the first time the user enters in this current robot or not.
+     */
+    private void checkShowTipsIfFirstTime() {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+        if(this instanceof PollywogFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.POLLYWOG_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.POLLYWOG_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof BeetleFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof RhinoFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.RHINO_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.RHINO_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof CrabFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.CRAB_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.CRAB_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof GenericRobotFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.GENERIC_ROBOT_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.GENERIC_ROBOT_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+        }
+    }
+
+
+    /**
+     * Write in the shared preference editor
+     * @param key key of the preference
+     * @param value of the preference
+     */
+    private void writeInSharedPreferencesEditor(String key, boolean value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+
+    /**
+     * Enable the listener of the tips layout only if the fragment has to show the tips
+     */
+    private void enableToolTipListener() {
         mToolTipFrameLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -154,19 +240,6 @@ public abstract class RobotFragment extends Fragment {
                 showTips();
             }
         });
-
-        if (showTipsValue == RoboPadConstants.showTipsValues.FIRST_TIME.ordinal()) {
-
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.NEVER.ordinal()));
-            editor.commit();
-
-            showTips();
-
-        } else if (showTipsValue == RoboPadConstants.showTipsValues.ALWAYS.ordinal()) {
-            showTips();
-        }
-
     }
 
 
@@ -218,6 +291,10 @@ public abstract class RobotFragment extends Fragment {
 			switch (event.getAction()) {
 
 			case MotionEvent.ACTION_DOWN:
+
+                if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                    stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                }
 
 				if(listener != null && !listener.onCheckIsConnected()) {
 					mIsConnected = false;

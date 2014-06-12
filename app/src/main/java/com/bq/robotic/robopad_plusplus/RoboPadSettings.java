@@ -1,5 +1,6 @@
 package com.bq.robotic.robopad_plusplus;
 
+
 import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -25,7 +26,7 @@ import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 import java.util.List;
 
 /**
- * A {@link android.preference.PreferenceActivity} that presents a set of application settings. On
+ * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
  * settings are split by category, with category headers shown to the left of
  * the list of settings.
@@ -66,55 +67,13 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
      */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(RoboPadConstants.ENABLE_BLUETOOTH_KEY)) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            Boolean enablingBluetooth = sharedPref.getBoolean(RoboPadConstants.ENABLE_BLUETOOTH_KEY, false);
+            enableBluetoothKeyChanged();
 
-            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        } else if (key.equals(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY)) {
+            wasEnablingBluetoothAllowedKeyChanged();
 
-            if(enablingBluetooth) {
-
-                if(mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
-                    mBluetoothAdapter.enable();
-                }
-
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, true);
-                editor.commit();
-
-            } else if(mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) {
-                mBluetoothAdapter.disable();
-            }
-
-        }
-
-        else if (key.equals(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY)) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            Boolean isBluetoothAllowed = sharedPref.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, false);
-
-            // Only disable is the permission is revoked. Don't change the bluetooth state if it is not revoked
-            if(!isBluetoothAllowed) {
-
-                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                if(mBluetoothAdapter != null) {
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-                    editor.putBoolean(RoboPadConstants.ENABLE_BLUETOOTH_KEY, false);
-                    editor.commit();
-
-                    if (Build.VERSION.SDK_INT < 14 && !isXLargeTablet(this)) {
-                        ((CheckBoxPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
-
-                    } else if (Build.VERSION.SDK_INT > 14 && !isXLargeTablet(this)){
-                        ((SwitchPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
-
-                    } else if (Build.VERSION.SDK_INT > 14 && isXLargeTablet(this)) {
-                        PreferenceFragment fragment = (PreferenceFragment) getFragmentManager().findFragmentById(bluetoothFragmentId);
-                        Log.e(LOG_TAG, "fragment null? " + (fragment == null));
-                        Log.e(LOG_TAG, "preference manager null? " + (fragment.getPreferenceManager() == null));
-                        ((SwitchPreference) fragment.getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
-
-                    }
-                }
-            }
+        } else if (key.equals(RoboPadConstants.SHOW_TIPS_KEY)){
+            showTipsKeyChanged();
         }
     }
 
@@ -158,6 +117,87 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
         super.onPause();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+
+    /**
+     * The preference for enabling or disabling the Bluetooth has changed
+     */
+    private void enableBluetoothKeyChanged() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean enablingBluetooth = sharedPref.getBoolean(RoboPadConstants.ENABLE_BLUETOOTH_KEY, false);
+
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if(enablingBluetooth) {
+
+            if(mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
+                mBluetoothAdapter.enable();
+            }
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, true);
+            editor.commit();
+
+        } else if(mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.disable();
+        }
+    }
+
+
+    /**
+     * When the permission for the automatic enabling and disabling of the Bluetooth for the battery
+     * saving is revoked, the app disable the Bluetooth
+     */
+    private void wasEnablingBluetoothAllowedKeyChanged() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean isBluetoothAllowed = sharedPref.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, false);
+
+        // Only disable is the permission is revoked. Don't change the bluetooth state if it is not revoked
+        if(!isBluetoothAllowed) {
+
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if(mBluetoothAdapter != null) {
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                editor.putBoolean(RoboPadConstants.ENABLE_BLUETOOTH_KEY, false);
+                editor.commit();
+
+                if (Build.VERSION.SDK_INT < 14 && !isXLargeTablet(this)) {
+                    ((CheckBoxPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
+
+                } else if (Build.VERSION.SDK_INT > 14 && !isXLargeTablet(this)){
+                    ((SwitchPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
+
+                } else if (Build.VERSION.SDK_INT > 14 && isXLargeTablet(this)) {
+                    PreferenceFragment fragment = (PreferenceFragment) getFragmentManager().findFragmentById(bluetoothFragmentId);
+                    Log.e(LOG_TAG, "fragment null? " + (fragment == null));
+                    Log.e(LOG_TAG, "preference manager null? " + (fragment.getPreferenceManager() == null));
+                    ((SwitchPreference) fragment.getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
+
+                }
+            }
+        }
+    }
+
+
+    /**
+     * When the user select that the tips will be shown the first time, reset each robot screen value
+     * to true
+     */
+    private void showTipsKeyChanged() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int showTipsValue = Integer.parseInt(sharedPref.getString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.FIRST_TIME.ordinal())));
+
+        // If never we don't do anything
+        if (showTipsValue == RoboPadConstants.showTipsValues.FIRST_TIME.ordinal()) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(RoboPadConstants.POLLYWOG_FIRST_TIME_TIPS_KEY, true);
+            editor.putBoolean(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, true);
+            editor.putBoolean(RoboPadConstants.RHINO_FIRST_TIME_TIPS_KEY, true);
+            editor.putBoolean(RoboPadConstants.CRAB_FIRST_TIME_TIPS_KEY, true);
+            editor.putBoolean(RoboPadConstants.GENERIC_ROBOT_FIRST_TIME_TIPS_KEY, true);
+            editor.commit();
+        }
     }
 
 
@@ -212,13 +252,13 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
      */
     private static boolean isXLargeTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
-        & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
 
     /**
      * Determines whether the simplified settings UI should be shown. This is
      * true if this is forced via {@link #ALWAYS_SIMPLE_PREFS}, or the device
-     * doesn't have newer APIs like {@link android.preference.PreferenceFragment}, or the device
+     * doesn't have newer APIs like {@link PreferenceFragment}, or the device
      * doesn't have an extra-large screen. In these cases, a single-pane
      * "simplified" settings UI should be shown.
      */

@@ -5,10 +5,14 @@
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
 
-    <dimen name="activity_horizontal_margin">100dp</dimen>
+    <dimen name="activity_horizontal_margin">10dp</dimen>
     <dimen name="activity_vertical_margin">18dp</dimen>
 
-    <dimen name="scheduler_control_height">65dp</dimen>
+    <dimen name="scheduler_control_size">90dp</dimen>
+    <dimen name="scheduler_grid_margin">16dp</dimen>
+    <dimen name="scheduler_delete_zone_right_margin">26dp</dimen>
+    <dimen name="scheduler_delete_zone_bottom_margin">36dp</dimen>
+    <dimen name="scheduler_grid_left_right_margin">20dp</dimen>
 
     <dimen name="button_press_padding">12dp</dimen>
     <dimen name="button_press_medium_padding">9dp</dimen>
@@ -19,5 +23,6 @@
     <dimen name="left_pad_margin">60dp</dimen>
     <dimen name="pad_minus_margins">-60dp</dimen>
     <dimen name="text_size">16sp</dimen>
+    <dimen name="robot_state_button_margin">20dp</dimen>
 
 </resources>

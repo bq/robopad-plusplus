@@ -35,7 +35,8 @@
         <activity
             android:name="com.bq.robotic.robopad_plusplus.RoboPad_plusplus"
             android:screenOrientation="landscape"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".RoboPadSettings"
             android:label="@string/settings"

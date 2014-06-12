@@ -34,9 +34,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.utils.RobotConnectionsPopupWindow;
 import com.bq.robotic.robopad_plusplus.utils.TipsFactory;
@@ -56,13 +58,12 @@ public class PollywogFragment extends RobotFragment {
 	private static final String LOG_TAG = "PollywogFragment";
 
     private ImageButton pinExplanationButton;
+    private ImageButton lineFollowerButton;
+
 
     // Tips
-    private ToolTipView pin_explanation_tip;
-    private ToolTipView bluetooth_tip;
-    private ToolTipView pad_tip;
-    private ToolTipView schedule_tip;
-    private ToolTipView currentTipView;
+    private tips currentTip;
+    private enum tips {PIN, BLUETOOTH, SCHEDULE, PAD, CLAWS}
 
 
     @Override
@@ -109,6 +110,9 @@ public class PollywogFragment extends RobotFragment {
 
         pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
         pinExplanationButton.setOnClickListener(onButtonClick);
+
+        lineFollowerButton = (ImageButton) containerLayout.findViewById(R.id.line_follower);
+        lineFollowerButton.setOnClickListener(onButtonClick);
 	}
 
 
@@ -163,6 +167,10 @@ public class PollywogFragment extends RobotFragment {
 			switch(v.getId()) { 
 
 				case R.id.stop_button:
+
+                    if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                        stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                    }
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;
 
@@ -170,11 +178,6 @@ public class PollywogFragment extends RobotFragment {
 
                     PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
                             getActivity())).getPopupWindow();
-
-//                    // Displaying the popup at the specified location, + offsets.
-//                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
-//                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
-//                            pinExplanationButton.getPaddingTop());
 
                     int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
                             getActivity().getResources().getDisplayMetrics());
@@ -186,12 +189,57 @@ public class PollywogFragment extends RobotFragment {
                     break;
 
 				case R.id.schedule_button:
+
+                    if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                        stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                    }
+
 					listener.onScheduleButtonClicked(robotType.POLLYWOG);
 					break;
+
+                case R.id.line_follower:
+                    if(!listener.onCheckIsConnected()) {
+                        return;
+                    }
+
+                    if(state == robotState.MANUAL_CONTROL) {
+                        stateChanged(robotState.LINE_FOLLOWER);
+
+                    } else {
+                        stateChanged(robotState.MANUAL_CONTROL);
+                    }
+
+                    break;
 			}
 
 		}
 	};
+
+
+    /**
+     * The state of the robot changes. The state is the type of control the user has of the robot
+     * such as manual control, or if the robot is in line follower mode
+     * @param nextState next state the robot is going to have
+     */
+    protected void stateChanged(robotState nextState) {
+
+        switch (nextState) {
+
+            case MANUAL_CONTROL:
+                lineFollowerButton.setPressed(false);
+                state = robotState.MANUAL_CONTROL;
+                listener.onSendMessage(RoboPadConstants.MANUAL_CONTROL_MODE_COMMAND);
+                break;
+
+            case LINE_FOLLOWER:
+                lineFollowerButton.setPressed(true);
+                state = robotState.LINE_FOLLOWER;
+                listener.onSendMessage(RoboPadConstants.LINE_FOLLOWER_MODE_COMMAND);
+                break;
+
+        }
+
+    }
 
 
     private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
@@ -203,56 +251,57 @@ public class PollywogFragment extends RobotFragment {
     };
 
 
+    /**
+     * Show the next tip for this robot fragment. The tips are displayed one after another when the
+     * user clicks on the screen
+     */
     protected void showNextTip() {
-        if (currentTipView == null) {
+
+        if (currentTip == null) {
             setIsLastTipToShow(false);
-            // Pin explanation tip
-            pin_explanation_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
-                    getActivity().findViewById(R.id.bot_icon));
 
-            currentTipView = pin_explanation_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == pin_explanation_tip) {
-            pin_explanation_tip.remove();
-            pin_explanation_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
+                    getActivity().findViewById(R.id.bot_icon)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            bluetooth_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
-                    getActivity().findViewById(R.id.connect_button));
+            currentTip = tips.PIN;
 
-            currentTipView = bluetooth_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+        } else if (currentTip.equals(tips.PIN)) {
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == bluetooth_tip) {
-            bluetooth_tip.remove();
-            bluetooth_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            schedule_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.schedule_tip_text),
-                    getActivity().findViewById(R.id.schedule_button));
+            currentTip = tips.BLUETOOTH;
 
-            currentTipView = schedule_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+        } else if (currentTip.equals(tips.BLUETOOTH)) {
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == schedule_tip) {
-            schedule_tip.remove();
-            schedule_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.schedule_tip_text),
+                    getActivity().findViewById(R.id.schedule_button)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            pad_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
-                    getActivity().findViewById(R.id.right_button));
+            currentTip = tips.SCHEDULE;
 
-            currentTipView = pad_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+        } else if (currentTip.equals(tips.SCHEDULE)) {
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == pad_tip) {
-            pad_tip.remove();
-            pad_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
+                    getActivity().findViewById(R.id.right_button)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            currentTipView = null;
+            currentTip = tips.PAD;
+
+        } else if (currentTip.equals(tips.PAD)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            currentTip = null;
             setIsLastTipToShow(true);
             mToolTipFrameLayout.setOnClickListener(null);
+
         }
 
     }
+
 
     @Override
     protected void setIsLastTipToShow(boolean isLastTipToShow) {
@@ -264,6 +313,8 @@ public class PollywogFragment extends RobotFragment {
     public void onBluetoothConnected() {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
+
+        state = robotState.MANUAL_CONTROL;
     }
 
     @Override
