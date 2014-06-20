@@ -139,7 +139,7 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
                 size = 95;
 
             }else if (config.screenWidthDp >= 500) {
-                size = 80;
+                size = 75;
 
             } else {
                 size = 60;
@@ -360,10 +360,10 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
             iconId = R.drawable.ic_scheduler_full_open_claw;
 
         } else if (movement.equals(RoboPadConstants.OPEN_STEP_COMMAND)) {
-            iconId = R.drawable.ic_open_claw;
+            iconId = R.drawable.ic_scheduler_open_claw;
 
         } else if (movement.equals(RoboPadConstants.CLOSE_STEP_COMMAND)) {
-            iconId = R.drawable.ic_close_claw;
+            iconId = R.drawable.ic_scheduler_close_claw;
 
         } else if (movement.equals(RoboPadConstants.CHARGE_COMMAND)) {
             iconId = R.drawable.charge_button;
@@ -437,15 +437,15 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
             if(mBotType == robotType.BEETLE) {
                 switch (v.getId()) {
                     case R.id.full_open_claw_button:
-                        addButtonPressedToGrid(R.drawable.ic_full_open_claw, RoboPadConstants.FULL_OPEN_STEP_COMMAND);
+                        addButtonPressedToGrid(R.drawable.ic_scheduler_full_open_claw, RoboPadConstants.FULL_OPEN_STEP_COMMAND);
                         break;
 
                     case R.id.open_claw_button:
-                        addButtonPressedToGrid(R.drawable.ic_open_claw, RoboPadConstants.OPEN_STEP_COMMAND);
+                        addButtonPressedToGrid(R.drawable.ic_scheduler_open_claw, RoboPadConstants.OPEN_STEP_COMMAND);
                         break;
 
                     case R.id.close_claw_button:
-                        addButtonPressedToGrid(R.drawable.ic_close_claw, RoboPadConstants.CLOSE_STEP_COMMAND);
+                        addButtonPressedToGrid(R.drawable.ic_scheduler_close_claw, RoboPadConstants.CLOSE_STEP_COMMAND);
                         break;
                 }
             }

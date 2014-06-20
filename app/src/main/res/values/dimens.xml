@@ -12,7 +12,7 @@
 
     <dimen name="button_press_padding">6dp</dimen>
     <dimen name="button_press_medium_padding">5dp</dimen>
-    <dimen name="button_press_little_padding">2dp</dimen>
+    <dimen name="button_press_little_padding">3dp</dimen>
     <dimen name="stop_button_margin_right">-12dp</dimen>
     <dimen name="splash_icon_margin">23dp</dimen>
     <dimen name="claw_buttons_margin">12dp</dimen>

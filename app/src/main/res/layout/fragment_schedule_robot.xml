@@ -154,6 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/scheduler_grid_margin"
+        android:padding="2dp"
         android:layout_toRightOf="@id/layout_container_for_centering_grid"
         android:layout_below="@id/menu_options_container"
         android:background="@android:color/white" />

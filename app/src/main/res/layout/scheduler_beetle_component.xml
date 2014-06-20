@@ -8,6 +8,7 @@
         android:background="@drawable/green_circle_btn_transparent_selector"
         android:scaleType="fitXY"
         android:layout_gravity="center"
+        android:padding="@dimen/button_press_little_padding"
         android:src="@drawable/schedule_full_open_claw_control_selector" />
 
     <ImageButton
@@ -17,6 +18,7 @@
         android:background="@drawable/green_circle_btn_transparent_selector"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
+        android:padding="@dimen/button_press_medium_padding"
         android:src="@drawable/schedule_open_claw_control_selector" />
 
     <ImageButton
@@ -26,6 +28,7 @@
         android:background="@drawable/green_circle_btn_transparent_selector"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
+        android:padding="@dimen/button_press_padding"
         android:src="@drawable/schedule_close_claw_control_selector" />
 
 </merge>
