@@ -14,17 +14,17 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 
-import com.bq.robotic.robopad_plusplus.listeners.SchedulerMenuDialogListener;
+import com.bq.robotic.robopad_plusplus.listeners.ScheduledMovementsFileManagementListener;
 
 public class SchedulerMenuDialogFragment extends DialogFragment {
 	
 	private SharedPreferences preferences;
 	
-	private SchedulerMenuDialogListener listener;
+	private ScheduledMovementsFileManagementListener listener;
     private String title;
     private String[] list;
 
-    public SchedulerMenuDialogFragment(SchedulerMenuDialogListener listener, List<String> list, String title) {
+    public SchedulerMenuDialogFragment(ScheduledMovementsFileManagementListener listener, List<String> list, String title) {
         this.listener = listener;
         this.list = (String[]) list.toArray();
         this.title = title;

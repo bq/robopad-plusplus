@@ -30,11 +30,25 @@ import java.util.List;
  * Listener for the scheduler dialog
  */
 
-public interface SchedulerMenuDialogListener {
+public interface ScheduledMovementsFileManagementListener {
 
-	void onScheduleSaved(boolean success);
-	
-	void onScheduleRemoved(boolean success);
-	
-	void onScheduleLoaded(List<String> movementsList);
+    /**
+     * Result after having clicked the save sequence button
+     * @param success if the saving was succeeded or not
+     */
+	void onScheduledMovementsSaved(boolean success);
+
+
+    /**
+     * Result after having clicked the delete sequence button
+     * @param success if the removing was succeeded or not
+     */
+	void onScheduledMovementsRemoved(boolean success);
+
+
+    /**
+     * Result after having clicked the load sequence button
+     * @param loadedMovementsList list with the movements stored
+     */
+	void onScheduledMovementsLoaded(List<String> loadedMovementsList);
 }

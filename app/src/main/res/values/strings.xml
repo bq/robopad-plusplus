@@ -36,8 +36,17 @@
     <string name="schedule">Schedule</string>
     
     <!-- Scheduler -->
-    <string name="save">Save</string>
-    <string name="load">Load</string>
+    <string name="load_scheduled_movements_title">Select the file with the movements that you want to load</string>
+    <string name="delete_scheduled_movements_title">Select the file with the movements that you want to delete</string>
+    <string name="save_scheduled_movements_title">Choose a name for this sequence of movements</string>
+    <string name="save_succeeded">The sequence of movements was saved!</string>
+    <string name="save_not_succeeded">There was an error while saving the sequence of movements. Nothing was saved.</string>
+    <string name="delete_succeeded">The sequence of movements was deleted!</string>
+    <string name="delete_not_succeeded">There was an error while deleting the sequence of movements. Nothing was deleted.</string>
+    <string name="load_not_succeeded">There was an error while loading the sequence of movements</string>
+    <string name="no_files_stored">There aren\'t sequences of movements stored for this robot</string>
+    <string name="invalid_name">Enter a valid name</string>
+
 
     <!-- Tips -->
     <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>

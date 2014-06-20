@@ -5,7 +5,7 @@
         <!--android:drawable="@drawable/stop_button_disabled" /> -->
 
     <item android:state_enabled="false"
-        android:drawable="@drawable/ic_stop_button" />
+        android:drawable="@drawable/ic_stop_disabled" />
 
 <item android:state_enabled="true"
     android:drawable="@drawable/ic_stop_button" />
