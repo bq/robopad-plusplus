@@ -24,12 +24,14 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayout;
 import android.util.Log;
@@ -75,6 +77,9 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 	private ArrayList<String> scheduledControls = new ArrayList<String>();
 	private int currentControlIndex = -1;
 	private boolean sendStopCommand = false;
+    private MySendControlsToArduinoTask mSendControlsToArduinoTask;
+
+    private boolean waitsBetweenMovementsEnabledInPref = true;
 
     private Handler sendMovementsHandler;
     private ScheduledMovementsFileManagement scheduledMovementsFileManagement;
@@ -168,7 +173,15 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 	}
 
 
-	@Override
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        waitsBetweenMovementsEnabledInPref = sharedPref.getBoolean(RoboPadConstants.ENABLE_WAITS_BETWEEN_MOVEMENTS_KEY, true);
+    }
+
+    @Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
@@ -181,9 +194,18 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 					+ " must implement SelectBotListener");
 		}
 	}
-	
-	
-	public void onBluetoothConnected() {
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if(mSendControlsToArduinoTask != null) {
+            sendMovementsHandler.removeCallbacks(mSendControlsToArduinoTask);
+        }
+    }
+
+    public void onBluetoothConnected() {
 		// Do nothing
 	}
 	
@@ -523,7 +545,8 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
                     disableControllerButtons();
 
                     currentControlIndex = 0;
-                    (new MySendControlsToArduinoTask()).run();
+                    mSendControlsToArduinoTask = new MySendControlsToArduinoTask();
+                    mSendControlsToArduinoTask.run();
                     break;
 
                 case R.id.load_movements_button:
@@ -718,7 +741,11 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
                     gridView.getChildAt(currentControlIndex - 1).setBackgroundColor(Color.WHITE);
                 }
 
-                sendStopCommand = true;
+                // Enable the waits between movements only if it is enabled in the preferences menu
+                if(waitsBetweenMovementsEnabledInPref) {
+                    sendStopCommand = true;
+                }
+
                 currentControlIndex++;
 
                 if (mBotType == robotType.CRAB) {

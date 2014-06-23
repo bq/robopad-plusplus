@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@android:drawable/stat_sys_data_bluetooth">
+
+    <SwitchPreference
+        android:key="pref_scheduler_wait_between_movements"
+        android:title="@string/pref_title_wait_between_movements"
+        android:checked="true"
+        android:defaultValue="true"/>
+
+</PreferenceScreen>

@@ -25,4 +25,9 @@
     <string name="pref_title_bluetooth">Enable/Disable Bluetooth</string>
     <string name="pref_summary_automatic_bluetooth">Revoke the permission for turning off and on the Bluetooth automatically for battery saving</string>
 
+    <!-- Settings for Scheduler -->
+    <string name="pref_header_scheduler">Scheduler of movements</string>
+    <string name="pref_summary_scheduler">Manage options of the scheduler of movements</string>
+    <string name="pref_title_wait_between_movements">Waits between movements</string>
+
 </resources>

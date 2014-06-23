@@ -47,6 +47,7 @@ public class RoboPadConstants {
      * Shared preferences
      */
     public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
+    public static final String ENABLE_WAITS_BETWEEN_MOVEMENTS_KEY = "pref_scheduler_wait_between_movements";
     public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
     public static final String SHOW_TIPS_KEY = "help_options";
     public static final String POLLYWOG_FIRST_TIME_TIPS_KEY = "pollywog_first_time_tips_key";

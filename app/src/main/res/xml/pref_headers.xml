@@ -9,6 +9,12 @@
         android:summary="@string/pref_summary_bluetooth"/>
 
     <header
+        android:fragment="com.bq.robotic.robopad_plusplus.RoboPadSettings$SchedulerPreferenceFragment"
+        android:title="@string/pref_header_scheduler"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:summary="@string/pref_summary_scheduler"/>
+
+    <header
         android:fragment="com.bq.robotic.robopad_plusplus.RoboPadSettings$TipsPreferenceFragment"
         android:title="@string/pref_header_help_options"
         android:icon="@drawable/settings_help"

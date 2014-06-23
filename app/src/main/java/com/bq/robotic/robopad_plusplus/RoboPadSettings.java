@@ -228,6 +228,12 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
         getPreferenceScreen().addPreference(fakeHeader);
         addPreferencesFromResource(R.xml.pref_bluetooth);
 
+        // Add 'scheduler' preferences, and a corresponding header.
+        fakeHeader = new PreferenceCategory(this);
+        fakeHeader.setTitle(R.string.pref_header_scheduler);
+        getPreferenceScreen().addPreference(fakeHeader);
+        addPreferencesFromResource(R.xml.pref_scheduler);
+
         // Add 'data and sync' preferences, and a corresponding header.
         fakeHeader = new PreferenceCategory(this);
         fakeHeader.setTitle(R.string.pref_header_help_options);
@@ -373,6 +379,41 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
             }
         }
     }
+
+
+    /**
+     * This fragment shows bluetooth preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class SchedulerPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_scheduler);
+
+            // TODO: think a better way rather than the static variable
+            bluetoothFragmentId = getId();
+
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            View grandParent = (View) getView().getParent().getParent();
+            grandParent.setBackgroundResource(R.color.preferences_background);
+
+            if (grandParent.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) grandParent.getLayoutParams();
+                int margin = getResources().getDimensionPixelSize(R.dimen.button_press_little_padding);
+                p.setMargins(0, margin, 0, margin);
+                grandParent.requestLayout();
+            }
+
+        }
+    }
+
 
     /**
      * This fragment shows help options preferences only. It is used when the
