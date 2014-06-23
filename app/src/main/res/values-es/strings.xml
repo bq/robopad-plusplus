@@ -51,6 +51,13 @@
     <string name="schedule_tip_text">Si me pulsas, te llevaré a la pantalla de programación de movimientos</string>
     <string name="pad_tip_text">Si nos pulsas, controlaremos al robot</string>
     <string name="claws_tip_text">Si nos pulsas, controlaremos las pinzas del robot</string>
+    <string name="scheduler_add_commands_text">Púlsanos para añadirnos a la lista de movimientos del robot</string>
+    <string name="scheduler_remove_all_text">Púlsame para borrar todos los movimientos de este robot</string>
+    <string name="scheduler_send_text">¡Púlsame para que el robot haga estos movimientos!</string>
+    <string name="scheduler_load_text">Púlsame para cargar una lista de movimientos de este robot</string>
+    <string name="scheduler_save_text">Púlsame para guardar la lista de movimientos de este robot</string>
+    <string name="scheduler_remove_file_text">Púlsame para borrar una lista ya guardada de movimientos de este robot</string>
+    <string name="scheduler_grid_text">Aquí se irán añadiendo los movimientos que quieres que el robot haga.\nPulsando sobre los iconos puedes cambiarlos de orden,\no eliminarlos si los dejas caer en la papelera</string>
 
     <!-- Error -->
     <string name="max_exceeded_error">"El valor máximo es "</string>

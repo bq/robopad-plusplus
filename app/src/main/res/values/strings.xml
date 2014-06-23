@@ -47,14 +47,19 @@
     <string name="no_files_stored">There aren\'t sequences of movements stored for this robot</string>
     <string name="invalid_name">Enter a valid name</string>
 
-
     <!-- Tips -->
     <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>
     <string name="bluetooth_tip_text">If you click on me, I will connect or disconnect with the robot</string>
     <string name="schedule_tip_text">If you click on me, I will take you to the scheduling movements screen</string>
     <string name="pad_tip_text">If you click on us, we will control the robot</string>
     <string name="claws_tip_text">If you click on us, we will control\nthe claws of the robot</string>
-
+    <string name="scheduler_add_commands_text">Click on us to add us to list of the robot movements</string>
+    <string name="scheduler_remove_all_text">Click on me to remove all the movements of this robot</string>
+    <string name="scheduler_send_text">Click on me to make the robot perform these movements!</string>
+    <string name="scheduler_load_text">Click on me to load a list of movements of this robot</string>
+    <string name="scheduler_save_text">Click on me to save this list of movements</string>
+    <string name="scheduler_remove_file_text">Click on me to delete a stored list of movements of this robot</string>
+    <string name="scheduler_grid_text">All the movements that you want the robot perform will be added here.\nBy clicking on the icons, you can change their order\nor delete them by dropping them in the bin</string>
 
     <!-- Error -->
     <string name="max_exceeded_error">"The maximum value is "</string>

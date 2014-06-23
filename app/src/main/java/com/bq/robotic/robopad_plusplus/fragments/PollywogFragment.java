@@ -34,7 +34,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
@@ -246,16 +245,12 @@ public class PollywogFragment extends RobotFragment {
 
         @Override
         public void onToolTipViewClicked(ToolTipView toolTipView) {
-            showNextTip();
+            onShowNextTip();
         }
     };
 
 
-    /**
-     * Show the next tip for this robot fragment. The tips are displayed one after another when the
-     * user clicks on the screen
-     */
-    protected void showNextTip() {
+    public void onShowNextTip() {
 
         if (currentTip == null) {
             setIsLastTipToShow(false);
@@ -304,8 +299,8 @@ public class PollywogFragment extends RobotFragment {
 
 
     @Override
-    protected void setIsLastTipToShow(boolean isLastTipToShow) {
-        this.isLastTipToShow = isLastTipToShow;
+    public void setIsLastTipToShow(boolean isLastTipToShow) {
+        tipsManager.setLastTipToShow(isLastTipToShow);
     }
 
 

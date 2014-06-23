@@ -276,12 +276,12 @@ public class RhinoFragment extends RobotFragment {
 
         @Override
         public void onToolTipViewClicked(ToolTipView toolTipView) {
-            showNextTip();
+            onShowNextTip();
         }
     };
 
 
-    protected void showNextTip() {
+    public void onShowNextTip() {
         if (currentTipView == null) {
             setIsLastTipToShow(false);
             // Pin explanation tip
@@ -314,8 +314,8 @@ public class RhinoFragment extends RobotFragment {
     }
 
     @Override
-    protected void setIsLastTipToShow(boolean isLastTipToShow) {
-        this.isLastTipToShow = isLastTipToShow;
+    public void setIsLastTipToShow(boolean isLastTipToShow) {
+        tipsManager.setLastTipToShow(isLastTipToShow);
     }
 
 

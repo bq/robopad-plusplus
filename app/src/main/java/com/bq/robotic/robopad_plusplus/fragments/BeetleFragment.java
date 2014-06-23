@@ -40,8 +40,8 @@ import android.widget.Toast;
 
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
-import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.Claw_next_state;
+import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.utils.RobotConnectionsPopupWindow;
 import com.bq.robotic.robopad_plusplus.utils.TipsFactory;
@@ -72,6 +72,7 @@ public class BeetleFragment extends RobotFragment {
 
     // Tips
     private tips currentTip;
+
     private enum tips {PIN, BLUETOOTH, SCHEDULE, PAD, CLAWS}
 
 
@@ -438,7 +439,7 @@ public class BeetleFragment extends RobotFragment {
 
         @Override
         public void onToolTipViewClicked(ToolTipView toolTipView) {
-            showNextTip();
+            onShowNextTip();
         }
     };
 
@@ -447,7 +448,7 @@ public class BeetleFragment extends RobotFragment {
      * Show the next tip for this robot fragment. The tips are displayed one after another when the
      * user clicks on the screen
      */
-    protected void showNextTip() {
+    public void onShowNextTip() {
 
         if (currentTip == null) {
             setIsLastTipToShow(false);
@@ -508,8 +509,8 @@ public class BeetleFragment extends RobotFragment {
     }
 
     @Override
-    protected void setIsLastTipToShow(boolean isLastTipToShow) {
-        this.isLastTipToShow = isLastTipToShow;
+    public void setIsLastTipToShow(boolean isLastTipToShow) {
+        tipsManager.setLastTipToShow(isLastTipToShow);
     }
 
 

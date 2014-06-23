@@ -52,9 +52,14 @@ import com.bq.robotic.drag_drop_grid.OnRearrangeListener;
 import com.bq.robotic.robopad_plusplus.R;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
 import com.bq.robotic.robopad_plusplus.listeners.ScheduledMovementsFileManagementListener;
+import com.bq.robotic.robopad_plusplus.listeners.TipsManagerListener;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.utils.ScheduledMovementsFileManagement;
+import com.bq.robotic.robopad_plusplus.utils.TipsFactory;
+import com.bq.robotic.robopad_plusplus.utils.TipsManager;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +71,7 @@ import java.util.List;
  * 
  */
 
-public class ScheduleRobotMovementsFragment extends Fragment implements ScheduledMovementsFileManagementListener {
+public class ScheduleRobotMovementsFragment extends Fragment implements ScheduledMovementsFileManagementListener, TipsManagerListener {
 
 	// Debugging
 	private static final String LOG_TAG = "ScheduleRobotActionsFragment";
@@ -83,6 +88,12 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 
     private Handler sendMovementsHandler;
     private ScheduledMovementsFileManagement scheduledMovementsFileManagement;
+
+    // Tips
+    protected ToolTipRelativeLayout mToolTipFrameLayout;
+    protected TipsManager tipsManager;
+    private tips currentTip;
+    private enum tips {ADD_COMMANDS, REMOVE_ALL, SEND, LOAD, SAVE, DELETE_FILE, GRID}
 	
 
 	@Override
@@ -90,7 +101,7 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 			ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View layout = inflater.inflate(R.layout.fragment_schedule_robot, container, false);
+		View layout = inflater.inflate(R.layout.fragment_scheduler_robot, container, false);
 		
 		gridView = ((DraggableGridView) layout.findViewById(R.id.grid_view));
 		gridView.setDeleteZone((DeleteDropZoneView) layout.findViewById(R.id.delete_view));
@@ -160,6 +171,11 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 
         // Set the class that manage the sequences of movements storage
         scheduledMovementsFileManagement = new ScheduledMovementsFileManagement(getActivity(), this, mBotType);
+
+        mToolTipFrameLayout = (ToolTipRelativeLayout) getActivity().findViewById(R.id.activity_main_tooltipframelayout);
+
+        tipsManager = new TipsManager(getActivity(), mToolTipFrameLayout, this);
+        tipsManager.initTips();
 
 	}
 
@@ -561,26 +577,9 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
                     scheduledMovementsFileManagement.deleteScheduledMovements();
                     break;
 
-//                case R.id.setting_button:
-////				    PopupMenu popup = new PopupMenu(getActivity(), v);
-////				    MenuInflater inflater = popup.getMenuInflater();
-////				    inflater.inflate(R.menu.scheduler_menu, popup.getMenu());
-////				    popup.setOnMenuItemClickListener(onMenuItemClickListener);
-////				    popup.show();
-//                    break;
             }
         }
     };
-
-
-	public robotType getmBotType() {
-		return mBotType;
-	}
-
-
-	public void setmBotType(robotType mBotType) {
-		this.mBotType = mBotType;
-	}
 
 
     /**
@@ -621,6 +620,99 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 
 		gridView.setEnabled(false);
 	}
+
+
+
+    private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
+
+        @Override
+        public void onToolTipViewClicked(ToolTipView toolTipView) {
+            onShowNextTip();
+        }
+    };
+
+
+    /**
+     * Show the next tip for this robot fragment. The tips are displayed one after another when the
+     * user clicks on the screen
+     */
+    public void onShowNextTip() {
+
+        if (currentTip == null) {
+            setIsLastTipToShow(false);
+
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_add_commands_text),
+                    getActivity().findViewById(R.id.right_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.ADD_COMMANDS;
+
+        } else if (currentTip.equals(tips.ADD_COMMANDS)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_grid_text),
+                    getActivity().findViewById(R.id.grid_view)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.GRID;
+
+        } else if (currentTip.equals(tips.GRID)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_remove_all_text),
+                    getActivity().findViewById(R.id.remove_all_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.REMOVE_ALL;
+
+        } else if (currentTip.equals(tips.REMOVE_ALL)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_send_text),
+                    getActivity().findViewById(R.id.send_movements_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.SEND;
+
+        } else if (currentTip.equals(tips.SEND)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_load_text),
+                    getActivity().findViewById(R.id.load_movements_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.LOAD;
+
+        } else if (currentTip.equals(tips.LOAD)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_save_text),
+                    getActivity().findViewById(R.id.save_movements_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.SAVE;
+
+        } else if (currentTip.equals(tips.SAVE)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_remove_file_text),
+                    getActivity().findViewById(R.id.remove_stored_movements_button)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.DELETE_FILE;
+
+        } else if (currentTip.equals(tips.DELETE_FILE)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            currentTip = null;
+            setIsLastTipToShow(true);
+            mToolTipFrameLayout.setOnClickListener(null);
+
+        }
+    }
+
+    @Override
+    public void setIsLastTipToShow(boolean isLastTipToShow) {
+        tipsManager.setLastTipToShow(isLastTipToShow);
+    }
 
 
     /***********************************************************************************************

@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/scheduler_grid_margin"
-    android:layout_marginBottom="@dimen/scheduler_grid_margin">
+    android:paddingBottom="@dimen/scheduler_grid_margin">
 
     <LinearLayout
         android:id="@+id/layout_container_for_centering_grid"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/scheduler_control_size"
+        android:layout_marginTop="@dimen/scheduler_menu_size"
         android:gravity="center">
 
         <ScrollView
@@ -85,7 +85,7 @@
     <LinearLayout
         android:id="@+id/menu_options_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/scheduler_control_size"
+        android:layout_height="@dimen/scheduler_menu_size"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginRight="@dimen/scheduler_grid_margin"
@@ -138,15 +138,6 @@
             android:src="@drawable/abc_ic_clear_normal"
             android:scaleType="centerCrop" />
 
-        <!--<ImageButton-->
-            <!--android:id="@+id/setting_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="@dimen/button_press_medium_padding"-->
-            <!--android:background="@drawable/dark_blue_circle_btn_transparent_selector"-->
-            <!--android:src="@drawable/ic_settings"-->
-            <!--android:scaleType="centerCrop" />-->
-
     </LinearLayout>
 
     <com.bq.robotic.drag_drop_grid.DraggableGridView
@@ -183,6 +174,12 @@
         android:background="@drawable/abc_menu_dropdown_panel_holo_dark"
         android:padding="10dp"
         android:visibility="gone" />
+
+    <com.nhaarman.supertooltips.ToolTipRelativeLayout
+        android:id="@+id/activity_main_tooltipframelayout"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
 

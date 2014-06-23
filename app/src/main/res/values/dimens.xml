@@ -5,6 +5,8 @@
     <dimen name="activity_vertical_margin">10dp</dimen>
     
     <dimen name="scheduler_control_size">55dp</dimen>
+    <dimen name="scheduler_menu_size">55dp</dimen>
+    <dimen name="scheduler_commands_top_margin">55dp</dimen>
     <dimen name="scheduler_grid_margin">11dp</dimen>
     <dimen name="scheduler_delete_zone_right_margin">19dp</dimen>
     <dimen name="scheduler_delete_zone_bottom_margin">26dp</dimen>

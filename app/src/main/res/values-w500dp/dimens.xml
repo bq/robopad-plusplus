@@ -1,6 +1,8 @@
 <resources>
 
     <dimen name="scheduler_control_size">63dp</dimen>
+    <dimen name="scheduler_menu_size">63dp</dimen>
+    <dimen name="scheduler_commands_top_margin">63dp</dimen>
     <dimen name="scheduler_grid_left_right_margin">10dp</dimen>
     <dimen name="claw_buttons_margin">15dp</dimen>
     <dimen name="left_pad_margin">40dp</dimen>
