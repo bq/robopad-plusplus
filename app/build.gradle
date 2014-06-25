@@ -32,6 +32,7 @@ dependencies {
         transitive = true
     }
     compile('com.android.support:gridlayout-v7:18.0.+')
-    compile('com.bq.robotic:drag-drop-grid:+@jar')
+//    compile('com.bq.robotic:drag-drop-grid:+@jar')
+    compile('com.bq.robotic:drag-drop-grid:+@aar')
     compile('com.nhaarman.supertooltips:library:3.0.+')
 }

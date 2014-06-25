@@ -53,8 +53,15 @@ Installation
 
 #. Install the drag-drop-grid library in your local repository::
    
-	cd drag-drop-grid/drag-drop-grid
-	gradle publishToMavenLocal
+	  * Gradle version equal or lower than 1.10 and drag-drop-grid version equal or lower than 1.6::
+  
+        cd drag-drop-grid/drag-drop-grid
+        gradle publishToMavenLocal
+
+    * Gradle version greater than 1.10 and drag-drop-grid version greater than 1.6::
+        
+        cd drag-drop-grid/drag-drop-grid
+        gradle install
 
 
 #. Install `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ and `Gradle <http://www.gradle.org/downloads>`_.
