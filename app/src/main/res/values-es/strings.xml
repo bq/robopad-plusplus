@@ -51,6 +51,8 @@
     <string name="schedule_tip_text">Si me pulsas, te llevaré a la pantalla de programación de movimientos</string>
     <string name="pad_tip_text">Si nos pulsas, controlaremos al robot</string>
     <string name="claws_tip_text">Si nos pulsas, controlaremos las pinzas del robot</string>
+    <string name="line_follower_text">Si me pulsas, activaré o desactivaré el modo siguelíneas</string>
+    <string name="light_avoider_text">Si me pulsas, activaré o desactivaré el modo huye luz</string>
     <string name="scheduler_add_commands_text">Púlsanos para añadirnos a la lista de movimientos del robot</string>
     <string name="scheduler_remove_all_text">Púlsame para borrar todos los movimientos de este robot</string>
     <string name="scheduler_send_text">¡Púlsame para que el robot haga estos movimientos!</string>

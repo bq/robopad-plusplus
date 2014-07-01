@@ -132,10 +132,10 @@
         <ImageButton
             android:id="@+id/remove_stored_movements_button"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="@dimen/button_press_medium_padding"
             android:background="@drawable/dark_blue_circle_btn_transparent_selector"
-            android:src="@drawable/abc_ic_clear_normal"
+            android:src="@drawable/ic_delete_file"
             android:scaleType="centerCrop" />
 
     </LinearLayout>

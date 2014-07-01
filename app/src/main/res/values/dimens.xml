@@ -21,6 +21,6 @@
     <dimen name="left_pad_margin">30dp</dimen>
     <dimen name="pad_minus_margins">-30dp</dimen>
     <dimen name="text_size">13sp</dimen>
-    <dimen name="robot_state_button_margin">3dp</dimen>
+    <dimen name="robot_state_button_margin">5dp</dimen>
 
 </resources>

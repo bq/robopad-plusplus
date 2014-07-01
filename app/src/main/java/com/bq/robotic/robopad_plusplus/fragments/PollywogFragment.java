@@ -62,7 +62,7 @@ public class PollywogFragment extends RobotFragment {
 
     // Tips
     private tips currentTip;
-    private enum tips {PIN, BLUETOOTH, SCHEDULE, PAD, CLAWS}
+    private enum tips {PIN, BLUETOOTH, SCHEDULE, PAD, LINE_FOLLOWER}
 
 
     @Override
@@ -225,13 +225,13 @@ public class PollywogFragment extends RobotFragment {
         switch (nextState) {
 
             case MANUAL_CONTROL:
-                lineFollowerButton.setPressed(false);
+                lineFollowerButton.setSelected(false);
                 state = robotState.MANUAL_CONTROL;
                 listener.onSendMessage(RoboPadConstants.MANUAL_CONTROL_MODE_COMMAND);
                 break;
 
             case LINE_FOLLOWER:
-                lineFollowerButton.setPressed(true);
+                lineFollowerButton.setSelected(true);
                 state = robotState.LINE_FOLLOWER;
                 listener.onSendMessage(RoboPadConstants.LINE_FOLLOWER_MODE_COMMAND);
                 break;
@@ -289,6 +289,14 @@ public class PollywogFragment extends RobotFragment {
         } else if (currentTip.equals(tips.PAD)) {
             mToolTipFrameLayout.removeAllViews();
 
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.line_follower_text),
+                    getActivity().findViewById(R.id.line_follower)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.LINE_FOLLOWER;
+
+        } else if (currentTip.equals(tips.LINE_FOLLOWER)) {
+            mToolTipFrameLayout.removeAllViews();
+
             currentTip = null;
             setIsLastTipToShow(true);
             mToolTipFrameLayout.setOnClickListener(null);
@@ -309,7 +317,7 @@ public class PollywogFragment extends RobotFragment {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
 
-        state = robotState.MANUAL_CONTROL;
+        stateChanged(robotState.MANUAL_CONTROL);
     }
 
     @Override

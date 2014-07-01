@@ -33,7 +33,7 @@ Features
   
 #. Schedule the movements of your robot and see how it moves according to them
 
-#. Specific controls for the Pollywog, Beetle and Rhino printbots of Bq
+#. Specific controls for the Pollywog, Beetle and Rhino printbots of Bq. Now some of them can also change into the line follower mode or the light avoider mode.
 
 #. Management of the Bluetooth connection for battery saving
 

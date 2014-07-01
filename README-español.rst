@@ -33,7 +33,7 @@ Características
    
 #. Programa los movimientos de tu robot y mira cómo los realiza
 
-#. Mandos de control específicos para los printbots Renacuajo, Escarabajo y Rhino de Bq
+#. Mandos de control específicos para los printbots Renacuajo, Escarabajo y Rhino de Bq. Ahora, algunos también pueden activar el modo siguelíneas o el modo huye luz.
 
 #. Administración de la conexión Bluetooth para ahorrar batería
 
