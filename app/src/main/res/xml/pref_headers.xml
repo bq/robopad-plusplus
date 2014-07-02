@@ -11,7 +11,7 @@
     <header
         android:fragment="com.bq.robotic.robopad_plusplus.RoboPadSettings$SchedulerPreferenceFragment"
         android:title="@string/pref_header_scheduler"
-        android:icon="@android:drawable/ic_menu_recent_history"
+        android:icon="@drawable/ic_scheduler_waits"
         android:summary="@string/pref_summary_scheduler"/>
 
     <header

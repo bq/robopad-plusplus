@@ -370,10 +370,12 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if(mBluetoothAdapter != null) {
                 if (Build.VERSION.SDK_INT < 14) {
-                    ((CheckBoxPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(mBluetoothAdapter.isEnabled());
+                    ((CheckBoxPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY))
+                            .setChecked(mBluetoothAdapter.isEnabled());
 
                 } else if (Build.VERSION.SDK_INT > 14) {
-                    ((SwitchPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(mBluetoothAdapter.isEnabled());
+                    ((SwitchPreference) getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY))
+                            .setChecked(mBluetoothAdapter.isEnabled());
 
                 }
             }
