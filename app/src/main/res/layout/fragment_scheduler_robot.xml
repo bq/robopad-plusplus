@@ -150,19 +150,26 @@
         android:layout_below="@id/menu_options_container"
         android:background="@android:color/white" />
 
+    <TextView
+        android:id="@+id/tip_grid_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="@dimen/scheduler_grid_margin"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+
     <com.bq.robotic.drag_drop_grid.DeleteDropZoneView
         android:id="@+id/delete_view"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:padding="@dimen/scheduler_grid_margin"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/scheduler_delete_zone_right_margin"
+        android:layout_marginRight="@dimen/scheduler_delete_zone_bottom_margin"
         android:layout_marginBottom="@dimen/scheduler_delete_zone_bottom_margin"
-        android:visibility="invisible" />
+        android:background="@drawable/turquoise_circle_default_button"
+        android:visibility="gone" />
     
     <ProgressBar
         android:id="@+id/progress_bar"

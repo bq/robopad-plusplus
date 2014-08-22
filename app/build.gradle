@@ -1,12 +1,12 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 20
+    buildToolsVersion "20"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 19
+        targetSdkVersion 20
     }
 
     buildTypes {
@@ -33,6 +33,6 @@ dependencies {
     }
     compile('com.android.support:gridlayout-v7:18.0.+')
 //    compile('com.bq.robotic:drag-drop-grid:+@jar')
-    compile('com.bq.robotic:drag-drop-grid:+@aar')
+    compile('com.bq.robotic:drag-drop-grid:1.8@aar')
     compile('com.nhaarman.supertooltips:library:3.0.+')
 }

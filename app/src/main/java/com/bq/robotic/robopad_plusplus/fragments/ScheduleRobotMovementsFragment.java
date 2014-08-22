@@ -58,6 +58,7 @@ import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.utils.ScheduledMovementsFileManagement;
 import com.bq.robotic.robopad_plusplus.utils.TipsFactory;
 import com.bq.robotic.robopad_plusplus.utils.TipsManager;
+import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
 
@@ -104,10 +105,12 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 		View layout = inflater.inflate(R.layout.fragment_scheduler_robot, container, false);
 		
 		gridView = ((DraggableGridView) layout.findViewById(R.id.grid_view));
-		gridView.setDeleteZone((DeleteDropZoneView) layout.findViewById(R.id.delete_view));
+        DeleteDropZoneView deleteZone = (DeleteDropZoneView) layout.findViewById(R.id.delete_view);
+        deleteZone.setDeleteDrawable(R.drawable.ic_trash);
+        deleteZone.setHighlightDeleteDrawable(R.drawable.red_circle_default_button);
+		gridView.setDeleteZone(deleteZone);
 
 		return layout;
-
 	}
 	
 
@@ -655,7 +658,8 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
             mToolTipFrameLayout.removeAllViews();
 
             mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.scheduler_grid_text),
-                    getActivity().findViewById(R.id.grid_view)).setOnToolTipViewClickedListener(onToolTipClicked);
+                    getActivity().findViewById(R.id.tip_grid_view)).setOnToolTipViewClickedListener(onToolTipClicked);
+//                    getActivity().findViewById(R.id.grid_view)).setOnToolTipViewClickedListener(onToolTipClicked);
 
             currentTip = tips.GRID;
 
