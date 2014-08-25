@@ -40,6 +40,10 @@
 #define pinLeftWheel   6   
 #define pinRightWheel  9   
 #define pinClaw       11
+#define pinSensorIRLeft         2   /*   Left infrared sensor     */ 
+#define pinSensorIRRight        3   /*   Right infrared sensor    */
+#define pinSensorLDRLeft       A2   /*   Left light sensor        */ 
+#define pinSensorLDRRight      A3   /*   Right light sensor       */
 
 /* Definition of the values ​​that can take continuous rotation servo,
  that is, the wheels */
@@ -49,18 +53,43 @@
 #define rightWheelFordwardValue 180
 #define rightWheelBackwardsValue 0
 
+/* Bauderate of the Bluetooth*/
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH    38400
+#define BQ_ZUM_BLUETOOTH                       19200
+
+/* Define the posible states of the state machine of the program */
+#define MANUAL_CONTROL_STATE    0
+#define LINE_FOLLOWER           1
+#define LIGHT_FOLLOWER          2
+
 /* Max and min positions of the claw */
 #define maxClawPosition 10
 #define minClawPosition 55
 
-
 /* Size of the received data buffer */
 #define bufferSize 5
+
+/* Default delay */
+#define defaultDelay        10
+
+/* Variable that controls the current state of the program */
+int currentState;
 
 /* A object from the Servo class is created for each servo */
 Servo leftWheel;                       /*  Values from 0 to 180  */
 Servo rightWheel;                      /*  Values from 0 to 180  */
 Servo claw;                            /*  Values from 10 to 50  */
+
+/* Variables of the line follower mode */
+int rightIR;
+int leftIR;
+int BLACK = 0;
+int WHITE = 1;
+
+/* Variables of the light follower mode */
+int rightLDR;
+int leftLDR;
+int lightLimitValue;
 
 /*  A char buffer to storage the received data from the Bluetooth
     Serial */
@@ -82,46 +111,46 @@ int posClaw = 0;
 
 void stopWheels() {
   leftWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 
 void goForwards() {
   leftWheel.write(leftWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 
 void goBackwards() {
   leftWheel.write(leftWheelBackwardsValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelBackwardsValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 
 void goLeft() {
   leftWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 
 void goRight() {
   leftWheel.write(leftWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 
@@ -136,83 +165,137 @@ void moveClaw() {
   }
 
   claw.write(posClaw);
-  delay(3);
-}
-
-
-/* Perform the action required by the user of the Android app */
-void setAction(char* data) {
-  
-  switch(data[0]) {
-
-    // Claw button pressed
-    case 'C':
-      posClaw = strtol(data+1, NULL, 10);
-      moveClaw();
-      break;
-  }
+  delay(defaultDelay);
 }
 
 
 /* Manage the buffer of data */
 void checkData(char* data){  
   
-  if (data[0] == 'S') {
-    /* Stop button pressed */
-    stopWheels();
-  
-  } else if (data[0] == 'U') {
-    /* Up button pressed */
-    goForwards();
-  
-  } else if (data[0] == 'D') {
-    /* Down button pressed */
-    goBackwards();
-    
-  } else if (data[0] == 'L') {
-    /* Left button pressed */ 
-    goLeft();
-    
-  } else if (data[0] == 'R') {
-    /* Right button pressed */ 
-    goRight();
+   switch(data[0]) {
 
-  } else if (data[0] == 'O') {
-    /* open claw button pressed in scheduler screen */ 
-    posClaw -= 5;
-    moveClaw();
+    /* Line follower mode button pressed */
+    case 'I':
+      currentState = LINE_FOLLOWER;
+      break;
+
+    /* Light follower mode button pressed */
+    case 'G':
+      currentState = LIGHT_FOLLOWER;
+      break;
+
+    /* Manual control mode button pressed */
+    case 'M':
+      currentState = MANUAL_CONTROL_STATE;
+      stopWheels();
+      break;
+
+    case'S':
+      /* Stop button pressed */
+      stopWheels();
+      break;
     
-  } else if (data[0] == 'T') {
+    case 'U':
+      /* Up button pressed */
+      goForwards();
+      break;
+    
+    case 'D':
+      /* Down button pressed */
+      goBackwards();
+      break;
+      
+    case 'L':
+      /* Left button pressed */ 
+      goLeft();
+      break;
+      
+    case 'R':
+      /* Right button pressed */ 
+      goRight();
+      break;
+
+    /* Claw button pressed */
+    case 'C':
+      posClaw = strtol(data+1, NULL, 10);
+      moveClaw();
+      break;
+
+    /* open claw button pressed in scheduler screen */
+    case 'O': 
+      posClaw -= 5;
+      moveClaw();
+      break;
+    
     /* close claw button pressed in scheduler screen */ 
-    posClaw += 5;
-    moveClaw();
+    case 'T': 
+      posClaw += 5;
+      moveClaw();
+      break;
     
-  } else if (data[0] == 'F') {
     /* full open claw button pressed in scheduler screen */ 
-    posClaw = maxClawPosition;
-    moveClaw();
+    case 'F': 
+      posClaw = maxClawPosition;
+      moveClaw();
+      break;
     
-  } else {
-   
-    /* Divide the full instruction line with all the 
-       configuration instructions in single configuration 
-       instructions. All the command line, example: _C40_C35_ */
-    char* full_instruction_line = {0};  
-     
-    full_instruction_line = strtok(data, "_");
-     
-    while(full_instruction_line != NULL) {
-                 
-      setAction(full_instruction_line);   
-       
-      full_instruction_line = strtok(NULL, "_");
-     
-    }
-  }
+  } 
 
   /* Empty the Serial */   
   Serial.flush();
 
+}
+
+
+
+
+/* The robot is in the line follower mode */
+void followTheLine() {
+  /* Read the state of the IR sensors */
+  rightIR = digitalRead(pinSensorIRLeft);
+  leftIR = digitalRead(pinSensorIRRight);
+
+  if (rightIR == WHITE && leftIR == BLACK) {
+    goRight();
+
+  } else if (rightIR == BLACK && leftIR == WHITE) {
+    goLeft();
+
+  } else {
+    goForwards();
+
+  }
+}
+
+
+/* The robot is in the light follower mode */
+void followTheLight() {
+  /* Read the state of the LDR sensors */
+  rightLDR = analogRead(pinSensorLDRRight);
+  leftLDR = analogRead(pinSensorLDRLeft);
+  
+  /* If the user covers the right LDR, we stop the right wheel,
+     and go forward if it is receiving light */
+  if (rightLDR < lightLimitValue) {
+    rightWheel.write(wheelStopValue);
+    delay(defaultDelay);
+
+  } else {
+    rightWheel.write(rightWheelFordwardValue);
+    delay(defaultDelay);
+  }
+  
+    /* If the user covers the left LDR, we stop the left wheel,
+     and go forward if it is receiving light */
+  if (leftLDR < lightLimitValue) {
+    leftWheel.write(wheelStopValue);
+    delay(defaultDelay);
+
+  } else {
+    leftWheel.write(leftWheelFordwardValue);
+    delay(defaultDelay);
+
+  }
 }
     
 
@@ -223,7 +306,8 @@ void checkData(char* data){
 void setup() {
   
   /* Open the Bluetooth Serial and empty it */
-  Serial.begin(38400); 
+  //Serial.begin(BQ_ZUM_BLUETOOTH);  
+  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
   Serial.flush();     
   
   /* Define the appropiate pin to each object */
@@ -231,12 +315,20 @@ void setup() {
   rightWheel.attach(pinRightWheel);
   claw.attach(pinClaw);
 
+  /* Put the IR sensors as input */
+  pinMode(pinSensorIRLeft, INPUT);
+  pinMode(pinSensorIRRight, INPUT);
+
   /* The robot is stopped at the beginning */
   stopWheels();
   
   /* Put the claw in a intermediate position at the beginning */
   posClaw = 30;
   moveClaw();
+
+  currentState = MANUAL_CONTROL_STATE;
+
+  lightLimitValue = 200;
 
 }
 
@@ -284,5 +376,13 @@ void loop() {
     checkData(dataBuffer);
     
   }
+
+  if(currentState == LINE_FOLLOWER) {
+    followTheLine();
+  
+  } else if(currentState == LIGHT_FOLLOWER) {
+    followTheLight();
+  }
+  
 }  
   

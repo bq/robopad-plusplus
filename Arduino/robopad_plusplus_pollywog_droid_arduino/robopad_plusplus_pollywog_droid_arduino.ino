@@ -24,6 +24,7 @@
 
 
 
+
 /******************************************************************
  *                           Libraries                            *
  ******************************************************************/ 
@@ -36,23 +37,45 @@
  ******************************************************************/
 
 /* Pin definition of the board to be used */
-#define pinLeftWheel 6
-#define pinRightWheel 9
+#define pinLeftWheel            6
+#define pinRightWheel           9
+#define pinSensorIRLeft         2   /*   Left infrared sensor     */ 
+#define pinSensorIRRight        3   /*   Right infrared sensor    */
+
+/* Define the posible states of the state machine of the program */
+#define MANUAL_CONTROL_STATE    0
+#define LINE_FOLLOWER           1
+
+/* Bauderate of the Bluetooth*/
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH    38400
+#define BQ_ZUM_BLUETOOTH                       19200
 
 /* Definition of the values ​​that can take continuous rotation servo,
  that is, the wheels */
-#define wheelStopValue 90
-#define leftWheelFordwardValue 0
-#define leftWheelBackwardsValue 180
-#define rightWheelFordwardValue 180
-#define rightWheelBackwardsValue 0
+#define wheelStopValue            90
+#define leftWheelFordwardValue    0
+#define leftWheelBackwardsValue   180
+#define rightWheelFordwardValue   180
+#define rightWheelBackwardsValue  0
 
 /* Size of the received data buffer */
 #define bufferSize 1
 
+/* Default delay */
+#define defaultDelay        10
+
+/* Variable that controls the current state of the program */
+int currentState;
+
 /* A object from the Servo class is created for each servo */
 Servo leftWheel;                       /*  Values from 0 to 180  */
 Servo rightWheel;                      /*  Values from 0 to 180  */
+
+/* Variables of the line follower mode */
+int rightIR;
+int leftIR;
+int BLACK = 0;
+int WHITE = 1;
 
 /*  A char buffer to storage the received data from the Bluetooth
     Serial */
@@ -71,42 +94,42 @@ int numChar = 0;
 
 void stopWheels() {
   leftWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goForwards() {
   leftWheel.write(leftWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goBackwards() {
   leftWheel.write(leftWheelBackwardsValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelBackwardsValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goLeft() {
   leftWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goRight() {
   leftWheel.write(leftWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 /*
@@ -115,6 +138,17 @@ void goRight() {
 void setAction(char* data) {
   
   switch(data[0]) {
+
+    /* Line follower mode button pressed */
+    case 'I':
+      currentState = LINE_FOLLOWER;
+      break;
+
+    /* Manual control mode button pressed */
+    case 'M':
+      currentState = MANUAL_CONTROL_STATE;
+      stopWheels();
+      break;
    
     /* Stop button pressed */
     case 'S':
@@ -149,6 +183,35 @@ void setAction(char* data) {
 }
 
 
+void followTheLine() {
+  /* Read the state of the sensors */
+  rightIR = digitalRead(pinSensorIRLeft);
+  leftIR = digitalRead(pinSensorIRRight);
+
+  /* If the right sensor reads black, we go straight forward, else
+     if it reads white, we turn to the left */
+  if (rightIR == BLACK) {
+    leftWheel.write(leftWheelFordwardValue);
+    delay(defaultDelay);
+  
+  } else {
+    leftWheel.write(wheelStopValue);
+    delay(defaultDelay);
+  }
+  
+  /* If the left sensor reads black, we go straight forward, else
+    if it reads white, we turn to the right */
+  if (leftIR == BLACK) {
+    rightWheel.write(rightWheelFordwardValue);
+    delay(defaultDelay);
+  
+  } else {
+    rightWheel.write(wheelStopValue);
+    delay((defaultDelay));
+  }
+}
+
+
 /******************************************************************
  *                             Setup                              *
  ******************************************************************/
@@ -156,7 +219,8 @@ void setAction(char* data) {
 void setup(){
   
   /* Open the Bluetooth Serial and empty it */
-  Serial.begin(38400); 
+  //Serial.begin(BQ_ZUM_BLUETOOTH);  
+  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
   Serial.flush();     
   
   /* Define the appropiate pin to each object */
@@ -165,6 +229,13 @@ void setup(){
 
   /* The robot is stopped at the beginning */
   stopWheels();
+
+  /* Put the IR sensors as input */
+  pinMode(pinSensorIRLeft, INPUT);
+  pinMode(pinSensorIRRight, INPUT);
+
+  /* Default state is manual control */
+  currentState = MANUAL_CONTROL_STATE;
 }
 
 
@@ -211,5 +282,10 @@ void loop() {
     setAction(dataBuffer);
     
   }
+
+  if(currentState == LINE_FOLLOWER) {
+    followTheLine();
+  }
+
 }  
  
