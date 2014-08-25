@@ -242,7 +242,7 @@ public class BeetleFragment extends RobotFragment {
 
                 case R.id.bot_icon:
 
-                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
+                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(robotType.BEETLE,
                             getActivity())).getPopupWindow();
 
                     int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
