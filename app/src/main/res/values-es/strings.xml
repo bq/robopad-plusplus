@@ -34,32 +34,32 @@
     <string name="schedule">Programar</string>
     
     <!-- Scheduler -->
-    <string name="load_scheduled_movements_title">Selecciona el archivo con los movimientos que deseas cargar</string>
-    <string name="delete_scheduled_movements_title">Selecciona el archivo con los movimientos que deseas eliminar</string>
-    <string name="save_scheduled_movements_title">Elige un nombre para esta secuencia de movimientos</string>
-    <string name="save_succeeded">¡La secuencia de movimientos se guardó correctamente!</string>
-    <string name="save_not_succeeded">Hubo un error al guardar la secuencia de movimientos. No se ha guardado nada.</string>
-    <string name="delete_succeeded">¡La secuencia de movimientos se borró correctamente!</string>
-    <string name="delete_not_succeeded">Hubo un error al borrar la secuencia de movimientos. No se ha borrado nada.</string>
-    <string name="load_not_succeeded">Hubo un error al carga la secuencia de movimientos</string>
-    <string name="no_files_stored">No hay archivos de movimientos guardados para este robot</string>
+    <string name="load_scheduled_movements_title">Selecciona la lista de movimientos que deseas cargar</string>
+    <string name="delete_scheduled_movements_title">Selecciona la lista de movimientos que deseas eliminar</string>
+    <string name="save_scheduled_movements_title">Elige un nombre para esta lista de movimientos</string>
+    <string name="save_succeeded">¡La lista de movimientos se guardó correctamente!</string>
+    <string name="save_not_succeeded">Hubo un error al guardar la lista de movimientos. ¡No se ha guardado nada!</string>
+    <string name="delete_succeeded">¡La lista de movimientos se borró correctamente!</string>
+    <string name="delete_not_succeeded">Hubo un error al borrar la lista de movimientos. ¡No se ha borrado nada!</string>
+    <string name="load_not_succeeded">Hubo un error al cargar la lista de movimientos</string>
+    <string name="no_files_stored">No hay listas de movimientos guardados para este robot</string>
     <string name="invalid_name">Introduce un nombre válido</string>
 
     <!-- Tips -->
     <string name="pin_explanation_tip_text">Si me pulsas, te enseñaré cómo has de conectar mis pines</string>
     <string name="bluetooth_tip_text">Si me pulsas, me conectaré o desconectaré del robot</string>
-    <string name="schedule_tip_text">Si me pulsas, te llevaré a la pantalla de programación de movimientos</string>
+    <string name="schedule_tip_text">Si me pulsas, te llevaré al programador de movimientos</string>
     <string name="pad_tip_text">Si nos pulsas, controlaremos al robot</string>
     <string name="claws_tip_text">Si nos pulsas, controlaremos las pinzas del robot</string>
     <string name="line_follower_text">Si me pulsas, activaré o desactivaré el modo siguelíneas</string>
     <string name="light_avoider_text">Si me pulsas, activaré o desactivaré el modo huye luz</string>
-    <string name="scheduler_add_commands_text">Púlsanos para añadirnos a la lista de movimientos del robot</string>
-    <string name="scheduler_remove_all_text">Púlsame para borrar todos los movimientos de este robot</string>
-    <string name="scheduler_send_text">¡Púlsame para que el robot haga estos movimientos!</string>
-    <string name="scheduler_load_text">Púlsame para cargar una lista de movimientos de este robot</string>
-    <string name="scheduler_save_text">Púlsame para guardar la lista de movimientos de este robot</string>
-    <string name="scheduler_remove_file_text">Púlsame para borrar una lista ya guardada de movimientos de este robot</string>
-    <string name="scheduler_grid_text">Aquí se irán añadiendo los movimientos que quieres que el robot haga.\nPulsando sobre los iconos puedes cambiarlos de orden,\no eliminarlos si los dejas caer en la papelera</string>
+    <string name="scheduler_add_commands_text">Púlsanos para añadirnos a la lista de movimientos</string>
+    <string name="scheduler_remove_all_text">Púlsame para borrar todos los movimientos</string>
+    <string name="scheduler_send_text">¡Púlsame para enviar los movimientos al robot!</string>
+    <string name="scheduler_load_text">Púlsame para cargar una lista de movimientos</string>
+    <string name="scheduler_save_text">Púlsame para guardar la lista de movimientos</string>
+    <string name="scheduler_remove_file_text">Púlsame para borrar una lista ya guardada de movimientos</string>
+    <string name="scheduler_grid_text">Todos los movimientos se añadirán aquí.\nPuedes cambiar el orden de los movimientos pulsando sobre ellos\no eliminarlos si los dejas caer en la papelera</string>
 
     <!-- Error -->
     <string name="max_exceeded_error">"El valor máximo es "</string>

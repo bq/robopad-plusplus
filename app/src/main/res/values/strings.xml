@@ -36,32 +36,32 @@
     <string name="schedule">Schedule</string>
     
     <!-- Scheduler -->
-    <string name="load_scheduled_movements_title">Select the file with the movements that you want to load</string>
-    <string name="delete_scheduled_movements_title">Select the file with the movements that you want to delete</string>
-    <string name="save_scheduled_movements_title">Choose a name for this sequence of movements</string>
-    <string name="save_succeeded">The sequence of movements was saved!</string>
-    <string name="save_not_succeeded">There was an error while saving the sequence of movements. Nothing was saved.</string>
-    <string name="delete_succeeded">The sequence of movements was deleted!</string>
-    <string name="delete_not_succeeded">There was an error while deleting the sequence of movements. Nothing was deleted.</string>
-    <string name="load_not_succeeded">There was an error while loading the sequence of movements</string>
-    <string name="no_files_stored">There aren\'t sequences of movements stored for this robot</string>
+    <string name="load_scheduled_movements_title">Select the list of movements that you want to load</string>
+    <string name="delete_scheduled_movements_title">Select the list movements that you want to delete</string>
+    <string name="save_scheduled_movements_title">Choose a name for this list of movements</string>
+    <string name="save_succeeded">The list of movements was saved!</string>
+    <string name="save_not_succeeded">There was an error while saving the list of movements. Nothing was saved!</string>
+    <string name="delete_succeeded">The list of movements was deleted!</string>
+    <string name="delete_not_succeeded">There was an error while deleting the list of movements. Nothing was deleted!</string>
+    <string name="load_not_succeeded">There was an error while loading the list of movements</string>
+    <string name="no_files_stored">There are no saved lists of movements for this robot</string>
     <string name="invalid_name">Enter a valid name</string>
 
     <!-- Tips -->
     <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>
     <string name="bluetooth_tip_text">If you click on me, I will connect or disconnect with the robot</string>
-    <string name="schedule_tip_text">If you click on me, I will take you to the scheduling movements screen</string>
+    <string name="schedule_tip_text">If you click on me, I will take you to the movements programmer</string>
     <string name="pad_tip_text">If you click on us, we will control the robot</string>
     <string name="claws_tip_text">If you click on us, we will control\nthe claws of the robot</string>
     <string name="line_follower_text">If you click on me, I will enable or disable the line follower mode</string>
     <string name="light_avoider_text">If you click on me, I will enable or disable the light avoider mode</string>
-    <string name="scheduler_add_commands_text">Click on us to add us to the list of the robot movements</string>
-    <string name="scheduler_remove_all_text">Click on me to remove all the movements of this robot</string>
-    <string name="scheduler_send_text">Click on me to make the robot perform these movements!</string>
-    <string name="scheduler_load_text">Click on me to load a list of movements of this robot</string>
-    <string name="scheduler_save_text">Click on me to save this list of movements</string>
-    <string name="scheduler_remove_file_text">Click on me to delete a stored list of movements of this robot</string>
-    <string name="scheduler_grid_text">All the movements that you want the robot perform will be added here.\nBy clicking on the icons, you can change their order\nor delete them by dropping them in the bin</string>
+    <string name="scheduler_add_commands_text">Click on us to add us to the list of robot movements</string>
+    <string name="scheduler_remove_all_text">Click on me to delete all movements</string>
+    <string name="scheduler_send_text">Click on me to send the movements to the robot!</string>
+    <string name="scheduler_load_text">CClick on me to load a list of movements</string>
+    <string name="scheduler_save_text">Click on me to save a list of movements</string>
+    <string name="scheduler_remove_file_text">Click on me to delete a stored list of movement</string>
+    <string name="scheduler_grid_text">All the movements will be added here.\nYou can change the order of the movements by clicking\non them or delete them by dropping them in the bin</string>
 
     <!-- Error -->
     <string name="max_exceeded_error">"The maximum value is "</string>

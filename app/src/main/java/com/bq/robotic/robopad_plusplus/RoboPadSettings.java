@@ -196,6 +196,7 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
             editor.putBoolean(RoboPadConstants.RHINO_FIRST_TIME_TIPS_KEY, true);
             editor.putBoolean(RoboPadConstants.CRAB_FIRST_TIME_TIPS_KEY, true);
             editor.putBoolean(RoboPadConstants.GENERIC_ROBOT_FIRST_TIME_TIPS_KEY, true);
+            editor.putBoolean(RoboPadConstants.SCHEDULER_MOVEMENTS_FIRST_TIME_TIPS_KEY, true);
             editor.commit();
         }
     }

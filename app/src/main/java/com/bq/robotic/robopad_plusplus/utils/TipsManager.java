@@ -12,6 +12,7 @@ import com.bq.robotic.robopad_plusplus.fragments.CrabFragment;
 import com.bq.robotic.robopad_plusplus.fragments.GenericRobotFragment;
 import com.bq.robotic.robopad_plusplus.fragments.PollywogFragment;
 import com.bq.robotic.robopad_plusplus.fragments.RhinoFragment;
+import com.bq.robotic.robopad_plusplus.fragments.ScheduleRobotMovementsFragment;
 import com.bq.robotic.robopad_plusplus.listeners.TipsManagerListener;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 
@@ -106,7 +107,15 @@ public class TipsManager {
                 enableToolTipListener();
                 showTips();
             }
+
+        } else if(listener instanceof ScheduleRobotMovementsFragment) {
+
+        if(sharedPref.getBoolean(RoboPadConstants.SCHEDULER_MOVEMENTS_FIRST_TIME_TIPS_KEY, true)) {
+            writeInSharedPreferencesEditor(RoboPadConstants.SCHEDULER_MOVEMENTS_FIRST_TIME_TIPS_KEY, false);
+            enableToolTipListener();
+            showTips();
         }
+    }
     }
 
 

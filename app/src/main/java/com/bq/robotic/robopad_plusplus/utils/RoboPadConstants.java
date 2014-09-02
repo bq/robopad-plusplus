@@ -55,6 +55,7 @@ public class RoboPadConstants {
     public static final String RHINO_FIRST_TIME_TIPS_KEY = "rhino_first_time_tips_key";
     public static final String CRAB_FIRST_TIME_TIPS_KEY = "crab_first_time_tips_key";
     public static final String GENERIC_ROBOT_FIRST_TIME_TIPS_KEY = "generic_robot_first_time_tips_key";
+    public static final String SCHEDULER_MOVEMENTS_FIRST_TIME_TIPS_KEY = "scheduler_movements_first_time_tips_key";
     public static final String CURRENT_TIP_KEY = "current_tip_key";
     public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS}
 
