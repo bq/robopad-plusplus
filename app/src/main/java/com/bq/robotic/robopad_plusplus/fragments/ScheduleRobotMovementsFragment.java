@@ -24,6 +24,7 @@
 package com.bq.robotic.robopad_plusplus.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -34,6 +35,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,10 +60,10 @@ import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad_plusplus.utils.ScheduledMovementsFileManagement;
 import com.bq.robotic.robopad_plusplus.utils.TipsFactory;
 import com.bq.robotic.robopad_plusplus.utils.TipsManager;
-import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,15 +151,16 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
             Resources r = getActivity().getResources();
 
             int size = -1;
-            Configuration config = r.getConfiguration();
 
-            if (config.smallestScreenWidthDp >= 720) {
+            int smallestScreenWithDpCompat = getSmallestScreenWidthDp(getActivity());
+
+            if (smallestScreenWithDpCompat >= 720) {
                 size = 120;
 
-            } else if (config.smallestScreenWidthDp >= 600) {
+            } else if (smallestScreenWithDpCompat >= 600) {
                 size = 95;
 
-            }else if (config.screenWidthDp >= 500) {
+            }else if (smallestScreenWithDpCompat >= 500) {
                 size = 75;
 
             } else {
@@ -181,6 +184,20 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
         tipsManager.initTips();
 
 	}
+
+
+    public static int getSmallestScreenWidthDp(Context context) {
+        Resources resources = context.getResources();
+        try {
+            Field field = Configuration.class.getDeclaredField("smallestScreenWidthDp");
+            return (Integer) field.get(resources.getConfiguration());
+        } catch (Exception e) {
+            // not perfect because reported screen size might not include status and button bars
+            DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+            int smallestScreenWidthPixels = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels);
+            return Math.round(smallestScreenWidthPixels / displayMetrics.density);
+        }
+    }
 
 
 	@Override
