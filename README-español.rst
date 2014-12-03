@@ -6,7 +6,7 @@ RoboPad++ es una aplicación Android para controlar robots a través del Bluetoo
 
 Los tipos de robots que se pueden seleccionar hoy en día son aquellos diseñados por la empresa Bq, además de cualquier otro que sea controlado por una placa Arduino.
 
-Puedes usar una impresora 3D para crear tu printbot (Renacuajo, Escarabajo y Rhino). Tanto los archivos con las partes imprimibles como el código Arduino de cada uno de los printbots de Bq se puede descargar desde la web http://diy.bq.com/printbots/ (el código no está disponible aún en la web).
+Puedes usar una impresora 3D para crear tu printbot (Renacuajo, Escarabajo y Rhino). Tanto los archivos con las partes imprimibles como el código Arduino de cada uno de los printbots de Bq se puede descargar desde la web http://diwo.bq.com/tag/printbot/
 
 Hay un mando de control para robots genéricos que te permite controlar tu propio robot con hasta 6 funcionalidades más la cruceta de movimientos o bien aumentar el número de funcionalidades de algún printbot ya existente con los 6 botones de comandos.
 
@@ -21,7 +21,7 @@ Estos 6 botones mandan el siguiente carácter a la placa Arduino:
 
 La diferencia con la aplicación RoboPad es que ¡ahora tienes la nueva funcionalidad de programar de los movimientos del robot! Puedes añadir los movimientos que quieres que el robot realice, reorganizarlos y eliminarlos uno a uno o todas a la vez. Cuando estés listo, puedes enviar los movimientos al robot y ver cómo los realiza.
 
-Si tienes alguna duda puedes consultarnos a través del `foro de DIY <http://diy.bq.com/forums/forum/forum/>`_ o mandando un correo a diy@bq.com.
+Si tienes alguna duda puedes consultarnos mandando un correo a diy@bq.com.
 
 
 Características
@@ -77,7 +77,7 @@ Instalación
 
 #. En Android Studio, ve a ``File`` > ``Open`` y selecciona el proyecto RoboPad clonado previamente.
 
-#. Mete el código Arduino adecuado a tu robot. Puedes encontrarlo en la carpeta Arduino de este proyecto o en la `web de DIY de Bq  <http://diy.bq.com/printbots/>`_ (el código no está disponible aún en la web).
+#. Mete el código Arduino adecuado a tu robot. Puedes encontrarlo en la carpeta Arduino de este proyecto o en la `web de DIWO de Bq <http://diwo.bq.com/robopad-3/>`_ 
    
 #. Para instalar el firmware del printbot Cangrejo que se encuentra en la carpeta de Arduino, tienes que copiar la carpeta ``Oscillator`` (que está en la carpeta Oscillator_Lib) en la carpeta ``libraries``  en la carpeta donde has instalado el programa de Arduino. Puedes encontrar información más detallada para hacer esto en la  `documentación de la web de Arduino <http://arduino.cc/en/Guide/Libraries>`_. 
    

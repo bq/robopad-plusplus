@@ -6,7 +6,7 @@ RoboPad++ is an Android app that consists on a robots controller via the device'
 
 Right now, the type of robot that you can choose are the printbots designed in the Bq company or whichever robot with an Arduino board. 
 
-You can use a 3D printer to create your printbot (Pollywog, Beetle and Rhino). You can find the printable parts and the code of each one in http://diy.bq.com/printbots/ (the code in the web is not available yet).
+You can use a 3D printer to create your printbot (Pollywog, Beetle and Rhino). You can find the printable parts and the code of each one in http://diwo.bq.com/tag/printbot/
 
 You can use the generic robot controller if you create your own robot with its own Arduino code or if you wants to add more functionality to the other ones, through the buttons 1 to 6.
 
@@ -21,7 +21,7 @@ The buttons send the following character to the Arduino board:
 
 The difference with the RoboPad app is that now you have the new functionality of scheduling the robot's movements! You can add the movements that you want for your robot, rearrange them and remove them one by one or all at once. When you are ready, you can send the movements to your robot and see how it moves as you chose. 
 
-If you have any questions you can contact us through the `DIY forum <http://diy.bq.com/forums/forum/forum/>`_  or sending an email to diy@bq.com.
+If you have any questions you can contact us by sending an email to diy@bq.com.
 
 
 Features
@@ -78,7 +78,7 @@ Installation
 
 #. In Android Studio go to ``File`` > ``Open`` and select the  previous RoboPad cloned project.
 
-#. Upload the Arduino code to your robot. You can find it in the Arduino folder of this project or in `DIY web of Bq  <http://diy.bq.com/printbots/>`_ (the code in the web is not available yet).
+#. Upload the Arduino code to your robot. You can find it in the Arduino folder of this project or in `DIWO web of Bq <http://diwo.bq.com/robopad-3/>`_
 
 #. In order to install the firmware of the Crab printbot that you will find in the Arduino folder, you have to copy the ``Oscillator`` folder (that is in the Oscillator_Lib folder) in to the ``libraries`` folder in the folder where you have installed the Arduino program. You can find more detailed info for doing this in the `documentation of the Arduino web <http://arduino.cc/en/Guide/Libraries>`_.
 
