@@ -33,8 +33,8 @@ public class RoboPadConstants {
     public static final long DELAY_BETWEEN_SCHEDULED_COMMANDS = 800;
     public static final long CRAB_DELAY_BETWEEN_SCHEDULED_COMMANDS = 4000;
 
-    public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT}
-    public static enum robotState {MANUAL_CONTROL, LINE_FOLLOWER, LIGHT_FOLLOWER}
+    public static enum robotType {POLLYWOG, BEETLE, EVOLUTION, RHINO, CRAB, GENERIC_ROBOT}
+    public static enum robotState {MANUAL_CONTROL, LINE_FOLLOWER, LIGHT_AVOIDER, OBSTACLES_AVOIDER}
 
     
     /**
@@ -97,7 +97,8 @@ public class RoboPadConstants {
      */
     public static final String MANUAL_CONTROL_MODE_COMMAND = "M";
     public static final String LINE_FOLLOWER_MODE_COMMAND = "I";
-    public static final String LIGHT_FOLLOWER_MODE_COMMAND = "G";
+    public static final String LIGHT_AVOIDER_MODE_COMMAND = "G";
+    public static final String OBSTACLES_FOLLOWER_MODE_COMMAND = "B";
 
     
     /**

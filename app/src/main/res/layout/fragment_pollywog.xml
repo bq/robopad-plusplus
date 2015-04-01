@@ -16,14 +16,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/bq_logo" />
+        android:src="@drawable/bq_logo"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/schedule_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/bq_logo"
-        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/line_follower"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/yellow_circle_btn_transparent_selector"
         android:src="@drawable/ic_schedule_button"/>
@@ -54,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bot_icon"
+        android:layout_alignLeft="@id/bot_icon"
         android:background="@drawable/orange_circle_btn_transparent_selector"
         android:layout_marginLeft="@dimen/robot_state_button_margin"
         android:layout_marginBottom="15dp"

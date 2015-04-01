@@ -269,7 +269,7 @@ public class BeetleFragment extends RobotFragment {
                         return;
                     }
 
-                    if(state == robotState.MANUAL_CONTROL || state == robotState.LIGHT_FOLLOWER) {
+                    if(state == robotState.MANUAL_CONTROL || state == robotState.LIGHT_AVOIDER) {
                         stateChanged(robotState.LINE_FOLLOWER);
 
                     } else {
@@ -284,7 +284,7 @@ public class BeetleFragment extends RobotFragment {
                     }
 
                     if(state == robotState.MANUAL_CONTROL || state == robotState.LINE_FOLLOWER) {
-                        stateChanged(robotState.LIGHT_FOLLOWER);
+                        stateChanged(robotState.LIGHT_AVOIDER);
 
                     } else {
                         stateChanged(robotState.MANUAL_CONTROL);
@@ -321,11 +321,11 @@ public class BeetleFragment extends RobotFragment {
                 listener.onSendMessage(RoboPadConstants.LINE_FOLLOWER_MODE_COMMAND);
                 break;
 
-            case LIGHT_FOLLOWER:
+            case LIGHT_AVOIDER:
                 lightFollowerButton.setSelected(true);
                 lineFollowerButton.setSelected(false);
-                state = robotState.LIGHT_FOLLOWER;
-                listener.onSendMessage(RoboPadConstants.LIGHT_FOLLOWER_MODE_COMMAND);
+                state = robotState.LIGHT_AVOIDER;
+                listener.onSendMessage(RoboPadConstants.LIGHT_AVOIDER_MODE_COMMAND);
                 break;
 
         }

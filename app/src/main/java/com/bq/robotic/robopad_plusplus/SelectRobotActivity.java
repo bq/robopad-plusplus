@@ -36,6 +36,11 @@ public class SelectRobotActivity extends Activity {
             case R.id.beetle_button:
                 intent.putExtra(RoboPadConstants.ROBOT_SELECTED_KEY, RoboPadConstants.robotType.BEETLE);
                 break;
+
+            case R.id.evolution_button:
+                intent.putExtra(RoboPadConstants.ROBOT_SELECTED_KEY, RoboPadConstants.robotType.EVOLUTION);
+                break;
+
             case R.id.rhino_button:
                 intent.putExtra(RoboPadConstants.ROBOT_SELECTED_KEY, RoboPadConstants.robotType.RHINO);
                 break;

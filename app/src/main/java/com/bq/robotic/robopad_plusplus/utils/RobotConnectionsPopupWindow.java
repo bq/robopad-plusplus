@@ -34,6 +34,10 @@ public class RobotConnectionsPopupWindow {
                 popupView.setImageResource(R.drawable.beetle_pins);
                 break;
 
+            case EVOLUTION:
+                popupView.setImageResource(R.drawable.evolution_pins);
+                break;
+
         }
     }
 

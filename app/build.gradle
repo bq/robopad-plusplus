@@ -1,23 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 20
+    compileSdkVersion 21
     buildToolsVersion "20"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 20
+        targetSdkVersion 21
     }
 
     buildTypes {
 
         debug {
-            runProguard false
+            minifyEnabled false
             proguardFile file('custom-proguard-android.txt')
         }
 
         release {
-            runProguard true
+            minifyEnabled true
             proguardFile file('custom-proguard-android.txt')
         }
     }

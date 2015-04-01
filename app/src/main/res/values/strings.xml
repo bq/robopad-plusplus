@@ -55,6 +55,7 @@
     <string name="claws_tip_text">If you click on us, we will control\nthe claws of the robot</string>
     <string name="line_follower_text">If you click on me, I will enable or disable the line follower mode</string>
     <string name="light_avoider_text">If you click on me, I will enable or disable the light avoider mode</string>
+    <string name="obstacles_avoider_text">If you click on me, I will enable or disable the obstacles avoider mode</string>
     <string name="scheduler_add_commands_text">Click on us to add us to the list of robot movements</string>
     <string name="scheduler_remove_all_text">Click on me to delete all movements</string>
     <string name="scheduler_send_text">Click on me to send the movements to the robot!</string>

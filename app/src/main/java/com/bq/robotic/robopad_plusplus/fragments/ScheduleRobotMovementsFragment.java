@@ -130,7 +130,10 @@ public class ScheduleRobotMovementsFragment extends Fragment implements Schedule
 		    } else if (robotTypeIndex == robotType.BEETLE.ordinal()) {
 		    	mBotType = robotType.BEETLE;
 		    	setBeetleUIComponents();
-		    	
+
+            } else if (robotTypeIndex == robotType.EVOLUTION.ordinal()) {
+                mBotType = robotType.EVOLUTION;
+
 		    } else if (robotTypeIndex == robotType.RHINO.ordinal()) {
                 mBotType = robotType.RHINO;
                 setRhinoUIComponents();

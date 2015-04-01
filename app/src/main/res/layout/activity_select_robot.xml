@@ -43,18 +43,27 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/menu_pollywog_icon_pressed_selector"
                     android:src="@drawable/menu_pollywog_icon_selector"
-                    android:padding="20dp"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:padding="5dp"
                     android:onClick="onRobotSelected"/>
 
                 <ImageButton
                     android:id="@+id/beetle_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:padding="5dp"
                     android:background="@drawable/menu_beetle_icon_pressed_selector"
                     android:src="@drawable/menu_beetle_icon_selector"
                     android:onClick="onRobotSelected"/>
+
+                <ImageButton
+                    android:id="@+id/evolution_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:background="@drawable/menu_evolution_icon_pressed_selector"
+                    android:src="@drawable/menu_evolution_icon_selector"
+                    android:onClick="onRobotSelected"/>
+
 
                 <Button
                     android:id="@+id/rhino_button"
@@ -99,5 +108,13 @@
 
         </HorizontalScrollView>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_diwo_logo"
+        android:layout_marginBottom="@dimen/button_press_medium_padding"/>
 
 </RelativeLayout>

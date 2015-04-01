@@ -7,6 +7,6 @@
     <dimen name="claw_buttons_margin">15dp</dimen>
     <dimen name="left_pad_margin">40dp</dimen>
     <dimen name="pad_minus_margins">-40dp</dimen>
-    <dimen name="robot_state_button_margin">15dp</dimen>
+    <dimen name="robot_state_button_margin">10dp</dimen>
 
 </resources>

@@ -20,5 +20,7 @@
     <color name="orange_transparent_2">#40f57e29</color>
     <color name="red_transparent_1">#A0d72129</color>
     <color name="red_transparent_2">#40d72129</color>
+    <color name="purple_transparent_1">#A0a62254</color>
+    <color name="purple_transparent_2">#40a62254</color>
     <color name="preferences_background">#022d4f</color>
 </resources>

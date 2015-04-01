@@ -60,7 +60,7 @@
 /* Define the posible states of the state machine of the program */
 #define MANUAL_CONTROL_STATE    0
 #define LINE_FOLLOWER           1
-#define LIGHT_FOLLOWER          2
+#define LIGHT_AVOIDER           2
 
 /* Max and min positions of the claw */
 #define maxClawPosition 10
@@ -86,7 +86,7 @@ int leftIR;
 int BLACK = 0;
 int WHITE = 1;
 
-/* Variables of the light follower mode */
+/* Variables of the light avoider mode */
 int rightLDR;
 int leftLDR;
 int lightLimitValue;
@@ -179,9 +179,9 @@ void checkData(char* data){
       currentState = LINE_FOLLOWER;
       break;
 
-    /* Light follower mode button pressed */
+    /* Light avoider mode button pressed */
     case 'G':
-      currentState = LIGHT_FOLLOWER;
+      currentState = LIGHT_AVOIDER; 
       break;
 
     /* Manual control mode button pressed */
@@ -268,8 +268,8 @@ void followTheLine() {
 }
 
 
-/* The robot is in the light follower mode */
-void followTheLight() {
+/* The robot is in the light avoider mode */
+void avoidTheLight() {
   /* Read the state of the LDR sensors */
   rightLDR = analogRead(pinSensorLDRRight);
   leftLDR = analogRead(pinSensorLDRLeft);
@@ -380,8 +380,8 @@ void loop() {
   if(currentState == LINE_FOLLOWER) {
     followTheLine();
   
-  } else if(currentState == LIGHT_FOLLOWER) {
-    followTheLight();
+  } else if(currentState == LIGHT_AVOIDER)  {
+    avoidTheLight();
   }
   
 }  
