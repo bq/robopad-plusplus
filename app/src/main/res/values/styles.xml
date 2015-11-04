@@ -18,12 +18,33 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/background_gradient</item>
         <item name="android:colorBackgroundCacheHint">#00000000</item>
 
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@color/holo_turquoise</item>
+        <item name="actionBarStyle">@style/AppActionBar</item>
+    </style>
+
+    <style name="SettingsBaseTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="windowActionBar">true</item>
+        <item name="android:textColorSecondary">@color/semi_transparent_white</item>
+    </style>
+
+    <style name="SettingsTheme" parent="SettingsBaseTheme">
+        <item name="windowNoTitle">false</item>
+        <item name="android:colorBackgroundCacheHint">#00000000</item>
+        <item name="android:windowBackground">@drawable/background_gradient</item>
+        <item name="actionBarStyle">@style/AppActionBar</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorTertiary">@color/holo_turquoise</item>
+    </style>
+
+    <style name="AppActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="displayOptions">homeAsUp|showTitle</item>
+        <item name="background">@color/holo_turquoise</item>
+        <item name="backgroundStacked">@null</item>
     </style>
 
     <!-- popup anim -->

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bq.robotic.robopad_plusplus"
-    android:versionCode="4"
-    android:versionName="1.4"
+    android:versionCode="5"
+    android:versionName="1.5"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -40,7 +40,8 @@
         <activity
             android:name=".RoboPadSettings"
             android:label="@string/settings"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:theme="@style/SettingsTheme" >
         </activity>
     </application>
 

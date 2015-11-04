@@ -178,7 +178,6 @@
         android:indeterminate="true"
         android:layout_alignParentBottom="true"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:background="@drawable/abc_menu_dropdown_panel_holo_dark"
         android:padding="10dp"
         android:visibility="gone" />
 
