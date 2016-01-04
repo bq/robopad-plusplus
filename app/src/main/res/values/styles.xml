@@ -19,6 +19,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@drawable/background_gradient</item>
         <item name="android:colorBackgroundCacheHint">#00000000</item>
 
