@@ -21,6 +21,8 @@ The buttons send the following character to the Arduino board:
 
 The difference with the RoboPad app is that now you have the new functionality of scheduling the robot's movements! You can add the movements that you want for your robot, rearrange them and remove them one by one or all at once. When you are ready, you can send the movements to your robot and see how it moves as you chose. 
 
+The generic robot, Crab and Rhino options are hidden as their UI is not finished. Make them visible in the ``activity_select_robot.xml`` layout.
+
 If you have any questions you can contact us by sending an email to diy@bq.com.
 
 
@@ -52,16 +54,9 @@ Installation
     gradle install
 
 #. Install the drag-drop-grid library in your local repository::
-   
-	  * Gradle version equal or lower than 1.10 and drag-drop-grid version equal or lower than 1.6::
-  
-        cd drag-drop-grid/drag-drop-grid
-        gradle publishToMavenLocal
-
-    * Gradle version greater than 1.10 and drag-drop-grid version greater than 1.6::
         
-        cd drag-drop-grid/drag-drop-grid
-        gradle install
+    cd drag-drop-grid/drag-drop-grid
+    gradle install
 
 
 #. Install `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ and `Gradle <http://www.gradle.org/downloads>`_.
@@ -95,7 +90,7 @@ Requirements
     sudo apt-get update
     sudo apt-get install maven
 
-- `Gradle <http://www.gradle.org/downloads>`_ recommended version 2.2.1
+- `Gradle <http://www.gradle.org/downloads>`_ version 3.3
   
 - `Arduino IDE <http://arduino.cc/en/Main/Software#.UzBT5HX5Pj4>`_ 
 

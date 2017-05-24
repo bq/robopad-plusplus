@@ -21,6 +21,9 @@ Estos 6 botones mandan el siguiente carácter a la placa Arduino:
 
 La diferencia con la aplicación RoboPad es que ¡ahora tienes la nueva funcionalidad de programar de los movimientos del robot! Puedes añadir los movimientos que quieres que el robot realice, reorganizarlos y eliminarlos uno a uno o todas a la vez. Cuando estés listo, puedes enviar los movimientos al robot y ver cómo los realiza.
 
+Las opciones de robot genérico, Cangrejo y Rhino estás ocultas ya que su UI no está terminada. Puedes hacerlos visibles en el layout ``activity_select_robot.xml``.
+
+
 Si tienes alguna duda puedes consultarnos mandando un correo a diy@bq.com.
 
 
@@ -52,16 +55,9 @@ Instalación
     gradle install
 
 #. Instala la biblioteca drag-drop-grid en tu repositorio local::
-   
-    * Versiones de Gradle igual o menores de 1.10 y versiones de drag-drop-grid igual o menores de 1.6::
-  
-        cd drag-drop-grid/drag-drop-grid
-        gradle publishToMavenLocal
-
-    * Versiones de Gradle mayores de 1.10 y versiones de drag-drop-grid mayores de 1.6::
         
-        cd drag-drop-grid/drag-drop-grid
-        gradle install
+    cd drag-drop-grid/drag-drop-grid
+    gradle install
 
 #. Instala `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ y `Gradle <http://www.gradle.org/downloads>`_.
 
@@ -95,7 +91,7 @@ Requisitos
     sudo apt-get update
     sudo apt-get install maven
 
-- `Gradle <http://www.gradle.org/downloads>`_ recommended version 2.2.1
+- `Gradle <http://www.gradle.org/downloads>`_ versión 3.3
   
 - `Arduino IDE <http://arduino.cc/en/Main/Software#.UzBT5HX5Pj4>`_ 
 

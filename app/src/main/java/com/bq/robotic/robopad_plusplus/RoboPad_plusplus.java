@@ -23,6 +23,7 @@
 
 package com.bq.robotic.robopad_plusplus;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -53,12 +54,18 @@ import com.bq.robotic.robopad_plusplus.listeners.ScheduleRobotMovementsListener;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants;
 import com.bq.robotic.robopad_plusplus.utils.RoboPadConstants.robotType;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 
 /**
  * Main activity of the app that contains the different fragments to show to the user
  */
 
-public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements RobotListener, ScheduleRobotMovementsListener {
+public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements RobotListener,
+   ScheduleRobotMovementsListener, EasyPermissions.PermissionCallbacks  {
 
     // Debugging
     private static final String LOG_TAG = "RoboPad_plusplus";
@@ -70,6 +77,10 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
     private ImageButton disconnectButton;
 
     private Animation anim;
+
+    // Permissions
+    // Location permission is now needed in order to scan for near bluetooth devices
+    private static final int RC_LOCATION_PERM = 124;
 
 
     @Override
@@ -254,12 +265,27 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
         switch (v.getId()) {
 
             case R.id.connect_button:
-                requestDeviceConnection();
+                tryConnectToDevice();
                 break;
 
             case R.id.disconnect_button:
                 stopBluetoothConnection();
                 break;
+        }
+    }
+
+    /**
+     * Connect to the device
+     */
+    @AfterPermissionGranted(RC_LOCATION_PERM)
+    private void tryConnectToDevice() {
+        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            requestDeviceConnection();
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, getString(R.string.permission_location),
+               RC_LOCATION_PERM, perms);
         }
     }
 
@@ -400,5 +426,42 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
         }
     }
 
+    /**************************************************************************************
+     ********************************   PERMISSIONS   *************************************
+     **************************************************************************************/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(LOG_TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog warning the user that the app will be able to connect only
+        // to paired devices, but show it only when the permission is not permanently denied, as the
+        // app is still functional without it
+        if (!EasyPermissions.permissionPermanentlyDenied(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            new AlertDialog.Builder(this)
+               .setMessage(getString(R.string.rationale_location))
+               .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                   @Override public void onClick(DialogInterface dialogInterface, int i) {
+                       requestDeviceConnection();
+                   }
+               })
+               .create()
+               .show();
+        } else if (EasyPermissions.permissionPermanentlyDenied(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+            requestDeviceConnection();
+        }
+    }
 
 }

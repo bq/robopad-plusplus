@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 21
+        minSdkVersion 9
+        targetSdkVersion 25
     }
 
     buildTypes {
@@ -28,11 +28,11 @@ android {
 }
 
 dependencies {
-    compile('com.bq.robotic:droid2ino:+@aar') {
+    compile('com.bq.robotic:droid2ino:2.1@aar') {
         transitive = true
     }
     compile('com.android.support:gridlayout-v7:18.0.+')
-//    compile('com.bq.robotic:drag-drop-grid:+@jar')
-    compile('com.bq.robotic:drag-drop-grid:+@aar')
+    compile('com.bq.robotic:drag-drop-grid:1.10@aar')
+    compile 'pub.devrel:easypermissions:0.4.0'
     compile('com.nhaarman.supertooltips:library:3.0.+')
 }

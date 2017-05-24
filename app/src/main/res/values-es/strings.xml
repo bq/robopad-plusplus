@@ -66,4 +66,9 @@
     <string name="max_exceeded_error">"El valor máximo es "</string>
     <string name="min_exceeded_error">"El valor mínimo es "</string>
 
+    <!--Permissions-->
+    <string name="permission_location">Se necesita el permiso de localización para buscar los robots cerca de ti y conectarte a ellos</string>
+    <string name="rationale_location">Se necesita el permiso de localización para buscar los robots cerca de ti y conectarte a ellos.
+        Sólo podrás conectarte a robots ya emparejados</string>
+
 </resources>

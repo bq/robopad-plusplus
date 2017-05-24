@@ -1,12 +1,12 @@
 <resources>
 
     <!--
-        Base application theme for API 21+. This theme completely replaces
+        Base application theme for API 25+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v21/styles.xml on API 21+ devices.
+        res/values-v11/styles.xml on API 14+ devices.
     -->
     <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <!-- API 21 theme customizations can go here. -->
+        <!-- API 25 theme customizations can go here. -->
 
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
@@ -16,7 +16,7 @@
     </style>
 
     <style name="SettingsBaseTheme" parent="@style/Theme.AppCompat">
-        <!-- API 21 theme customizations can go here. -->
+        <!-- API 25 theme customizations can go here. -->
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
@@ -24,8 +24,8 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-        <item name="android:dialogTheme">@style/Theme.AppCompat.Light.Dialog</item>
-        <item name="android:alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert</item>
+        <item name="android:dialogTheme">@android:style/Theme.Material.Light.Dialog</item>
+        <item name="android:alertDialogTheme">@android:style/Theme.Material.Light.Dialog.Alert</item>
     </style>
 
 </resources>
