@@ -182,22 +182,22 @@ public class BeetleFragment extends RobotFragment {
 
 		case R.id.up_button:
 			listener.onSendMessage(RoboPadConstants.UP_COMMAND);
-			//	    			Log.e(LOG_TAG, "up command send");
+			//	    			Log.d(LOG_TAG, "up command send");
 			break;
 
 		case R.id.down_button:
 			listener.onSendMessage(RoboPadConstants.DOWN_COMMAND);
-			//	    			Log.e(LOG_TAG, "down command send");
+			//	    			Log.d(LOG_TAG, "down command send");
 			break;
 
 		case R.id.left_button:
 			listener.onSendMessage(RoboPadConstants.LEFT_COMMAND);	
-			//	    			Log.e(LOG_TAG, "left command send");
+			//	    			Log.d(LOG_TAG, "left command send");
 			break;
 
 		case R.id.right_button:
 			listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND);
-			//	    			Log.e(LOG_TAG, "right command send");
+			//	    			Log.d(LOG_TAG, "right command send");
 			break;
 
 		}

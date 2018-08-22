@@ -262,7 +262,7 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
 					sleep(RoboPadConstants.CLICK_SLEEP_TIME);
 
 					if(mIsClick && listener != null) {
-						Log.e(LOG_TAG, "stop command in thread send");
+						Log.i(LOG_TAG, "stop command in thread send");
 						listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 					}
 

@@ -201,10 +201,7 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
 
                 } else if (Build.VERSION.SDK_INT > 14 && isXLargeTablet(this)) {
                     PreferenceFragment fragment = (PreferenceFragment) getFragmentManager().findFragmentById(bluetoothFragmentId);
-                    Log.e(LOG_TAG, "fragment null? " + (fragment == null));
-                    Log.e(LOG_TAG, "preference manager null? " + (fragment.getPreferenceManager() == null));
                     ((SwitchPreference) fragment.getPreferenceManager().findPreference(RoboPadConstants.ENABLE_BLUETOOTH_KEY)).setChecked(false);
-
                 }
             }
         }
