@@ -37,9 +37,9 @@
 
 /* Pin definition of the board to be used */
 
-#define pinLeftWheel   6   
-#define pinRightWheel  9   
-#define pinClaw       11
+#define pinLeftWheel            6   
+#define pinRightWheel           9   
+#define pinClaw                11
 #define pinSensorIRLeft         2   /*   Left infrared sensor     */ 
 #define pinSensorIRRight        3   /*   Right infrared sensor    */
 #define pinSensorLDRLeft       A2   /*   Left light sensor        */ 
@@ -54,8 +54,9 @@
 #define rightWheelBackwardsValue 0
 
 /* Bauderate of the Bluetooth*/
-#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH    38400
-#define BQ_ZUM_BLUETOOTH                       19200
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      38400
+#define BQ_ZUM_BLUETOOTH                         19200
+#define BQ_ZUM_CORE_2                            115200
 
 /* Define the posible states of the state machine of the program */
 #define MANUAL_CONTROL_STATE    0
@@ -308,6 +309,7 @@ void setup() {
   /* Open the Bluetooth Serial and empty it */
   //Serial.begin(BQ_ZUM_BLUETOOTH);  
   Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
+  //Serial.begin(BQ_ZUM_CORE_2);
   Serial.flush();     
   
   /* Define the appropiate pin to each object */

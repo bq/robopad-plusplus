@@ -36,7 +36,7 @@
  ******************************************************************/ 
 
 #include <Servo.h>
-#include <Oscillator.h>
+#include "Oscillator_Lib/Oscillator/Oscillator.h"
 
 
 /******************************************************************
@@ -48,6 +48,10 @@
 #define pin_miniServoI       11  /*   Mini servo 2 - Left      -  */ 
 #define pin_miniServoC       6   /*   Mini servo 3 - Central   -  */ 
 
+/* Bauderate of the Bluetooth*/
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      38400
+#define BQ_ZUM_BLUETOOTH                         19200
+#define BQ_ZUM_CORE_2                            115200
 
 /*  Definition of the three oscillators                            */
 Oscillator osc[3];
@@ -216,7 +220,9 @@ void setup() {
   osc[2].SetPh(dif_fase);
   
   /* Open and empty the port where the Bluetooth is connected       */
-  Serial.begin(38400); 
+  //Serial.begin(BQ_ZUM_BLUETOOTH);  
+  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
+  //Serial.begin(BQ_ZUM_CORE_2); 
   Serial.flush();  
   
   /* Wait three seconds                                             */

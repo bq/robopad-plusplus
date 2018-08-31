@@ -197,7 +197,7 @@ public class PollywogFragment extends RobotFragment {
 					break;
 
                 case R.id.line_follower:
-                    if(!listener.onCheckIsConnected()) {
+                    if(!listener.onCheckIsConnectedWithToast()) {
                         return;
                     }
 

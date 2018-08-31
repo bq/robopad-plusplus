@@ -211,7 +211,7 @@ public class EvolutionFragment extends RobotFragment {
                     break;
 
                 case R.id.line_follower:
-                    if(!listener.onCheckIsConnected()) {
+                    if(!listener.onCheckIsConnectedWithToast()) {
                         return;
                     }
 
@@ -226,7 +226,7 @@ public class EvolutionFragment extends RobotFragment {
                     break;
 
                 case R.id.light_avoider:
-                    if(!listener.onCheckIsConnected()) {
+                    if(!listener.onCheckIsConnectedWithToast()) {
                         return;
                     }
 
@@ -241,7 +241,7 @@ public class EvolutionFragment extends RobotFragment {
                     break;
 
                 case R.id.obstacles_avoider:
-                    if(!listener.onCheckIsConnected()) {
+                    if(!listener.onCheckIsConnectedWithToast()) {
                         return;
                     }
 

@@ -5,22 +5,25 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 14
         targetSdkVersion 26
         versionCode 7
         versionName "2.0"
     }
 
-    buildTypes {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
-        debug {
+    buildTypes {
+        release {
             minifyEnabled false
-            proguardFile file('custom-proguard-android.txt')
         }
 
-        release {
+        debug {
             minifyEnabled true
-            proguardFile file('custom-proguard-android.txt')
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), file('robopad-proguard.txt')
         }
     }
 

@@ -52,6 +52,7 @@ public class RoboPadConstants {
     public static final String SHOW_TIPS_KEY = "help_options";
     public static final String POLLYWOG_FIRST_TIME_TIPS_KEY = "pollywog_first_time_tips_key";
     public static final String BEETLE_FIRST_TIME_TIPS_KEY = "beetle_first_time_tips_key";
+    public static final String EVOLUTION_FIRST_TIME_TIPS_KEY = "evolution_first_time_tips_key";
     public static final String RHINO_FIRST_TIME_TIPS_KEY = "rhino_first_time_tips_key";
     public static final String CRAB_FIRST_TIME_TIPS_KEY = "crab_first_time_tips_key";
     public static final String GENERIC_ROBOT_FIRST_TIME_TIPS_KEY = "generic_robot_first_time_tips_key";

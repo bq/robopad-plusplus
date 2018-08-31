@@ -72,5 +72,9 @@
     <string name="permission_location">Location permission is needed to search for the robots near you to connect to them</string>
     <string name="rationale_location">Location permission is needed to search for the robots near you to connect to them.
         You will only be able to connect to paired robots</string>
+    
+    <!--BT type selector dialog-->
+    <string name="bt_socket_selector_view_text">Zum Core</string>
+    <string name="ble_selector_view_text">Zum Core 2.0</string>
 
 </resources>

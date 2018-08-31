@@ -175,7 +175,7 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
                 }
 
 
-				if(listener != null && !listener.onCheckIsConnected()) {
+				if(listener != null && !listener.onCheckIsConnectedWithToast()) {
 					mIsConnected = false;
 					break;
 				} else {

@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -505,10 +506,13 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Set the orientation to landscape if the device doesn't supports user_landscape
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-
         getSupportActionBar().show();
     }
 

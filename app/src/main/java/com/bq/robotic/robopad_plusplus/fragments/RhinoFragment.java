@@ -73,7 +73,7 @@ public class RhinoFragment extends RobotFragment {
 
 		setUiListeners(layout);
 
-		if(listener != null && listener.onCheckIsConnectedWithoutToast()) {
+		if(listener != null && listener.onCheckIsConnected()) {
 			onBluetoothConnected();
 		} else {
 			onBluetoothDisconnected();
@@ -217,7 +217,7 @@ public class RhinoFragment extends RobotFragment {
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
 
-			if(listener != null && listener.onCheckIsConnectedWithoutToast()) {
+			if(listener != null && listener.onCheckIsConnected()) {
 				
 				String valueToSend = null;
 				if(progress == 1) {

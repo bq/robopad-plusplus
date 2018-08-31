@@ -229,7 +229,7 @@ public class BeetleFragment extends RobotFragment {
 					break;
 
                 case R.id.full_open_claw_button:
-                    if(listener.onCheckIsConnected()) {
+                    if(listener.onCheckIsConnectedWithToast()) {
 
                         if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
                             stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
@@ -265,7 +265,7 @@ public class BeetleFragment extends RobotFragment {
 					break;
 
                 case R.id.line_follower:
-                    if(!listener.onCheckIsConnected()) {
+                    if(!listener.onCheckIsConnectedWithToast()) {
                         return;
                     }
 
@@ -279,7 +279,7 @@ public class BeetleFragment extends RobotFragment {
                     break;
 
                 case R.id.light_avoider:
-                    if(!listener.onCheckIsConnected()) {
+                    if(!listener.onCheckIsConnectedWithToast()) {
                         return;
                     }
 
@@ -355,7 +355,7 @@ public class BeetleFragment extends RobotFragment {
                         stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
                     }
 
-                    if(listener.onCheckIsConnected()) {
+                    if(listener.onCheckIsConnectedWithToast()) {
                         clawButtonUp = false;
                         (new MySendClawValueToArduinoTask(v.getId())).run();
                     }

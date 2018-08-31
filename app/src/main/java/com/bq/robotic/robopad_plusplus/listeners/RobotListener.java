@@ -39,7 +39,7 @@ public interface RobotListener {
 	 * 
 	 * @return true if is connected or false if not
 	 */
-	boolean onCheckIsConnected();
+	boolean onCheckIsConnectedWithToast();
 	
 	
 	/**
@@ -49,7 +49,7 @@ public interface RobotListener {
 	 * 
 	 * @return true if is connected or false if not
 	 */
-	boolean onCheckIsConnectedWithoutToast();
+	boolean onCheckIsConnected();
 	
 	
 	/**

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.bq.robotic.robopad_plusplus.fragments.BeetleFragment;
 import com.bq.robotic.robopad_plusplus.fragments.CrabFragment;
+import com.bq.robotic.robopad_plusplus.fragments.EvolutionFragment;
 import com.bq.robotic.robopad_plusplus.fragments.GenericRobotFragment;
 import com.bq.robotic.robopad_plusplus.fragments.PollywogFragment;
 import com.bq.robotic.robopad_plusplus.fragments.RhinoFragment;
@@ -80,6 +81,14 @@ public class TipsManager {
 
             if(sharedPref.getBoolean(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, true)) {
                 writeInSharedPreferencesEditor(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(listener instanceof EvolutionFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.EVOLUTION_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.EVOLUTION_FIRST_TIME_TIPS_KEY, false);
                 enableToolTipListener();
                 showTips();
             }

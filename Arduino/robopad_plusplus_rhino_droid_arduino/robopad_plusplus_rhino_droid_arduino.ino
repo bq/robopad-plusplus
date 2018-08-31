@@ -46,6 +46,11 @@
 #define rightWheelFordwardValue 180
 #define rightWheelBackwardsValue 0
 
+/* Bauderate of the Bluetooth*/
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      38400
+#define BQ_ZUM_BLUETOOTH                         19200
+#define BQ_ZUM_CORE_2                            115200
+
 /* Size of the received data buffer */
 #define bufferSize 2
 
@@ -182,7 +187,9 @@ void checkData(char* data){
 void setup(){
   
   /* Open the Bluetooth Serial and empty it */
-  Serial.begin(38400); 
+  //Serial.begin(BQ_ZUM_BLUETOOTH);  
+  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
+  //Serial.begin(BQ_ZUM_CORE_2); 
   Serial.flush();     
   
   /* Define the appropiate pin to each object */
