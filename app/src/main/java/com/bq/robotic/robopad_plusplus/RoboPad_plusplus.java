@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -267,9 +268,9 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 
    @Override
    protected void onDeviceListDialogStyleObtained(DevicesListDialogStyle deviceListDialogStyle) {
-      deviceListDialogStyle.getBtSocketSelectorView().setText(R.string.bt_socket_selector_view_text);
-      if (deviceListDialogStyle.getBleSelectorView() != null)
-         deviceListDialogStyle.getBleSelectorView().setText(R.string.ble_selector_view_text);
+      deviceListDialogStyle.getBtSocketSelectorTab().setText(R.string.bt_socket_selector_view_text);
+      if (deviceListDialogStyle.getBleSelectorTab() != null)
+         deviceListDialogStyle.getBleSelectorTab().setText(R.string.ble_selector_view_text);
    }
 
    /**
