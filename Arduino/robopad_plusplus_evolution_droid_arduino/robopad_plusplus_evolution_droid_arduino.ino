@@ -12,7 +12,7 @@
       Android RoboPad++ app.
 
  *   ****************************************************
- *   * Fecha: 27/03/2015                                *
+ *   * Fecha: 15/01/2019                                *
  *   * Autor:Estefana Sarasola Elvira                   *
  *   * Mail: diy@bq.com                                 *
  *   * Licencia: GNU General Public License v3 or later *
@@ -43,9 +43,8 @@
 #define pinSensorIRRight        3   /*   Right infrared sensor    */
 #define pinSensorLDRLeft       A2   /*   Left light sensor        */
 #define pinSensorLDRRight      A3   /*   Right light sensor       */
-#define pinUSTri                4   /*   Ultrasound trigger       */
-#define pinUSEch                5   /*   Ultrasound echo          */
-#define pinHead                11   /*   Ultrasound echo          */
+#define pinUltrasonic           4   /*   Ultrasonic               */
+#define pinHead                11   /*   Head microservo          */
 #define pinBuzzer              12   /*   Boozer                   */
 
 /* Definition of the values ​​that can take continuous rotation servo,
@@ -106,6 +105,12 @@ Servo head;                      /*  Values from 0 to 180  */
 boolean wasGoingFordward = true;
 int lastHeadAngle;
 
+// MAX = 4m   timeout =  (MAX * 2 * 1000000) / (100 * 340) = MAX * 29 * 2
+// The 2 is the go and return of the pulse
+#define US_MAX_DISTANCE                       4 /* 2m */
+#define SOUND_SPEED_IN_AIR                    29 
+int ultrasonicEchoTimeout = US_MAX_DISTANCE * 29 * 2;
+
 /* The obstacles avoider mode consumes a lot of time while it is
   not listening to the bluetooth serial, so we have to chop all
   the algorithm in several parts. This variables are used for
@@ -115,8 +120,8 @@ int lastHeadAngle;
 #define US_STATE_CHECK_CENTER               1
 #define US_STATE_CHECK_RIGHT                2
 #define US_STATE_CHECK_LEFT                 3
-
 int lastUsState = US_STATE_CHECK_NOT_STARTED;
+
 
 
 /*  A char buffer to storage the received data from the Bluetooth
@@ -135,21 +140,27 @@ int numChar = 0;
  ******************************************************************/
 
 //bqBAT (bq US)
-long TP_init_4_5() {
-  digitalWrite(pinUSTri, LOW);
+long timeToReceiveUltrasonicSignal() {
+  // trigger the ultrasonic
+  pinMode(pinUltrasonic, OUTPUT);
+  digitalWrite(pinUltrasonic, LOW);
   delayMicroseconds(2);
-  digitalWrite(pinUSTri, HIGH);
+  digitalWrite(pinUltrasonic, HIGH);
   delayMicroseconds(10);
-  digitalWrite(pinUSTri, LOW);
-  long microseconds = pulseIn(pinUSEch , HIGH);
+  digitalWrite(pinUltrasonic, LOW);
+
+  // Wait for the echo
+  pinMode(pinUltrasonic, INPUT);
+  long microseconds = pulseIn(pinUltrasonic, HIGH);
   return microseconds;
 }
 
-
-long distance_4_5() {
-  long microseconds = TP_init_4_5();
-  long distance;
-  distance = microseconds / 29 / 2;
+// time = (distance * 2 * 1000000) / (100 * 340) = distance * 29 * 2
+// distance = time / (29 * 2) = time / 58
+// The 2 is the go and return of the pulse
+long distanceToAnObjectByUltrasonic() {
+  long microseconds = timeToReceiveUltrasonicSignal();
+  long distance = microseconds / 58;
   return distance;
 }
 
@@ -166,7 +177,7 @@ int searchObstacles(int angle) {
 
   turnHead(angle, SEARCHING_OBSTACLES_HEAD_DELAY);
 
-  distance = distance_4_5();
+  distance = distanceToAnObjectByUltrasonic();
 
   if ((distance != 0) && (distance < 25)) {
     tone(pinBuzzer, 261, 300);
@@ -189,7 +200,7 @@ int checkCenterObstacle() {
     turnHead(US_CENTER_ANGLE, SEARCHING_OBSTACLES_HEAD_DELAY);
   }
 
-  int distance = distance_4_5();
+  int distance = distanceToAnObjectByUltrasonic();
 
   if ((distance != 0) && (distance < 25)) {
     stopWheels();
@@ -494,8 +505,8 @@ void setup() {
 
   /* Open the Bluetooth Serial and empty it */
   //Serial.begin(BQ_ZUM_BLUETOOTH);
-  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH);
-  //Serial.begin(BQ_ZUM_CORE_2);
+  //Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH);
+  Serial.begin(BQ_ZUM_CORE_2);
   Serial.flush();
 
   /* Define the appropiate pin to each object */
@@ -507,9 +518,8 @@ void setup() {
   pinMode(pinSensorIRLeft, INPUT);
   pinMode(pinSensorIRRight, INPUT);
 
-  /* US sensors */
-  pinMode(pinUSTri, OUTPUT);
-  pinMode(pinUSEch, INPUT);
+  /* US (ultrasonic) sensor use the same pin for the trigger and the echo so its
+    mode (input/output) will be configured everytime is used */
 
   /* The robot is stopped at the beginning */
   stopWheels();
