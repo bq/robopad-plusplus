@@ -35,17 +35,31 @@
                       Definition of variables
  ******************************************************************/
 
-/* Pin definition of the board to be used */
+/* Supported boards */  
+ #define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      1
+ #define BQ_ZUM_BLUETOOTH                         2
+ #define BQ_ZUM_CORE_2                            3
+/* Select in this variable which board are you going to use */
+ int boardSelected = BQ_ZUM_CORE_2;
 
+/* Pin definition of the board to be used */
 #define pinLeftWheel            8
 #define pinRightWheel           9
 #define pinSensorIRLeft         2   /*   Left infrared sensor     */
 #define pinSensorIRRight        3   /*   Right infrared sensor    */
 #define pinSensorLDRLeft       A2   /*   Left light sensor        */
 #define pinSensorLDRRight      A3   /*   Right light sensor       */
-#define pinUltrasonic           4   /*   Ultrasonic               */
 #define pinHead                11   /*   Head microservo          */
 #define pinBuzzer              12   /*   Boozer                   */
+
+/* Pin for the ultrasonic trigger or both trigger and echo depending on the [boardSelected] */ 
+#define pinUltrasonic           4   /*   Ultrasonic               */
+/* Only used in MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH and BQ_ZUM_BLUETOOTH boards, 
+   It has different pin for the trigger and the echo */
+#define pinOldUltrasonicEcho    5   /*   Old Ultrasonic echo      */
+/* Depending on the [boardSelected] it will be the [pinOldUltrasonicEcho] or
+   the same as the trigger, the [pinUltrasonic] */
+int pinUltrasonicInput = pinOldUltrasonicEcho;  
 
 /* Definition of the values ​​that can take continuous rotation servo,
   that is, the wheels */
@@ -56,9 +70,9 @@
 #define rightWheelBackwardsValue 0
 
 /* Bauderate of the Bluetooth*/
-#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      38400
-#define BQ_ZUM_BLUETOOTH                         19200
-#define BQ_ZUM_CORE_2                            115200
+#define BAUDS_MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH       38400
+#define BAUDS_BQ_ZUM_BLUETOOTH                          19200
+#define BAUDS_BQ_ZUM_CORE_2                            115200
 
 /* Define the posible states of the state machine of the program */
 #define MANUAL_CONTROL_STATE    0
@@ -91,6 +105,7 @@ int leftLDR;
 int lightLimitValue;
 
 /* Variables of the obstacles avoider mode */
+#define DISTANCE_TO_DETECT_OBSTACLE        20
 #define US_CENTER_ANGLE                    80
 #define US_LEFT_ANGLE                     110
 #define US_RIGHT_ANGLE                     50
@@ -105,11 +120,9 @@ Servo head;                      /*  Values from 0 to 180  */
 boolean wasGoingFordward = true;
 int lastHeadAngle;
 
-// MAX = 4m   timeout =  (MAX * 2 * 1000000) / (100 * 340) = MAX * 29 * 2
+// microseconds =  (distance * 2 * 1000000) / (100 * 340) = distance * 29 * 2
 // The 2 is the go and return of the pulse
-#define US_MAX_DISTANCE                       4 /* 2m */
 #define SOUND_SPEED_IN_AIR                    29 
-int ultrasonicEchoTimeout = US_MAX_DISTANCE * 29 * 2;
 
 /* The obstacles avoider mode consumes a lot of time while it is
   not listening to the bluetooth serial, so we have to chop all
@@ -121,8 +134,6 @@ int ultrasonicEchoTimeout = US_MAX_DISTANCE * 29 * 2;
 #define US_STATE_CHECK_RIGHT                2
 #define US_STATE_CHECK_LEFT                 3
 int lastUsState = US_STATE_CHECK_NOT_STARTED;
-
-
 
 /*  A char buffer to storage the received data from the Bluetooth
     Serial */
@@ -142,7 +153,10 @@ int numChar = 0;
 //bqBAT (bq US)
 long timeToReceiveUltrasonicSignal() {
   // trigger the ultrasonic
-  pinMode(pinUltrasonic, OUTPUT);
+  if (boardSelected == BQ_ZUM_CORE_2) {
+    // Same pin for trigger and echo, configure its pin to INPUT now
+    pinMode(pinUltrasonic, OUTPUT);
+  }
   digitalWrite(pinUltrasonic, LOW);
   delayMicroseconds(2);
   digitalWrite(pinUltrasonic, HIGH);
@@ -150,6 +164,10 @@ long timeToReceiveUltrasonicSignal() {
   digitalWrite(pinUltrasonic, LOW);
 
   // Wait for the echo
+  if (boardSelected == BQ_ZUM_CORE_2) {
+    // Same pin for trigger and echo, configure its pin to INPUT now
+    pinMode(pinUltrasonicInput, INPUT);
+  }
   pinMode(pinUltrasonic, INPUT);
   long microseconds = pulseIn(pinUltrasonic, HIGH);
   return microseconds;
@@ -179,7 +197,7 @@ int searchObstacles(int angle) {
 
   distance = distanceToAnObjectByUltrasonic();
 
-  if ((distance != 0) && (distance < 25)) {
+  if ((distance != 0) && (distance < DISTANCE_TO_DETECT_OBSTACLE)) {
     tone(pinBuzzer, 261, 300);
     delay(300);
     return OBSTACLE_DETECTED;
@@ -202,7 +220,7 @@ int checkCenterObstacle() {
 
   int distance = distanceToAnObjectByUltrasonic();
 
-  if ((distance != 0) && (distance < 25)) {
+  if ((distance != 0) && (distance < DISTANCE_TO_DETECT_OBSTACLE)) {
     stopWheels();
     tone(pinBuzzer, 261, 300);
     delay(300);
@@ -504,9 +522,13 @@ void avoidTheObstacles() {
 void setup() {
 
   /* Open the Bluetooth Serial and empty it */
-  //Serial.begin(BQ_ZUM_BLUETOOTH);
-  //Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH);
-  Serial.begin(BQ_ZUM_CORE_2);
+  long bauds = BAUDS_MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH;
+  if (boardSelected == BQ_ZUM_BLUETOOTH) {
+    bauds = BAUDS_BQ_ZUM_BLUETOOTH;
+  } else if (boardSelected == BQ_ZUM_CORE_2) {
+    bauds = BAUDS_BQ_ZUM_CORE_2;
+  }
+  Serial.begin(bauds);
   Serial.flush();
 
   /* Define the appropiate pin to each object */
@@ -518,8 +540,14 @@ void setup() {
   pinMode(pinSensorIRLeft, INPUT);
   pinMode(pinSensorIRRight, INPUT);
 
-  /* US (ultrasonic) sensor use the same pin for the trigger and the echo so its
-    mode (input/output) will be configured everytime is used */
+  if (boardSelected == BQ_ZUM_CORE_2) {
+    /* US (ultrasonic) sensor use the same pin for the trigger and the echo so its
+      mode (input/output) will be configured everytime is used */
+    pinUltrasonicInput = pinUltrasonic;
+  } else {
+    pinMode(pinUltrasonic, OUTPUT);
+    pinMode(pinUltrasonicInput, INPUT);
+  }
 
   /* The robot is stopped at the beginning */
   stopWheels();
