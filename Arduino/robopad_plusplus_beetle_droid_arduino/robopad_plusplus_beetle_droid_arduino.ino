@@ -35,6 +35,13 @@
  *                    Definition of variables                     *
  ******************************************************************/
 
+ /* Supported boards */  
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      1
+#define BQ_ZUM_BLUETOOTH                         2
+#define BQ_ZUM_CORE_2                            3
+/* Select in this variable which board are you going to use */
+int boardSelected = BQ_ZUM_CORE_2;
+
 /* Pin definition of the board to be used */
 
 #define pinLeftWheel            6   
@@ -54,9 +61,9 @@
 #define rightWheelBackwardsValue 0
 
 /* Bauderate of the Bluetooth*/
-#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      38400
-#define BQ_ZUM_BLUETOOTH                         19200
-#define BQ_ZUM_CORE_2                            115200
+#define BAUDS_MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH       38400
+#define BAUDS_BQ_ZUM_BLUETOOTH                          19200
+#define BAUDS_BQ_ZUM_CORE_2                            115200
 
 /* Define the posible states of the state machine of the program */
 #define MANUAL_CONTROL_STATE    0
@@ -307,9 +314,13 @@ void avoidTheLight() {
 void setup() {
   
   /* Open the Bluetooth Serial and empty it */
-  //Serial.begin(BQ_ZUM_BLUETOOTH);  
-  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
-  //Serial.begin(BQ_ZUM_CORE_2);
+  long bauds = BAUDS_MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH;
+  if (boardSelected == BQ_ZUM_BLUETOOTH) {
+    bauds = BAUDS_BQ_ZUM_BLUETOOTH;
+  } else if (boardSelected == BQ_ZUM_CORE_2) {
+    bauds = BAUDS_BQ_ZUM_CORE_2;
+  }
+  Serial.begin(bauds);
   Serial.flush();     
   
   /* Define the appropiate pin to each object */

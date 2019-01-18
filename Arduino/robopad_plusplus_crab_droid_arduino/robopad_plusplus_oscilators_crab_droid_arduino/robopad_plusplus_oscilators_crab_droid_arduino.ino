@@ -43,15 +43,21 @@
  *                    Definition of variables                     *
  ******************************************************************/
 
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      1
+#define BQ_ZUM_BLUETOOTH                         2
+#define BQ_ZUM_CORE_2                            3
+/* Select in this variable which board are you going to use */
+int boardSelected = BQ_ZUM_CORE_2;
+
 /* Pin definition of the board to be used                         */
 #define pin_miniServoD       10  /*   Mini servo 1 - Right     -  */    
 #define pin_miniServoI       11  /*   Mini servo 2 - Left      -  */ 
 #define pin_miniServoC       6   /*   Mini servo 3 - Central   -  */ 
 
 /* Bauderate of the Bluetooth*/
-#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      38400
-#define BQ_ZUM_BLUETOOTH                         19200
-#define BQ_ZUM_CORE_2                            115200
+#define BAUDS_MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH       38400
+#define BAUDS_BQ_ZUM_BLUETOOTH                          19200
+#define BAUDS_BQ_ZUM_CORE_2                            115200
 
 /*  Definition of the three oscillators                            */
 Oscillator osc[3];
@@ -220,9 +226,13 @@ void setup() {
   osc[2].SetPh(dif_fase);
   
   /* Open and empty the port where the Bluetooth is connected       */
-  //Serial.begin(BQ_ZUM_BLUETOOTH);  
-  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
-  //Serial.begin(BQ_ZUM_CORE_2); 
+  long bauds = BAUDS_MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH;
+  if (boardSelected == BQ_ZUM_BLUETOOTH) {
+    bauds = BAUDS_BQ_ZUM_BLUETOOTH;
+  } else if (boardSelected == BQ_ZUM_CORE_2) {
+    bauds = BAUDS_BQ_ZUM_CORE_2;
+  }
+  Serial.begin(bauds);
   Serial.flush();  
   
   /* Wait three seconds                                             */

@@ -36,11 +36,11 @@
  ******************************************************************/
 
 /* Supported boards */  
- #define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      1
- #define BQ_ZUM_BLUETOOTH                         2
- #define BQ_ZUM_CORE_2                            3
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH      1
+#define BQ_ZUM_BLUETOOTH                         2
+#define BQ_ZUM_CORE_2                            3
 /* Select in this variable which board are you going to use */
- int boardSelected = BQ_ZUM_CORE_2;
+int boardSelected = BQ_ZUM_CORE_2;
 
 /* Pin definition of the board to be used */
 #define pinLeftWheel            8
