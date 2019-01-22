@@ -18,6 +18,11 @@ public class RobotConnectionsPopupWindow {
 
 
     public RobotConnectionsPopupWindow(RoboPadConstants.robotType botType, Context context) {
+        this(botType, false, context);
+    }
+
+    public RobotConnectionsPopupWindow(RoboPadConstants.robotType botType,
+                                       boolean showZumCore2BoardConnections, Context context) {
 
         LayoutInflater layoutInflater
                 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,7 +40,11 @@ public class RobotConnectionsPopupWindow {
                 break;
 
             case EVOLUTION:
-                popupView.setImageResource(R.drawable.evolution_pins);
+                if (showZumCore2BoardConnections) {
+                    popupView.setImageResource(R.drawable.evolution_pins_zum_core_2);
+                } else {
+                    popupView.setImageResource(R.drawable.evolution_pins);
+                }
                 break;
 
         }

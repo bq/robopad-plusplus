@@ -3,7 +3,7 @@
 
     <string name="app_name">RoboPad++</string>
     <string name="settings">Settings</string>
-    <string name="title_activity_select_robot">SelectRobotActivity</string>
+    <string name="title_activity_select_robot" translatable="false">SelectRobotActivity</string>
     
     <string name="pollywog">Pollywog</string>
     <string name="beetle">Beetle</string>
@@ -13,6 +13,8 @@
     
     <string name="exit_robot_control_dialog">The connection with this robot will be lost, do you really want to choose a new type of robot?</string>
     <string name="exit_robot_control_dialog_title">Disconnect the robot</string>
+
+    <string name="show_printbot_connections_ask_board">Which board are you using?</string>
 
     <!-- Rhino robot -->
     <string name="charge">Charge</string>
@@ -26,9 +28,9 @@
     <string name="legs_coordination">"Coordination\nbetween legs"</string>
     <string name="phase_difference">Phase difference: </string>
     <string name="reset">Reset</string>
-    <string name="default_amplitude">20</string>
-    <string name="default_period">2000</string>
-    <string name="default_phase">-90</string>
+    <string name="default_amplitude" translatable="false">20</string>
+    <string name="default_period" translatable="false">2000</string>
+    <string name="default_phase" translatable="false">-90</string>
     
     <!-- DragDropGrid -->
     <string name="remove">Remove</string>
@@ -74,7 +76,7 @@
         You will only be able to connect to paired robots</string>
     
     <!--BT type selector dialog-->
-    <string name="bt_socket_selector_view_text">Zum Core</string>
-    <string name="ble_selector_view_text">Zum Core 2.0</string>
+    <string name="bt_socket_selector_view_text" translatable="false">Zum Core</string>
+    <string name="ble_selector_view_text" translatable="false">Zum Core 2.0</string>
 
 </resources>

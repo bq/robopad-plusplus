@@ -3,7 +3,6 @@
 
     <string name="app_name">RoboPad++</string>
     <string name="settings">Ajustes</string>
-    <string name="action_settings">Configuración</string>
     
     <string name="pollywog">Renacuajo</string>
     <string name="beetle">Escarabajo</string>
@@ -13,6 +12,8 @@
     
     <string name="exit_robot_control_dialog">Se perderá la conexión con este robot, ¿quieres elegir un nuevo tipo de robot?</string>
     <string name="exit_robot_control_dialog_title">Desconexión del robot</string>
+
+    <string name="show_printbot_connections_ask_board">¿Qué placa estás usando?</string>
 
     <!-- Rhino robot -->
     <string name="charge">Embestir</string>

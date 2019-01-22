@@ -245,13 +245,15 @@ public class BeetleFragment extends RobotFragment {
                     PopupWindow popupWindow = (new RobotConnectionsPopupWindow(robotType.BEETLE,
                             getActivity())).getPopupWindow();
 
-                    int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
-                            getActivity().getResources().getDisplayMetrics());
+                   // Workaround for getting the correct X coordinate when the device has a notch
+                   int[] pinExplanationButtonLocation = new int[2];
+                   pinExplanationButton.getLocationOnScreen(pinExplanationButtonLocation);
 
-                    // Displaying the popup at the specified location, + offsets.
-                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
-                            pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
-                            offsetY);
+                   // Displaying the popup at the specified location, + offsets.
+                   popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                      Math.round(pinExplanationButtonLocation[0] + pinExplanationButton.getWidth()
+                         - getActivity().getResources().getDimensionPixelSize(R.dimen.button_press_padding)),
+                      0);
 
                     break;
 					

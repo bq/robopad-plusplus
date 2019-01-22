@@ -27,4 +27,6 @@
     <dimen name="text_size">16sp</dimen>
     <dimen name="robot_state_button_margin">28dp</dimen>
 
+    <dimen name="ask_board_for_printbot_pins_width">360dp</dimen>
+
 </resources>

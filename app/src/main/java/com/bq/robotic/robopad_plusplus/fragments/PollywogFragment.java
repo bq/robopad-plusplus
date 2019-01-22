@@ -174,17 +174,17 @@ public class PollywogFragment extends RobotFragment {
 					break;
 
                 case R.id.bot_icon:
-
                     PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
                             getActivity())).getPopupWindow();
 
-                    int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
-                            getActivity().getResources().getDisplayMetrics());
+                   // Workaround for getting the correct X coordinate when the device has a notch
+                   int[] pinExplanationButtonLocation = new int[2];
+                   pinExplanationButton.getLocationOnScreen(pinExplanationButtonLocation);
 
-                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
-                            pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
-                            offsetY);
-
+                   popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                      Math.round(pinExplanationButtonLocation[0] + pinExplanationButton.getWidth()
+                         - getActivity().getResources().getDimensionPixelSize(R.dimen.button_press_padding)),
+                      0);
                     break;
 
 				case R.id.schedule_button:
