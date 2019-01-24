@@ -11,7 +11,7 @@
 
         <activity
             android:name=".RoboPadSplashScreen"
-            android:screenOrientation="userLandscape"
+            android:screenOrientation="landscape"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,18 +23,18 @@
         <activity
             android:name=".SelectRobotActivity"
             android:label="@string/title_activity_select_robot"
-            android:screenOrientation="userLandscape">
+            android:screenOrientation="landscape">
         </activity>
         
         <activity
             android:name=".RoboPad_plusplus"
-            android:screenOrientation="userLandscape"
+            android:screenOrientation="landscape"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".RoboPadSettings"
             android:label="@string/settings"
-            android:screenOrientation="userLandscape"
+            android:screenOrientation="landscape"
             android:theme="@style/SettingsTheme" >
         </activity>
     </application>

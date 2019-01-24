@@ -272,14 +272,9 @@ public class EvolutionFragment extends RobotFragment {
       PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.EVOLUTION,
          showZumCore2BoardConnections, getActivity())).getPopupWindow();
 
-      // Workaround for getting the correct X coordinate when the device has a notch
-      int[] pinExplanationButtonLocation = new int[2];
-      pinExplanationButton.getLocationOnScreen(pinExplanationButtonLocation);
-
       popupWindow.showAtLocation(getView(), Gravity.LEFT | Gravity.CENTER_VERTICAL,
-         Math.round(pinExplanationButtonLocation[0] + pinExplanationButton.getWidth()
-            - getActivity().getResources().getDimensionPixelSize(R.dimen.button_press_padding)),
-         0);
+         Math.round(pinExplanationButton.getX() + pinExplanationButton.getWidth()
+            - getActivity().getResources().getDimensionPixelSize(R.dimen.button_press_padding)), 0);
    }
 
 
