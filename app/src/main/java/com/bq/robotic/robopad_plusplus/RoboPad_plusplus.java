@@ -147,7 +147,6 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
 
    @Override
    protected void onPause() {
-      super.onPause();
       // Store values between instances here
       SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
       SharedPreferences.Editor editor = preferences.edit();
@@ -155,6 +154,11 @@ public class RoboPad_plusplus extends BaseBluetoothSendOnlyActivity implements R
       editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, isEnableBluetoothAllowed()); // value to store
       // Commit to storage
       editor.commit();
+
+      // Send here the stop command before the connection is lost
+      onSendMessage(RoboPadConstants.STOP_COMMAND);
+
+      super.onPause();
    }
 
    @Override

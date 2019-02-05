@@ -48,6 +48,7 @@
     <string name="load_not_succeeded">There was an error while loading the list of movements</string>
     <string name="no_files_stored">There are no saved lists of movements for this robot</string>
     <string name="invalid_name">Enter a valid name</string>
+    <string name="send_controls_error">There was an error sending the list of movements to your Printbot</string>
 
     <!-- Tips -->
     <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>

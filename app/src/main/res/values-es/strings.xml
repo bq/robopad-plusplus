@@ -45,6 +45,7 @@
     <string name="load_not_succeeded">Hubo un error al cargar la lista de movimientos</string>
     <string name="no_files_stored">No hay listas de movimientos guardados para este robot</string>
     <string name="invalid_name">Introduce un nombre válido</string>
+    <string name="send_controls_error">Hubo un error al enviar la lista de movimientos a tu Printbot</string>
 
     <!-- Tips -->
     <string name="pin_explanation_tip_text">Si me pulsas, te enseñaré cómo has de conectar mis pines</string>
